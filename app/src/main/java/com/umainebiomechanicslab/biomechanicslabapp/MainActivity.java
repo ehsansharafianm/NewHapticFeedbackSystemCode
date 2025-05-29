@@ -42,7 +42,7 @@ public class MainActivity extends AppCompatActivity {
         IMURecordingPageUI imuRecordingPageUI = new IMURecordingPageUI(this, R.id.imu_recording_page, logPopupWindowUI, fileManager);
         ExperimenterMenuUI experimenterMenuUI = new ExperimenterMenuUI(this, R.id.experimenter_menu, testHapticCellsUI, imuRecordingPageUI, loadingWindowUI);
         ParticipantMenuUI participantMenuUI = new ParticipantMenuUI(this, R.id.participant_menu);
-        StartPageUI startPageUI = new StartPageUI(this, R.id.thigh_extension_study_trial_page, experimenterMenuUI, participantMenuUI);
+        StartPageUI startPageUI = new StartPageUI(this, R.id.start_page, experimenterMenuUI, participantMenuUI);
 
         //Link User Interfaces
         testHapticCellsUI.linkUserInterfaceForBackButton(experimenterMenuUI);
