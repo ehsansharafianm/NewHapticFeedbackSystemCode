@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="AppTheme">
+
+        <!-- Background/Text Colors -->
+        <attr name="menuPageBackgroundColor" format="reference" />
+        <attr name="menuPageTitleTextColor" format="reference" />
+        <attr name="experimentalPageBackgroundColor" format="reference" />
+        <attr name="experimentalPageTitleTextColor" format="reference" />
+        <attr name="experimentalPageHeaderTextColor" format="reference" />
+        <attr name="experimentalPageLabelTextColor" format="reference" />
+        <attr name="experimentalPageNormalTextColor" format="reference" />
+
+        <!-- Button Styles -->
+        <attr name="defaultButtonStyle" format="reference" />
+        <attr name="redButtonStyle" format="reference" />
+        <attr name="greenButtonStyle" format="reference" />
+        <attr name="defaultCircularButtonStyle" format="reference" />
+
+        <!-- Dropdown Spinner Styles -->
+        <attr name="defaultDropdownSpinner" format="reference" />
+        <attr name="defaultDropdownSpinnerTextAppearance" format="reference" />"
+
+        <!-- Loading Progress Spinner Styles -->
+        <attr name="textEntryBoxStyle" format="reference" />
+        <attr name="loadingProgressSpinnerStyle" format="reference" />
+
+        <!-- Pop Up Window Styles -->
+        <attr name="popupWindowStyle" format="reference" />
+
+    </declare-styleable>
+</resources>

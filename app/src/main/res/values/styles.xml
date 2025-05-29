@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="DarkUMaineBlueButton" parent="Widget.AppCompat.Button">
+        <item name="android:background">@drawable/dark_blue_button_background</item>
+        <item name="android:textColor">@color/white</item>
+    </style>
+
+    <style name="LightUMaineBlueButton" parent="Widget.AppCompat.Button">
+        <item name="android:background">@drawable/light_blue_button_background</item>
+        <item name="android:textColor">@color/black</item>
+    </style>
+
+    <style name="DarkUMaineBlueCircularButton" parent="Widget.AppCompat.Button">
+        <item name="android:background">@drawable/dark_blue_circle_button_background</item>
+        <item name="android:textColor">@color/white</item>
+    </style>
+
+    <style name="LightUMaineBlueCircularButton" parent="Widget.AppCompat.Button">
+        <item name="android:background">@drawable/light_blue_circle_button_background</item>
+        <item name="android:textColor">@color/black</item>
+    </style>
+
+    <style name="DarkUMaineBlueTextEntryBox" parent="Widget.AppCompat.EditText">
+        <item name="android:background">@drawable/dark_blue_text_entry_box</item>
+        <item name="android:textColor">@color/black</item>
+    </style>
+
+    <style name="LightUMaineBlueTextEntryBox" parent="Widget.AppCompat.EditText">
+        <item name="android:background">@drawable/light_blue_text_entry_box</item>
+        <item name="android:textColor">@color/black</item>
+    </style>
+
+    <style name="LightLoadingProgressSpinner" parent="Widget.AppCompat.ProgressBar">
+        <item name="android:indeterminateTint">@color/lightUMaineBlue</item>
+    </style>
+
+    <style name="DarkLoadingProgressSpinner" parent="Widget.AppCompat.ProgressBar">
+        <item name="android:indeterminateTint">@color/darkUMaineBlue</item>
+    </style>
+
+    <style name="ExperimentalPageTitleText" parent="Widget.AppCompat.TextView">
+        <item name="android:textColor">?attr/experimentalPageTitleTextColor</item>
+        <item name="android:textSize">25sp</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:fontFamily">sans-serif</item>"
+    </style>
+
+    <style name="ExperimentalPageHeadingText" parent="Widget.AppCompat.TextView">
+        <item name="android:textColor">?attr/experimentalPageHeaderTextColor</item>
+        <item name="android:textSize">20sp</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:fontFamily">sans-serif</item>"
+    </style>
+
+    <style name="ExperimentalPageLabelText" parent="Widget.AppCompat.TextView">
+        <item name="android:textColor">?attr/experimentalPageLabelTextColor</item>
+        <item name="android:textSize">15sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:fontFamily">sans-serif</item>"
+    </style>
+
+    <style name="ExperimentalPageNormalText" parent="Widget.AppCompat.TextView">
+        <item name="android:textColor">?attr/experimentalPageNormalTextColor</item>
+        <item name="android:textSize">15sp</item>
+        <item name="android:textStyle">normal</item>
+        <item name="android:fontFamily">sans-serif</item>"
+    </style>
+
+    <style name="ExperimentalPageTableText" parent="Widget.AppCompat.TextView">
+        <item name="android:textColor">?attr/experimentalPageNormalTextColor</item>
+        <item name="android:background">@drawable/text_outline</item>
+        <item name="android:textSize">15sp</item>
+        <item name="android:textStyle">normal</item>
+        <item name="android:fontFamily">sans-serif</item>"
+    </style>
+
+    <style name="DarkUMaineBlueDropdownSpinner" parent="Widget.AppCompat.Spinner">>
+        <item name="android:background">@drawable/dark_blue_dropdown_spinner</item>
+        <item name="android:dropDownVerticalOffset">48dp</item>
+        <item name="android:popupBackground">@color/offWhite</item>
+    </style>
+
+    <style name="LightUMaineBlueDropdownSpinner" parent="Widget.AppCompat.Spinner">>
+        <item name="android:background">@drawable/light_blue_dropdown_spinner</item>
+        <item name="android:dropDownVerticalOffset">48dp</item>
+        <item name="android:popupBackground">@color/offBlack</item>
+    </style>
+
+    <style name="DropdownSpinnerTriggerTextStyle" parent="TextAppearance.AppCompat.Small">
+        <item name="android:textColor">?attr/defaultDropdownSpinnerTextAppearance</item> <!-- Example: Green text color -->
+        <item name="android:textSize">14sp</item>
+        <item name="android:textStyle">normal</item>
+        <item name="android:fontFamily">sans-serif</item>
+    </style>
+
+</resources>

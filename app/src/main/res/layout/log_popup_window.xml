@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/log_popup_window"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_marginTop="?attr/actionBarSize"
+    android:layout_marginStart="10dp"
+    android:layout_marginEnd="10dp"
+    android:layout_marginBottom="100dp"
+    android:background="?attr/popupWindowStyle">
+
+    <TextView
+        android:id="@+id/log_popup_window_LogTitle"
+        style="@style/ExperimentalPageTitleText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="10dp"
+        android:layout_marginStart="25dp"
+        android:text="Log Entries"/>
+
+    <TextView
+        android:id="@+id/log_popup_window_LogContents"
+        style="@style/ExperimentalPageNormalText"
+        android:background="?attr/experimentalPageBackgroundColor"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@+id/log_popup_window_LogTitle"
+        android:gravity="bottom"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="30dp"
+        android:layout_marginStart="25dp"
+        android:text="Start of Log"/>
+
+</RelativeLayout>

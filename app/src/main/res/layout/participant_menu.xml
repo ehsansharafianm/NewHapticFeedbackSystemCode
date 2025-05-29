@@ -1,0 +1,47 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/participant_menu"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="?attr/menuPageBackgroundColor">
+
+    <ImageView
+        android:id="@+id/participant_menu_UMaineLogo"
+        android:layout_width="wrap_content"
+        android:layout_height="180dp"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="30dp"
+        android:src="@drawable/umaine_logo"/>
+
+    <View
+        android:id="@+id/participant_menu_CenterMark"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_centerHorizontal="true"
+        android:layout_alignParentTop="true"/>
+
+    <TextView
+        android:id="@+id/participant_menu_PageTitle"
+        style="?attr/colorOnSecondary"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@+id/participant_menu_UMaineLogo"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="20dp"
+        android:text="Participant Menu"
+        android:textSize="40sp"/>
+
+    <Button
+        android:id="@+id/participant_menu_GoBack"
+        style="?attr/defaultButtonStyle"
+        android:layout_width="180dp"
+        android:layout_height="50dp"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="40dp"
+        android:text="Go Back"
+        android:textSize="20sp"/>
+
+</RelativeLayout>

@@ -1,0 +1,491 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/imu_recording_page"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="?attr/experimentalPageBackgroundColor">
+
+    <TextView
+        android:id="@+id/imu_recording_page_PageTitle"
+        style="@style/ExperimentalPageTitleText"
+        android:layout_width="200dp"
+        android:layout_height="45dp"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="?attr/actionBarSize"
+        android:layout_marginBottom="10dp"
+        android:text="Record IMU Data"/>
+
+    <Button
+        android:id="@+id/imu_recording_page_GoBackButton"
+        style="?attr/defaultButtonStyle"
+        android:layout_width="80dp"
+        android:layout_height="45dp"
+        android:layout_alignTop="@+id/imu_recording_page_PageTitle"
+        android:layout_toStartOf="@+id/imu_recording_page_PageTitle"
+        android:layout_marginEnd="10dp"
+        android:text="@string/GoBackButton"/>
+
+    <View
+        android:id="@+id/imu_recording_page_HorizontalLine1"
+        android:background="?attr/experimentalPageHeaderTextColor"
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:layout_below="@id/imu_recording_page_PageTitle"
+        android:layout_centerHorizontal="true"/>
+
+    <View
+        android:id="@+id/imu_recording_page_CenterSpace"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_centerHorizontal="true" />
+
+    <TextView
+        android:id="@+id/imu_recording_page_IMUSelectionTitle"
+        style="@style/ExperimentalPageHeadingText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/imu_recording_page_HorizontalLine1"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="10dp"
+        android:text="Select IMUs"/>
+
+    <Spinner
+        android:id="@+id/imu_recording_page_IMU1Spinner"
+        style="?attr/defaultDropdownSpinner"
+        android:layout_width="120dp"
+        android:layout_height="50dp"
+        android:layout_below="@+id/imu_recording_page_IMUSelectionTitle"
+        android:layout_toStartOf="@id/imu_recording_page_CenterSpace"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="10dp"/>
+
+    <TextView
+        android:id="@+id/imu_recording_page_IMU1SpinnerLabel"
+        style="@style/ExperimentalPageLabelText"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_alignTop="@+id/imu_recording_page_IMU1Spinner"
+        android:layout_toStartOf="@+id/imu_recording_page_IMU1Spinner"
+        android:layout_marginEnd="10dp"
+        android:gravity="center"
+        android:text="IMU1:"/>
+
+    <TextView
+        android:id="@+id/imu_recording_page_IMU2SpinnerLabel"
+        style="@style/ExperimentalPageLabelText"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_below="@+id/imu_recording_page_IMUSelectionTitle"
+        android:layout_toEndOf="@id/imu_recording_page_CenterSpace"
+        android:layout_marginTop="10dp"
+        android:layout_marginStart="10dp"
+        android:gravity="center"
+        android:text="IMU2:"/>
+
+    <Spinner
+        android:id="@+id/imu_recording_page_IMU2Spinner"
+        style="?attr/defaultDropdownSpinner"
+        android:layout_width="120dp"
+        android:layout_height="50dp"
+        android:layout_alignTop="@+id/imu_recording_page_IMU2SpinnerLabel"
+        android:layout_toEndOf="@+id/imu_recording_page_IMU2SpinnerLabel"
+        android:layout_marginStart="10dp"/>
+
+    <Spinner
+        android:id="@+id/imu_recording_page_IMU3Spinner"
+        style="?attr/defaultDropdownSpinner"
+        android:layout_width="120dp"
+        android:layout_height="50dp"
+        android:layout_below="@+id/imu_recording_page_IMU1Spinner"
+        android:layout_toStartOf="@id/imu_recording_page_CenterSpace"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="10dp"/>
+
+    <TextView
+        android:id="@+id/imu_recording_page_IMU3SpinnerLabel"
+        style="@style/ExperimentalPageLabelText"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_alignTop="@+id/imu_recording_page_IMU3Spinner"
+        android:layout_toStartOf="@+id/imu_recording_page_IMU3Spinner"
+        android:layout_marginEnd="10dp"
+        android:gravity="center"
+        android:text="IMU3:"/>
+
+    <TextView
+        android:id="@+id/imu_recording_page_IMU4SpinnerLabel"
+        style="@style/ExperimentalPageLabelText"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_below="@+id/imu_recording_page_IMU2SpinnerLabel"
+        android:layout_toEndOf="@id/imu_recording_page_CenterSpace"
+        android:layout_marginTop="10dp"
+        android:layout_marginStart="10dp"
+        android:gravity="center"
+        android:text="IMU4:"/>
+
+    <Spinner
+        android:id="@+id/imu_recording_page_IMU4Spinner"
+        style="?attr/defaultDropdownSpinner"
+        android:layout_width="120dp"
+        android:layout_height="50dp"
+        android:layout_alignTop="@+id/imu_recording_page_IMU4SpinnerLabel"
+        android:layout_toEndOf="@+id/imu_recording_page_IMU4SpinnerLabel"
+        android:layout_marginStart="10dp"/>
+
+    <View
+        android:id="@+id/imu_recording_page_HorizontalLine2"
+        android:background="?attr/experimentalPageHeaderTextColor"
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:layout_below="@id/imu_recording_page_IMU4SpinnerLabel"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="10dp"/>
+
+    <TextView
+        android:id="@+id/imu_recording_page_ConnectionStatusTitle"
+        style="@style/ExperimentalPageHeadingText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/imu_recording_page_HorizontalLine2"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="10dp"
+        android:text="Connection Status"/>
+
+    <Button
+        android:id="@+id/imu_recording_page_StartScanButton"
+        style="?attr/defaultButtonStyle"
+        android:layout_width="150dp"
+        android:layout_height="45dp"
+        android:layout_below="@+id/imu_recording_page_ConnectionStatusTitle"
+        android:layout_toStartOf="@id/imu_recording_page_CenterSpace"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginBottom="10dp"
+        android:text="Start Scan"/>
+
+    <Button
+        android:id="@+id/imu_recording_page_StartSyncButton"
+        style="?attr/defaultButtonStyle"
+        android:layout_width="150dp"
+        android:layout_height="45dp"
+        android:layout_below="@+id/imu_recording_page_ConnectionStatusTitle"
+        android:layout_toEndOf="@id/imu_recording_page_CenterSpace"
+        android:layout_marginTop="10dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginBottom="10dp"
+        android:text="Start Sync"/>
+
+    <TextView
+        android:id="@+id/imu_recording_page_IMU1StatusTitle"
+        style="@style/ExperimentalPageLabelText"
+        android:layout_width="60sp"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/imu_recording_page_StartScanButton"
+        android:layout_toStartOf="@+id/imu_recording_page_IMU1StatusView"
+        android:text="IMU1:"
+        android:gravity="center"/>
+
+    <TextView
+        android:id="@+id/imu_recording_page_IMU1StatusView"
+        style="@style/ExperimentalPageNormalText"
+        android:layout_width="120sp"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/imu_recording_page_StartScanButton"
+        android:layout_toStartOf="@id/imu_recording_page_CenterSpace"
+        android:text="Disconnected"
+        android:gravity="center"/>
+
+    <TextView
+        android:id="@+id/imu_recording_page_IMU2StatusTitle"
+        style="@style/ExperimentalPageLabelText"
+        android:layout_width="60sp"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/imu_recording_page_StartSyncButton"
+        android:layout_toEndOf="@+id/imu_recording_page_CenterSpace"
+        android:text="IMU2:"
+        android:gravity="center"/>
+
+    <TextView
+        android:id="@+id/imu_recording_page_IMU2StatusView"
+        style="@style/ExperimentalPageNormalText"
+        android:layout_width="120sp"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/imu_recording_page_StartSyncButton"
+        android:layout_toEndOf="@id/imu_recording_page_IMU2StatusTitle"
+        android:text="Disconnected"
+        android:gravity="center"/>
+
+    <TextView
+        android:id="@+id/imu_recording_page_IMU3StatusTitle"
+        style="@style/ExperimentalPageLabelText"
+        android:layout_width="60sp"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/imu_recording_page_IMU1StatusTitle"
+        android:layout_toStartOf="@+id/imu_recording_page_IMU1StatusView"
+        android:text="IMU3:"
+        android:gravity="center"/>
+
+    <TextView
+        android:id="@+id/imu_recording_page_IMU3StatusView"
+        style="@style/ExperimentalPageNormalText"
+        android:layout_width="120sp"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/imu_recording_page_IMU1StatusView"
+        android:layout_toStartOf="@id/imu_recording_page_CenterSpace"
+        android:text="Disconnected"
+        android:gravity="center"/>
+
+    <TextView
+        android:id="@+id/imu_recording_page_IMU4StatusTitle"
+        style="@style/ExperimentalPageLabelText"
+        android:layout_width="60sp"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/imu_recording_page_IMU2StatusTitle"
+        android:layout_toEndOf="@+id/imu_recording_page_CenterSpace"
+        android:text="IMU4:"
+        android:gravity="center"/>
+
+    <TextView
+        android:id="@+id/imu_recording_page_IMU4StatusView"
+        style="@style/ExperimentalPageNormalText"
+        android:layout_width="120sp"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/imu_recording_page_IMU2StatusView"
+        android:layout_toEndOf="@id/imu_recording_page_IMU2StatusTitle"
+        android:text="Disconnected"
+        android:gravity="center"/>
+
+    <Button
+        android:id="@+id/imu_recording_page_ShowIMUsBatteryButton"
+        style="?attr/defaultButtonStyle"
+        android:layout_width="150dp"
+        android:layout_height="45dp"
+        android:layout_below="@+id/imu_recording_page_IMU3StatusTitle"
+        android:layout_toStartOf="@id/imu_recording_page_CenterSpace"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginBottom="10dp"
+        android:text="Show Battery %"/>
+
+    <Button
+        android:id="@+id/imu_recording_page_DisconnectIMUsButton"
+        style="?attr/defaultButtonStyle"
+        android:layout_width="150dp"
+        android:layout_height="45dp"
+        android:layout_below="@+id/imu_recording_page_IMU3StatusTitle"
+        android:layout_toEndOf="@id/imu_recording_page_CenterSpace"
+        android:layout_marginTop="10dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginBottom="10dp"
+        android:text="Disconnect IMUs"/>
+
+    <View
+        android:id="@+id/imu_recording_page_HorizontalLine3"
+        android:background="?attr/experimentalPageHeaderTextColor"
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:layout_below="@id/imu_recording_page_DisconnectIMUsButton"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="10dp"/>
+
+    <TextView
+        android:id="@+id/imu_recording_page_TrialTitle"
+        style="@style/ExperimentalPageHeadingText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/imu_recording_page_HorizontalLine3"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="10dp"
+        android:text="Trial Start/Stop"/>
+
+    <TextView
+        android:id="@+id/imu_recording_page_TrialNameLabel"
+        style="@style/ExperimentalPageLabelText"
+        android:layout_width="60sp"
+        android:layout_height="50sp"
+        android:layout_below="@id/imu_recording_page_TrialTitle"
+        android:layout_toStartOf="@+id/imu_recording_page_IMU1StatusView"
+        android:layout_marginTop="10dp"
+        android:text="Trial\nName:"
+        android:gravity="center_vertical"/>
+
+    <EditText
+        android:id="@+id/imu_recording_page_TrialNameEntryBox"
+        style="?attr/textEntryBoxStyle"
+        android:layout_width="300dp"
+        android:layout_height="50dp"
+        android:layout_toEndOf="@id/imu_recording_page_TrialNameLabel"
+        android:layout_below="@+id/imu_recording_page_TrialTitle"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="5dp"
+        android:layout_marginEnd="20dp"
+        android:textAlignment="center"
+        android:inputType="text"/>
+
+    <Button
+        android:id="@+id/imu_recording_page_StartInitializationButton"
+        style="?attr/defaultButtonStyle"
+        android:layout_width="150dp"
+        android:layout_height="45dp"
+        android:layout_below="@+id/imu_recording_page_TrialNameEntryBox"
+        android:layout_toStartOf="@id/imu_recording_page_CenterSpace"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginBottom="10dp"
+        android:text="Start\nInitialization"/>
+
+    <Button
+        android:id="@+id/imu_recording_page_StartTrialButton"
+        style="?attr/defaultButtonStyle"
+        android:layout_width="150dp"
+        android:layout_height="45dp"
+        android:layout_below="@+id/imu_recording_page_TrialNameEntryBox"
+        android:layout_toEndOf="@id/imu_recording_page_CenterSpace"
+        android:layout_marginTop="10dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginBottom="10dp"
+        android:text="Start\nTrial"/>
+
+    <View
+        android:id="@+id/imu_recording_page_HorizontalLine4"
+        android:background="?attr/experimentalPageHeaderTextColor"
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:layout_below="@id/imu_recording_page_StartInitializationButton"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="10dp"/>
+
+    <TextView
+        android:id="@+id/imu_recording_page_DataOutputTitle"
+        style="@style/ExperimentalPageHeadingText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/imu_recording_page_HorizontalLine4"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="10dp"
+        android:text="Data Output"/>
+
+    <TextView
+        android:id="@+id/imu_recording_page_IMU1DataOutputTitle"
+        style="@style/ExperimentalPageLabelText"
+        android:layout_width="60sp"
+        android:layout_height="30sp"
+        android:layout_below="@id/imu_recording_page_DataOutputTitle"
+        android:layout_toStartOf="@+id/imu_recording_page_IMU1DataOutputView"
+        android:layout_marginTop="10dp"
+        android:text="IMU1:"
+        android:gravity="center"/>
+
+    <TextView
+        android:id="@+id/imu_recording_page_IMU1DataOutputView"
+        style="@style/ExperimentalPageTableText"
+        android:layout_width="120sp"
+        android:layout_height="30sp"
+        android:layout_below="@id/imu_recording_page_DataOutputTitle"
+        android:layout_toStartOf="@id/imu_recording_page_CenterSpace"
+        android:layout_marginTop="10dp"
+        android:text="No Data"
+        android:gravity="center"/>
+
+    <TextView
+        android:id="@+id/imu_recording_page_IMU2DataOutputTitle"
+        style="@style/ExperimentalPageLabelText"
+        android:layout_width="60sp"
+        android:layout_height="30sp"
+        android:layout_below="@id/imu_recording_page_DataOutputTitle"
+        android:layout_toEndOf="@+id/imu_recording_page_CenterSpace"
+        android:layout_marginTop="10dp"
+        android:text="IMU2:"
+        android:gravity="center"/>
+
+    <TextView
+        android:id="@+id/imu_recording_page_IMU2DataOutputView"
+        style="@style/ExperimentalPageTableText"
+        android:layout_width="120sp"
+        android:layout_height="30sp"
+        android:layout_below="@id/imu_recording_page_DataOutputTitle"
+        android:layout_toEndOf="@id/imu_recording_page_IMU2DataOutputTitle"
+        android:layout_marginTop="10dp"
+        android:text="No Data"
+        android:gravity="center"/>
+
+    <TextView
+        android:id="@+id/imu_recording_page_IMU3DataOutputTitle"
+        style="@style/ExperimentalPageLabelText"
+        android:layout_width="60sp"
+        android:layout_height="30sp"
+        android:layout_below="@id/imu_recording_page_IMU1DataOutputTitle"
+        android:layout_toStartOf="@+id/imu_recording_page_IMU1DataOutputView"
+        android:layout_marginTop="10dp"
+        android:text="IMU3:"
+        android:gravity="center"/>
+
+    <TextView
+        android:id="@+id/imu_recording_page_IMU3DataOutputView"
+        style="@style/ExperimentalPageTableText"
+        android:layout_width="120sp"
+        android:layout_height="30sp"
+        android:layout_below="@id/imu_recording_page_IMU1DataOutputView"
+        android:layout_toStartOf="@id/imu_recording_page_CenterSpace"
+        android:layout_marginTop="10dp"
+        android:text="No Data"
+        android:gravity="center"/>
+
+    <TextView
+        android:id="@+id/imu_recording_page_IMU4DataOutputTitle"
+        style="@style/ExperimentalPageLabelText"
+        android:layout_width="60sp"
+        android:layout_height="30sp"
+        android:layout_below="@id/imu_recording_page_IMU2DataOutputTitle"
+        android:layout_toEndOf="@+id/imu_recording_page_CenterSpace"
+        android:layout_marginTop="10dp"
+        android:text="IMU4:"
+        android:gravity="center"/>
+
+    <TextView
+        android:id="@+id/imu_recording_page_IMU4DataOutputView"
+        style="@style/ExperimentalPageTableText"
+        android:layout_width="120sp"
+        android:layout_height="30sp"
+        android:layout_below="@id/imu_recording_page_IMU2DataOutputView"
+        android:layout_toEndOf="@id/imu_recording_page_IMU2DataOutputTitle"
+        android:layout_marginTop="10dp"
+        android:text="No Data"
+        android:gravity="center"/>
+
+
+    <Button
+        android:id="@+id/imu_recording_page_ShowLogButton"
+        style="?attr/defaultButtonStyle"
+        android:layout_width="150dp"
+        android:layout_height="45dp"
+        android:layout_alignParentBottom="true"
+        android:layout_toStartOf="@id/imu_recording_page_CenterSpace"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginBottom="25dp"
+        android:text="Show Log"/>
+
+    <Button
+        android:id="@+id/imu_recording_page_UploadDataToCloudButton"
+        style="?attr/defaultButtonStyle"
+        android:layout_width="150dp"
+        android:layout_height="45dp"
+        android:layout_alignParentBottom="true"
+        android:layout_toEndOf="@id/imu_recording_page_CenterSpace"
+        android:layout_marginTop="10dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginBottom="25dp"
+        android:text="Uploade Data\nTo Cloud"/>
+
+    <View
+        android:id="@+id/imu_recording_page_HorizontalLine5"
+        android:background="?attr/experimentalPageHeaderTextColor"
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:layout_above="@id/imu_recording_page_ShowLogButton"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="10dp"/>
+
+</RelativeLayout>

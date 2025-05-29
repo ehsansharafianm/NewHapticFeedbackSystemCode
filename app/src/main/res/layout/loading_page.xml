@@ -1,0 +1,48 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/loading_page"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="?attr/menuPageBackgroundColor">
+
+    <ProgressBar
+        android:id="@+id/loading_page_ProgressSpinner"
+        style="?attr/loadingProgressSpinnerStyle"
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        android:layout_centerInParent="true"/>
+
+    <TextView
+        android:id="@+id/loading_page_LoadingText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:text="Loading..."
+        android:textSize="24sp"/>
+
+    <TextView
+        android:id="@+id/loading_page_LoadingInstructions"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_above="@+id/loading_page_ProgressSpinner"
+        android:layout_marginStart="30dp"
+        android:layout_marginEnd="30dp"
+        android:text="Turn On Haptic Control Module (If Previously Turned On, Turn Off Then Back On)"
+        android:gravity="center"
+        android:textSize="32sp"/>
+
+    <Button
+        android:id="@+id/loading_page_CancelButton"
+        style="?attr/defaultButtonStyle"
+        android:layout_width="180dp"
+        android:layout_height="50dp"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="40dp"
+        android:text="@string/CancelButtonText"
+        android:textSize="20sp"/>
+
+
+</RelativeLayout>

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+
+    <include layout="@layout/start_page"/>
+    <include layout="@layout/experimenter_menu"/>
+    <include layout="@layout/participant_menu"/>
+    <include layout="@layout/test_haptic_cells_page"/>
+    <include layout="@layout/loading_page"/>
+    <include layout="@layout/imu_recording_page"/>
+    <include layout="@layout/log_popup_window"/>
+    <include layout="@layout/thigh_extension_study_trial_page"/>"/>
+
+</FrameLayout>

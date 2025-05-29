@@ -1,0 +1,43 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <!-- Base application theme. -->
+    <style name="Theme.BiomechanicsLabApp" parent="Theme.AppCompat.DayNight.NoActionBar">
+        <!-- Primary brand color. -->
+        <item name="colorPrimary">@color/lightUMaineBlue</item>
+        <item name="colorPrimaryVariant">@color/lightUMaineBlueShadow</item>
+        <item name="colorOnPrimary">@color/black</item>
+        <!-- Secondary brand color. -->
+        <item name="colorSecondary">@color/darkUMaineBlue</item>
+        <item name="colorSecondaryVariant">@color/darkUMaineBlueShadow</item>
+        <item name="colorOnSecondary">@color/white</item>
+        <!-- Status bar color. -->
+        <item name="android:statusBarColor">?attr/colorPrimaryVariant</item>
+        <!-- Customize your theme here. -->
+
+        <!-- Background/Text Colors -->
+        <item name="menuPageBackgroundColor"> @color/darkUMaineBlue</item>
+        <item name="menuPageTitleTextColor"> @color/white</item>
+        <item name="experimentalPageBackgroundColor"> @color/black</item>
+        <item name="experimentalPageTitleTextColor"> @color/white</item>
+        <item name="experimentalPageHeaderTextColor"> @color/white</item>
+        <item name="experimentalPageLabelTextColor"> @color/white</item>
+        <item name="experimentalPageNormalTextColor"> @color/white</item>
+
+        <!-- Default Button Styles -->
+        <item name="defaultButtonStyle">@style/LightUMaineBlueButton</item>
+        <item name="defaultCircularButtonStyle">@style/LightUMaineBlueCircularButton</item>
+
+        <!-- Dropdown Spinner Styles -->
+        <item name="defaultDropdownSpinner">@style/LightUMaineBlueDropdownSpinner</item>
+        <item name="defaultDropdownSpinnerTextAppearance">@color/black</item>
+
+        <!-- Default Loading Progress Spinner Styles -->
+        <item name="loadingProgressSpinnerStyle">@style/LightLoadingProgressSpinner</item>
+
+        <!-- Default Text Entry Box Styles -->
+        <item name="textEntryBoxStyle">@style/LightUMaineBlueTextEntryBox</item>
+
+        <!-- Default Pop Up Window Styles -->
+        <item name="popupWindowStyle">@drawable/dark_log_popup_box</item>
+
+    </style>
+</resources>
