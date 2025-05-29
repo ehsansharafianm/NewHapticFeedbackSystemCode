@@ -12,6 +12,6 @@
     <include layout="@layout/loading_page"/>
     <include layout="@layout/imu_recording_page"/>
     <include layout="@layout/log_popup_window"/>
-    <include layout="@layout/thigh_extension_study_trial_page"/>"/>
+    <include layout="@layout/thigh_extension_study_trial_page"/>
 
 </FrameLayout>
