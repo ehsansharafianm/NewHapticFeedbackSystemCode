@@ -989,36 +989,6 @@
                 android:layout_alignStart="@+id/original_thigh_extension_study_trial_page_RightThighTitle"
                 android:text="@string/NoDataPlaceholder"
                 android:textAlignment="center"/>
-
-            <TextView
-                android:id="@+id/original_thigh_extension_study_trial_page_TargetCadenceTitle"
-                style="@style/ExperimentalPageNormalText"
-                android:layout_width="120dp"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/original_thigh_extension_study_trial_page_TargetAngleTitle"
-                android:layout_toStartOf="@+id/original_thigh_extension_study_trial_page_LeftThighTitle"
-                android:layout_marginTop="2dp"
-                android:text="@string/TargetCadenceLabel"/>
-
-            <TextView
-                android:id="@+id/original_thigh_extension_study_trial_page_LeftThighTargetCadence"
-                style="@style/ExperimentalPageNormalText"
-                android:layout_width="120dp"
-                android:layout_height="wrap_content"
-                android:layout_alignBottom="@+id/original_thigh_extension_study_trial_page_TargetCadenceTitle"
-                android:layout_alignStart="@+id/original_thigh_extension_study_trial_page_LeftThighTitle"
-                android:text="@string/NoDataPlaceholder"
-                android:textAlignment="center"/>
-
-            <TextView
-                android:id="@+id/original_thigh_extension_study_trial_page_RightThighTargetCadence"
-                style="@style/ExperimentalPageNormalText"
-                android:layout_width="120dp"
-                android:layout_height="wrap_content"
-                android:layout_alignBottom="@+id/original_thigh_extension_study_trial_page_TargetCadenceTitle"
-                android:layout_alignStart="@+id/original_thigh_extension_study_trial_page_RightThighTitle"
-                android:text="@string/NoDataPlaceholder"
-                android:textAlignment="center"/>
             
         </RelativeLayout>
         

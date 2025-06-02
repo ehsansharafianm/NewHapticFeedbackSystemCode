@@ -78,6 +78,8 @@ public class OriginalThighExtensionStudyUI extends UserInterfaceWithRecordingIMU
         updateButtonEnabledStatus(disconnectButton, false);
         updateButtonEnabledStatus(startInitializationButton, false);
         updateButtonEnabledStatus(startTrialButton, false);
+        updateButtonEnabledStatus(exportRecordedDataButton, false);
+        updateButtonEnabledStatus(uploadDataToCloudButton, false);
 
         //Declare UI EditText
         EditText subjectNumberEditText = activity.findViewById(R.id.original_thigh_extension_study_trial_page_SubjectNumberEntryBox);
@@ -552,6 +554,8 @@ public class OriginalThighExtensionStudyUI extends UserInterfaceWithRecordingIMU
                 updateButtonEnabledStatus(disconnectButton, true);
                 updateButtonEnabledStatus(startInitializationButton, true);
                 updateButtonEnabledStatus(goBackButton, true);
+                updateButtonEnabledStatus(exportRecordedDataButton, true);
+                updateButtonEnabledStatus(uploadDataToCloudButton, true);
 
             }
             else{
@@ -572,6 +576,8 @@ public class OriginalThighExtensionStudyUI extends UserInterfaceWithRecordingIMU
                     updateButtonEnabledStatus(disconnectButton, false);
                     updateButtonEnabledStatus(startInitializationButton, false);
                     updateButtonEnabledStatus(goBackButton, false);
+                    updateButtonEnabledStatus(exportRecordedDataButton, false);
+                    updateButtonEnabledStatus(uploadDataToCloudButton, false);
                 }
                 else{
                     errorMessagePopUp("ERROR: IMUs not Initialized");
@@ -809,21 +815,6 @@ public class OriginalThighExtensionStudyUI extends UserInterfaceWithRecordingIMU
                     Log.e(TAG + "updateGaitParameterOutput", "ERROR: Invalid IMU Name for Target Angle Update");
                 }
                 break;
-            case "TargetCadence":
-                //If nameOfIMU is Left Foot, update the Left Target Cadence
-                if(nameOfIMU.equals("Left Foot IMU")) {
-                    TextView LeftFootTargetCadence = activity.findViewById(R.id.original_thigh_extension_study_trial_page_LeftThighTargetCadence);
-                    LeftFootTargetCadence.setText(data);
-                }
-                //If nameOfIMU is Right Foot, update the Right Target Cadence
-                else if(nameOfIMU.equals("Right Foot IMU")){
-                    TextView RightFootTargetCadence = activity.findViewById(R.id.original_thigh_extension_study_trial_page_RightThighTargetCadence);
-                    RightFootTargetCadence.setText(data);
-                }
-                //If nameOFIMU is anything else, log as an error
-                else{
-                    Log.e(TAG + "updateGaitParameterOutput", "ERROR: Invalid IMU Name for Target Cadence Update");
-                }
         }
 
     }

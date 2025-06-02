@@ -78,6 +78,8 @@ public class OptimizedThighExtensionStudyUI extends UserInterfaceWithRecordingIM
         updateButtonEnabledStatus(disconnectButton, false);
         updateButtonEnabledStatus(startInitializationButton, false);
         updateButtonEnabledStatus(startTrialButton, false);
+        updateButtonEnabledStatus(exportRecordedDataButton, false);
+        updateButtonEnabledStatus(uploadDataToCloudButton, false);
 
         //Declare UI EditText
         EditText subjectNumberEditText = activity.findViewById(R.id.optimized_thigh_extension_study_trial_page_SubjectNumberEntryBox);
@@ -552,6 +554,8 @@ public class OptimizedThighExtensionStudyUI extends UserInterfaceWithRecordingIM
                 updateButtonEnabledStatus(disconnectButton, true);
                 updateButtonEnabledStatus(startInitializationButton, true);
                 updateButtonEnabledStatus(goBackButton, true);
+                updateButtonEnabledStatus(exportRecordedDataButton, true);
+                updateButtonEnabledStatus(uploadDataToCloudButton, true);
 
             }
             else{
@@ -572,6 +576,8 @@ public class OptimizedThighExtensionStudyUI extends UserInterfaceWithRecordingIM
                     updateButtonEnabledStatus(disconnectButton, false);
                     updateButtonEnabledStatus(startInitializationButton, false);
                     updateButtonEnabledStatus(goBackButton, false);
+                    updateButtonEnabledStatus(exportRecordedDataButton, false);
+                    updateButtonEnabledStatus(uploadDataToCloudButton, false);
                 }
                 else{
                     errorMessagePopUp("ERROR: IMUs not Initialized");

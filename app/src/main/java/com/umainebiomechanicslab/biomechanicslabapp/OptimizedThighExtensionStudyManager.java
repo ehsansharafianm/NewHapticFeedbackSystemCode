@@ -91,24 +91,12 @@ public class OptimizedThighExtensionStudyManager extends IMUManagerWithRecording
         // Example: trialDurations.put("Trial Name", durationInMinutes);
         trialDurations = new HashMap<>();
         trialDurations.put("Testing", 0);
-        trialDurations.put("Optimization Baseline", 2);
-        trialDurations.put("Optimization Familiarization", 1);
-        trialDurations.put("Optimization Feedback", 8);
-        trialDurations.put("Optimization Feedback with Cognitive Task", 2);
         trialDurations.put("Baseline Normal", 2);
         trialDurations.put("Baseline with Cognitive Task", 2);
         trialDurations.put("Fast", 2);
-        trialDurations.put("PF Familiarization", 1);
-        trialDurations.put("EF Familiarization", 1);
-        trialDurations.put("Verbal Feedback", 1);
-        trialDurations.put("Positive Feedback", 6);
-        trialDurations.put("Error Feedback", 6);
-        trialDurations.put("Verbal Feedback with Cognitive Task", 2);
-        trialDurations.put("Positive Feedback with Cognitive Task", 2);
-        trialDurations.put("Error Feedback with Cognitive Task", 2);
-        trialDurations.put("Retention", 2);
-        trialDurations.put("Retention with Cognitive Task", 2);
-
+        trialDurations.put("Optimization Familiarization", 1);
+        trialDurations.put("Optimization Feedback", 8);
+        trialDurations.put("Optimization Feedback with Cognitive Task", 2);
     }
 
     @Override
@@ -182,8 +170,6 @@ public class OptimizedThighExtensionStudyManager extends IMUManagerWithRecording
          * */
         switch(trialName) {
             case "Testing":
-            case "PF Familiarization":
-            case "EF Familiarization":
             case "Optimization Familiarization":
 
                 leftThighIMU.startTrial(trialName, currentTimeStamp, null, trialDurationMin, false);
@@ -193,16 +179,9 @@ public class OptimizedThighExtensionStudyManager extends IMUManagerWithRecording
                 break;
 
             case "Baseline Normal":
-            case "Optimization Baseline":
             case "Baseline with Cognitive Task":
             case "Fast":
-            case "Verbal Feedback":
-            case "Verbal Feedback with Cognitive Task":
-            case "Positive Feedback with Cognitive Task":
-            case "Error Feedback with Cognitive Task":
             case "Optimization Feedback with Cognitive Task":
-            case "Retention":
-            case "Retention with Cognitive Task":
 
                 //Create a new Trial Object to store data and add it to the trialArrayList
                 trialArrayList.add(new OptimizedThighExtensionStudyTrial(trialName, currentTimeStamp));
@@ -219,9 +198,11 @@ public class OptimizedThighExtensionStudyManager extends IMUManagerWithRecording
             case "Optimization Feedback":
 
                 //Ensure the arrays that store the last 20 steps of data are reset before starting the trial
-                //targetManager.resetLast20StepsArrays("Left");
-                //targetManager.resetLast20StepsArrays("Right");
-                //targetManager.resetTarget();
+                targetManager.resetLast20StepsArray("Left Thigh");
+                targetManager.resetLast20StepsArray("Right Thigh");
+                targetManager.resetLast20StepsArray("Left Foot");
+                targetManager.resetLast20StepsArray("Right Foot");
+                targetManager.resetTarget();
 
                 //Create a new Trial Object to store data and add it to the trialArrayList
                 trialArrayList.add(new OptimizedThighExtensionStudyTrial(trialName, currentTimeStamp));
@@ -235,24 +216,6 @@ public class OptimizedThighExtensionStudyManager extends IMUManagerWithRecording
                 rightArmIMU.startTrial(trialName, currentTimeStamp, trialArrayList.get(trialArrayList.size()-1), trialDurationMin, true);
                 break;
 
-            case "Positive Feedback":
-            case "Error Feedback":
-
-                //Ensure the arrays that store the last 20 steps of data are reset before starting the trial
-                //oldTargetManager.resetLast40StepsArray();
-                //oldTargetManager.resetTarget();
-
-                //Create a new Trial Object to store data and add it to the trialArrayList
-                trialArrayList.add(new OptimizedThighExtensionStudyTrial(trialName, currentTimeStamp));
-
-                //Call each IMUs startTrial function to start streaming/recording for each IMU
-                leftThighIMU.startTrial(trialName, currentTimeStamp, trialArrayList.get(trialArrayList.size()-1), trialDurationMin, true);
-                rightThighIMU.startTrial(trialName, currentTimeStamp, trialArrayList.get(trialArrayList.size()-1),  trialDurationMin, true);
-                leftFootIMU.startTrial(trialName, currentTimeStamp, trialArrayList.get(trialArrayList.size()-1), trialDurationMin, true);
-                rightFootIMU.startTrial(trialName, currentTimeStamp, trialArrayList.get(trialArrayList.size()-1), trialDurationMin, true);
-                leftArmIMU.startTrial(trialName, currentTimeStamp, trialArrayList.get(trialArrayList.size()-1), trialDurationMin, true);
-                rightArmIMU.startTrial(trialName, currentTimeStamp, trialArrayList.get(trialArrayList.size()-1), trialDurationMin, true);
-                break;
         }
 
     }

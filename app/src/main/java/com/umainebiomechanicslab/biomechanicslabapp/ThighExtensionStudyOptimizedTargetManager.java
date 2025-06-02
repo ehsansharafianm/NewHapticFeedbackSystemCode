@@ -391,6 +391,26 @@ public class ThighExtensionStudyOptimizedTargetManager {
 
     }
 
+    public void resetTarget(){
+
+        //Reset the target values to their initial values and the lastFrontFeedbackSampleNumber to 0
+        leftPeakThighAngleTarget = initialLeftPeakThighAngleTarget;
+        rightPeakThighAngleTarget = initialRightPeakThighAngleTarget;
+        lastFrontFeedbackSampleNumber = 0;
+
+        //Update the log with the generated target values
+        fileManager.writeToLogFile("Left Peak Thigh Angle Target Set To: " + leftPeakThighAngleTarget + " At sample number: 0");
+        fileManager.writeToLogFile("Right Peak Thigh Angle Target Set To: " + rightPeakThighAngleTarget + " At sample number: 0");
+        fileManager.writeToLogFile("Left Cadence Target Set To: " + leftCadenceTarget);
+        fileManager.writeToLogFile("Right Cadence Target Set To: " + rightCadenceTarget);
+
+        //Update the UI with the generated target values
+        optimizedThighExtensionStudyUI.updateGaitParameterOutput("TargetAngle", "Left Thigh IMU", String.format(Locale.US,"%.3f",leftPeakThighAngleTarget));
+        optimizedThighExtensionStudyUI.updateGaitParameterOutput("TargetAngle", "Right Thigh IMU", String.format(Locale.US,"%.3f",rightPeakThighAngleTarget));
+        optimizedThighExtensionStudyUI.updateGaitParameterOutput("TargetCadence", "Left Foot IMU", String.format(Locale.US,"%.3f",leftCadenceTarget));
+        optimizedThighExtensionStudyUI.updateGaitParameterOutput("TargetCadence", "Right Foot IMU", String.format(Locale.US,"%.3f",rightCadenceTarget));
+    }
+
     public void generatePeakThighTarget(OptimizedThighExtensionStudyTrial baselineTrial){
 
         double leftBaselineAverage, rightBaselineAverage;
