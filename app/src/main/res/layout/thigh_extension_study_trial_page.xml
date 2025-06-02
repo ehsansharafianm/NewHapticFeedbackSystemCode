@@ -13,7 +13,7 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="?attr/actionBarSize"
         android:layout_marginBottom="10dp"
-        android:text="Thigh Extension Study"/>
+        android:text="@string/ThighExtensionStudyPageTitle"/>
 
     <Button
         android:id="@+id/thigh_extension_study_trial_page_GoBackButton"
@@ -34,7 +34,7 @@
         android:layout_alignTop="@+id/thigh_extension_study_trial_page_PageTitle"
         android:layout_toEndOf="@+id/thigh_extension_study_trial_page_PageTitle"
         android:layout_marginStart="10dp"
-        android:text="Subject #:"/>
+        android:text="@string/SubjectNumber"/>
 
     <EditText
         android:id="@+id/thigh_extension_study_trial_page_SubjectNumberEntryBox"
@@ -63,26 +63,37 @@
     <Button
         android:id="@+id/thigh_extension_study_trial_page_ShowLogButton"
         style="?attr/defaultButtonStyle"
-        android:layout_width="150dp"
+        android:layout_width="120dp"
         android:layout_height="50dp"
         android:layout_alignParentBottom="true"
-        android:layout_toStartOf="@id/thigh_extension_study_trial_page_CenterSpace1"
+        android:layout_centerHorizontal="true"
         android:layout_marginTop="10dp"
-        android:layout_marginEnd="20dp"
         android:layout_marginBottom="25dp"
-        android:text="Show Log"/>
+        android:text="@string/ShowLogButtonText"/>
 
     <Button
         android:id="@+id/thigh_extension_study_trial_page_UploadDataToCloudButton"
         style="?attr/defaultButtonStyle"
-        android:layout_width="150dp"
+        android:layout_width="120dp"
         android:layout_height="50dp"
         android:layout_alignParentBottom="true"
-        android:layout_toEndOf="@id/thigh_extension_study_trial_page_CenterSpace1"
+        android:layout_toEndOf="@id/thigh_extension_study_trial_page_ShowLogButton"
         android:layout_marginTop="10dp"
-        android:layout_marginStart="20dp"
+        android:layout_marginStart="10dp"
         android:layout_marginBottom="25dp"
-        android:text="Upload Data\nTo Cloud"/>
+        android:text="@string/UploadDataToCloudButtonText"/>
+
+    <Button
+        android:id="@+id/thigh_extension_study_trial_page_ExportRecordedDataButton"
+        style="?attr/defaultButtonStyle"
+        android:layout_width="120dp"
+        android:layout_height="50dp"
+        android:layout_alignParentBottom="true"
+        android:layout_toStartOf="@id/thigh_extension_study_trial_page_ShowLogButton"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginBottom="25dp"
+        android:text="@string/ExportIMURecordedDataButtonText"/>
 
     <View
         android:id="@+id/thigh_extension_study_trial_page_HorizontalLine7"
@@ -119,7 +130,7 @@
                 android:layout_alignParentTop="true"
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="10dp"
-                android:text="Select IMUs"/>
+                android:text="@string/SelectIMUsHeader"/>
 
             <Spinner
                 android:id="@+id/thigh_extension_study_trial_page_LeftArmSpinner"
@@ -140,7 +151,7 @@
                 android:layout_toStartOf="@+id/thigh_extension_study_trial_page_LeftArmSpinner"
                 android:layout_marginEnd="10dp"
                 android:gravity="center"
-                android:text="Left Arm:"/>
+                android:text="@string/LeftArmLabel"/>
 
             <TextView
                 android:id="@+id/thigh_extension_study_trial_page_RightArmSpinnerLabel"
@@ -152,7 +163,7 @@
                 android:layout_marginTop="10dp"
                 android:layout_marginStart="10dp"
                 android:gravity="center"
-                android:text="Right Arm:"/>
+                android:text="@string/RightArmLabel"/>
 
             <Spinner
                 android:id="@+id/thigh_extension_study_trial_page_RightArmSpinner"
@@ -182,7 +193,7 @@
                 android:layout_toStartOf="@+id/thigh_extension_study_trial_page_LeftThighSpinner"
                 android:layout_marginEnd="10dp"
                 android:gravity="center"
-                android:text="Left Thigh:"/>
+                android:text="@string/LeftThighLabel"/>
 
             <TextView
                 android:id="@+id/thigh_extension_study_trial_page_RightThighSpinnerLabel"
@@ -194,7 +205,7 @@
                 android:layout_marginTop="10dp"
                 android:layout_marginStart="10dp"
                 android:gravity="center"
-                android:text="Right Thigh:"/>
+                android:text="@string/RightThighLabel"/>
 
             <Spinner
                 android:id="@+id/thigh_extension_study_trial_page_RightThighSpinner"
@@ -224,7 +235,7 @@
                 android:layout_toStartOf="@+id/thigh_extension_study_trial_page_LeftFootSpinner"
                 android:layout_marginEnd="10dp"
                 android:gravity="center"
-                android:text="Left Foot:"/>
+                android:text="@string/LeftFootLabel"/>
 
             <TextView
                 android:id="@+id/thigh_extension_study_trial_page_RightFootSpinnerLabel"
@@ -236,7 +247,7 @@
                 android:layout_marginTop="10dp"
                 android:layout_marginStart="10dp"
                 android:gravity="center"
-                android:text="Right Foot:"/>
+                android:text="@string/RightFootLabel"/>
 
             <Spinner
                 android:id="@+id/thigh_extension_study_trial_page_RightFootSpinner"
@@ -264,7 +275,7 @@
                 android:layout_below="@+id/thigh_extension_study_trial_page_HorizontalLine2"
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="10dp"
-                android:text="Select Haptic Cells"/>
+                android:text="@string/SelectHapticCellsHeader"/>
 
             <TextView
                 android:id="@+id/thigh_extension_study_trial_page_LeftDeviceIPEntryLabel"
@@ -359,7 +370,7 @@
                 android:layout_below="@+id/thigh_extension_study_trial_page_HorizontalLine3"
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="10dp"
-                android:text="Connection Status"/>
+                android:text="@string/ConnectionStatusHeader"/>
 
             <Button
                 android:id="@+id/thigh_extension_study_trial_page_StartScanButton"
@@ -371,7 +382,7 @@
                 android:layout_marginTop="10dp"
                 android:layout_marginEnd="20dp"
                 android:layout_marginBottom="10dp"
-                android:text="Start Scan"/>
+                android:text="@string/StartScanButtonText"/>
 
             <Button
                 android:id="@+id/thigh_extension_study_trial_page_StartSyncButton"
@@ -383,7 +394,7 @@
                 android:layout_marginTop="10dp"
                 android:layout_marginStart="20dp"
                 android:layout_marginBottom="10dp"
-                android:text="Start Sync"/>
+                android:text="@string/StartSyncButtonText"/>
 
             <TextView
                 android:id="@+id/thigh_extension_study_trial_page_LeftArmStatusTitle"
@@ -392,7 +403,7 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@id/thigh_extension_study_trial_page_StartScanButton"
                 android:layout_toStartOf="@+id/thigh_extension_study_trial_page_LeftArmStatusView"
-                android:text="Left Arm:"
+                android:text="@string/LeftArmLabel"
                 android:gravity="center"/>
 
             <TextView
@@ -402,7 +413,7 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@id/thigh_extension_study_trial_page_StartScanButton"
                 android:layout_toStartOf="@id/thigh_extension_study_trial_page_CenterSpace"
-                android:text="Disconnected"
+                android:text="@string/DisconnectedIMUPlaceholder"
                 android:gravity="center"/>
 
             <TextView
@@ -412,7 +423,7 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@id/thigh_extension_study_trial_page_StartSyncButton"
                 android:layout_toEndOf="@+id/thigh_extension_study_trial_page_CenterSpace"
-                android:text="Right Arm:"
+                android:text="@string/RightArmLabel"
                 android:gravity="center"/>
 
             <TextView
@@ -422,7 +433,7 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@id/thigh_extension_study_trial_page_StartSyncButton"
                 android:layout_toEndOf="@id/thigh_extension_study_trial_page_RightArmStatusTitle"
-                android:text="Disconnected"
+                android:text="@string/DisconnectedIMUPlaceholder"
                 android:gravity="center"/>
 
             <TextView
@@ -432,7 +443,7 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@id/thigh_extension_study_trial_page_LeftArmStatusTitle"
                 android:layout_toStartOf="@+id/thigh_extension_study_trial_page_LeftArmStatusView"
-                android:text="Left Thigh:"
+                android:text="@string/LeftThighLabel"
                 android:gravity="center"/>
 
             <TextView
@@ -442,7 +453,7 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@id/thigh_extension_study_trial_page_LeftArmStatusView"
                 android:layout_toStartOf="@id/thigh_extension_study_trial_page_CenterSpace"
-                android:text="Disconnected"
+                android:text="@string/DisconnectedIMUPlaceholder"
                 android:gravity="center"/>
 
             <TextView
@@ -452,7 +463,7 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@id/thigh_extension_study_trial_page_RightArmStatusTitle"
                 android:layout_toEndOf="@+id/thigh_extension_study_trial_page_CenterSpace"
-                android:text="Right Thigh:"
+                android:text="@string/RightThighLabel"
                 android:gravity="center"/>
 
             <TextView
@@ -462,7 +473,7 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@id/thigh_extension_study_trial_page_RightArmStatusView"
                 android:layout_toEndOf="@id/thigh_extension_study_trial_page_RightArmStatusTitle"
-                android:text="Disconnected"
+                android:text="@string/DisconnectedIMUPlaceholder"
                 android:gravity="center"/>
 
             <TextView
@@ -472,7 +483,7 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@id/thigh_extension_study_trial_page_LeftThighStatusTitle"
                 android:layout_toStartOf="@+id/thigh_extension_study_trial_page_LeftArmStatusView"
-                android:text="Left Foot:"
+                android:text="@string/LeftFootLabel"
                 android:gravity="center"/>
 
             <TextView
@@ -482,7 +493,7 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@id/thigh_extension_study_trial_page_LeftThighStatusView"
                 android:layout_toStartOf="@id/thigh_extension_study_trial_page_CenterSpace"
-                android:text="Disconnected"
+                android:text="@string/DisconnectedIMUPlaceholder"
                 android:gravity="center"/>
 
             <TextView
@@ -492,7 +503,7 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@id/thigh_extension_study_trial_page_RightThighStatusTitle"
                 android:layout_toEndOf="@+id/thigh_extension_study_trial_page_CenterSpace"
-                android:text="Right Foot:"
+                android:text="@string/RightFootLabel"
                 android:gravity="center"/>
 
             <TextView
@@ -502,7 +513,7 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@id/thigh_extension_study_trial_page_RightThighStatusView"
                 android:layout_toEndOf="@id/thigh_extension_study_trial_page_RightArmStatusTitle"
-                android:text="Disconnected"
+                android:text="@string/DisconnectedIMUPlaceholder"
                 android:gravity="center"/>
 
             <Button
@@ -515,7 +526,7 @@
                 android:layout_marginTop="10dp"
                 android:layout_marginEnd="20dp"
                 android:layout_marginBottom="10dp"
-                android:text="Show Battery %"/>
+                android:text="@string/ShowBatteryButtonText"/>
 
             <Button
                 android:id="@+id/thigh_extension_study_trial_page_DisconnectIMUsButton"
@@ -527,7 +538,7 @@
                 android:layout_marginTop="10dp"
                 android:layout_marginStart="20dp"
                 android:layout_marginBottom="10dp"
-                android:text="Disconnect IMUs"/>
+                android:text="@string/DisconnectIMUsButtonText"/>
 
             <View
                 android:id="@+id/thigh_extension_study_trial_page_HorizontalLine4"
@@ -546,7 +557,7 @@
                 android:layout_below="@+id/thigh_extension_study_trial_page_HorizontalLine4"
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="10dp"
-                android:text="Feedback Test Buttons"/>
+                android:text="@string/FeedbackTestHeader"/>
 
             <Button
                 android:id="@+id/thigh_extension_study_trial_page_FrontFeedbackButton"
@@ -557,7 +568,7 @@
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="10dp"
                 android:layout_marginBottom="10dp"
-                android:text="Both Thighs Front"/>
+                android:text="@string/BothThighsFrontFeedbackButtonText"/>
 
             <Button
                 android:id="@+id/thigh_extension_study_trial_page_LeftThighFeedbackButton"
@@ -569,7 +580,7 @@
                 android:layout_marginTop="10dp"
                 android:layout_marginBottom="10dp"
                 android:layout_marginEnd="10dp"
-                android:text="Left Thigh Back"/>
+                android:text="@string/LeftThighBackFeedbackButtonText"/>
 
             <Button
                 android:id="@+id/thigh_extension_study_trial_page_RightThighFeedbackButton"
@@ -581,7 +592,7 @@
                 android:layout_marginTop="10dp"
                 android:layout_marginBottom="10dp"
                 android:layout_marginStart="10dp"
-                android:text="Right Thigh Back"/>
+                android:text="@string/RightThighBackFeedbackButtonText"/>
 
             <View
                 android:id="@+id/thigh_extension_study_trial_page_HorizontalLine5"
@@ -600,7 +611,7 @@
                 android:layout_below="@+id/thigh_extension_study_trial_page_HorizontalLine5"
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="10dp"
-                android:text="Trial Mode"/>
+                android:text="@string/TrialModeHeader"/>
 
             <Spinner
                 android:id="@+id/thigh_extension_study_trial_page_TrialModeSpinner"
@@ -622,7 +633,7 @@
                 android:layout_marginTop="10dp"
                 android:layout_marginEnd="20dp"
                 android:layout_marginBottom="10dp"
-                android:text="Start\nInitialization"/>
+                android:text="@string/StartInitializationButtonText"/>
 
             <Button
                 android:id="@+id/thigh_extension_study_trial_page_StartTrialButton"
@@ -634,7 +645,7 @@
                 android:layout_marginTop="10dp"
                 android:layout_marginStart="20dp"
                 android:layout_marginBottom="10dp"
-                android:text="Start\nTrial"/>
+                android:text="@string/StartTrialButtonText"/>
 
             <View
                 android:id="@+id/thigh_extension_study_trial_page_HorizontalLine6"
@@ -653,7 +664,7 @@
                 android:layout_below="@+id/thigh_extension_study_trial_page_HorizontalLine6"
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="10dp"
-                android:text="IMU Output"/>
+                android:text="@string/IMUOutputHeader"/>
 
             <TextView
                 android:id="@+id/thigh_extension_study_trial_page_LeftThighDataOutputTitle"
@@ -663,7 +674,7 @@
                 android:layout_below="@id/thigh_extension_study_trial_page_IMUOutputTitle"
                 android:layout_toStartOf="@+id/thigh_extension_study_trial_page_LeftThighDataOutputView"
                 android:layout_marginTop="10dp"
-                android:text="Left Thigh:"
+                android:text="@string/LeftThighLabel"
                 android:gravity="center"/>
 
             <TextView
@@ -674,7 +685,7 @@
                 android:layout_below="@id/thigh_extension_study_trial_page_IMUOutputTitle"
                 android:layout_toStartOf="@id/thigh_extension_study_trial_page_CenterSpace"
                 android:layout_marginTop="10dp"
-                android:text="No Data"
+                android:text="@string/NoDataPlaceholder"
                 android:gravity="center"/>
 
             <TextView
@@ -685,7 +696,7 @@
                 android:layout_below="@id/thigh_extension_study_trial_page_IMUOutputTitle"
                 android:layout_toEndOf="@+id/thigh_extension_study_trial_page_CenterSpace"
                 android:layout_marginTop="10dp"
-                android:text="Right Thigh:"
+                android:text="@string/RightThighLabel"
                 android:gravity="center"/>
 
             <TextView
@@ -696,7 +707,7 @@
                 android:layout_below="@id/thigh_extension_study_trial_page_IMUOutputTitle"
                 android:layout_toEndOf="@id/thigh_extension_study_trial_page_RightThighDataOutputTitle"
                 android:layout_marginTop="10dp"
-                android:text="No Data"
+                android:text="@string/NoDataPlaceholder"
                 android:gravity="center"/>
 
             <TextView
@@ -707,7 +718,7 @@
                 android:layout_below="@id/thigh_extension_study_trial_page_LeftThighDataOutputTitle"
                 android:layout_toStartOf="@+id/thigh_extension_study_trial_page_LeftThighDataOutputView"
                 android:layout_marginTop="10dp"
-                android:text="Left Foot:"
+                android:text="@string/LeftFootLabel"
                 android:gravity="center"/>
 
             <TextView
@@ -718,7 +729,7 @@
                 android:layout_below="@id/thigh_extension_study_trial_page_LeftThighDataOutputView"
                 android:layout_toStartOf="@id/thigh_extension_study_trial_page_CenterSpace"
                 android:layout_marginTop="10dp"
-                android:text="No Data"
+                android:text="@string/NoDataPlaceholder"
                 android:gravity="center"/>
 
             <TextView
@@ -729,7 +740,7 @@
                 android:layout_below="@id/thigh_extension_study_trial_page_RightThighDataOutputTitle"
                 android:layout_toEndOf="@+id/thigh_extension_study_trial_page_CenterSpace"
                 android:layout_marginTop="10dp"
-                android:text="Right Foot:"
+                android:text="@string/RightFootLabel"
                 android:gravity="center"/>
 
             <TextView
@@ -740,7 +751,7 @@
                 android:layout_below="@id/thigh_extension_study_trial_page_RightThighDataOutputView"
                 android:layout_toEndOf="@id/thigh_extension_study_trial_page_RightThighDataOutputTitle"
                 android:layout_marginTop="10dp"
-                android:text="No Data"
+                android:text="@string/NoDataPlaceholder"
                 android:gravity="center"/>
 
             <TextView
@@ -751,7 +762,7 @@
                 android:layout_below="@id/thigh_extension_study_trial_page_LeftFootDataOutputTitle"
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="10dp"
-                android:text="Left Thigh:"
+                android:text="@string/LeftSideLabelText"
                 android:textAlignment="center"/>
 
             <TextView
@@ -762,7 +773,7 @@
                 android:layout_below="@id/thigh_extension_study_trial_page_LeftFootDataOutputTitle"
                 android:layout_toEndOf="@+id/thigh_extension_study_trial_page_LeftThighTitle"
                 android:layout_marginTop="10dp"
-                android:text="Right Thigh"
+                android:text="@string/RightSideLabelText"
                 android:textAlignment="center"/>
 
             <TextView
@@ -773,7 +784,7 @@
                 android:layout_below="@id/thigh_extension_study_trial_page_LeftThighTitle"
                 android:layout_toStartOf="@+id/thigh_extension_study_trial_page_LeftThighTitle"
                 android:layout_marginTop="2dp"
-                android:text="Last Stride PTE"/>
+                android:text="@string/PTEGaitFeatureLabel"/>
 
             <TextView
                 android:id="@+id/thigh_extension_study_trial_page_LeftThighLastPeak"
@@ -782,7 +793,7 @@
                 android:layout_height="wrap_content"
                 android:layout_alignBottom="@+id/thigh_extension_study_trial_page_LastPeakThighAngleTitle"
                 android:layout_alignStart="@+id/thigh_extension_study_trial_page_LeftThighTitle"
-                android:text="NO DATA"
+                android:text="@string/NoDataPlaceholder"
                 android:textAlignment="center"/>
 
             <TextView
@@ -792,7 +803,7 @@
                 android:layout_height="wrap_content"
                 android:layout_alignBottom="@+id/thigh_extension_study_trial_page_LastPeakThighAngleTitle"
                 android:layout_alignStart="@+id/thigh_extension_study_trial_page_RightThighTitle"
-                android:text="NO DATA"
+                android:text="@string/NoDataPlaceholder"
                 android:textAlignment="center"/>
 
             <TextView
@@ -803,7 +814,7 @@
                 android:layout_below="@id/thigh_extension_study_trial_page_LastPeakThighAngleTitle"
                 android:layout_toStartOf="@+id/thigh_extension_study_trial_page_LeftThighTitle"
                 android:layout_marginTop="2dp"
-                android:text="Last Stride Cad." />
+                android:text="@string/CadenceGaitFeatureLabel" />
 
             <TextView
                 android:id="@+id/thigh_extension_study_trial_page_LeftThighLastCadence"
@@ -812,7 +823,7 @@
                 android:layout_height="wrap_content"
                 android:layout_alignBottom="@+id/thigh_extension_study_trial_page_LastCadenceTitle"
                 android:layout_alignStart="@+id/thigh_extension_study_trial_page_LeftThighTitle"
-                android:text="NO DATA"
+                android:text="@string/NoDataPlaceholder"
                 android:textAlignment="center"/>
 
             <TextView
@@ -822,7 +833,37 @@
                 android:layout_height="wrap_content"
                 android:layout_alignBottom="@+id/thigh_extension_study_trial_page_LastCadenceTitle"
                 android:layout_alignStart="@+id/thigh_extension_study_trial_page_RightThighTitle"
-                android:text="NO DATA"
+                android:text="@string/NoDataPlaceholder"
+                android:textAlignment="center"/>
+
+            <TextView
+                android:id="@+id/thigh_extension_study_trial_page_LastStrideLengthTitle"
+                style="@style/ExperimentalPageNormalText"
+                android:layout_width="120dp"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/thigh_extension_study_trial_page_LastCadenceTitle"
+                android:layout_toStartOf="@+id/thigh_extension_study_trial_page_LeftThighTitle"
+                android:layout_marginTop="2dp"
+                android:text="@string/StrideLengthGaitFeatureLabel"/>
+
+            <TextView
+                android:id="@+id/thigh_extension_study_trial_page_LeftThighLastStrideLength"
+                style="@style/ExperimentalPageNormalText"
+                android:layout_width="120dp"
+                android:layout_height="wrap_content"
+                android:layout_alignBottom="@+id/thigh_extension_study_trial_page_LastStrideLengthTitle"
+                android:layout_alignStart="@+id/thigh_extension_study_trial_page_LeftThighTitle"
+                android:text="@string/NoDataPlaceholder"
+                android:textAlignment="center"/>
+
+            <TextView
+                android:id="@+id/thigh_extension_study_trial_page_RightThighLastStrideLength"
+                style="@style/ExperimentalPageNormalText"
+                android:layout_width="120dp"
+                android:layout_height="wrap_content"
+                android:layout_alignBottom="@+id/thigh_extension_study_trial_page_LastStrideLengthTitle"
+                android:layout_alignStart="@+id/thigh_extension_study_trial_page_RightThighTitle"
+                android:text="@string/NoDataPlaceholder"
                 android:textAlignment="center"/>
 
             <TextView
@@ -830,10 +871,10 @@
                 style="@style/ExperimentalPageNormalText"
                 android:layout_width="120dp"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/thigh_extension_study_trial_page_LastCadenceTitle"
+                android:layout_below="@id/thigh_extension_study_trial_page_LastStrideLengthTitle"
                 android:layout_toStartOf="@+id/thigh_extension_study_trial_page_LeftThighTitle"
                 android:layout_marginTop="2dp"
-                android:text="Speed (m/s)" />
+                android:text="@string/WalkingSpeedGaitFeatureLabel" />
 
             <TextView
                 android:id="@+id/thigh_extension_study_trial_page_LeftThighLastSpeed"
@@ -842,7 +883,7 @@
                 android:layout_height="wrap_content"
                 android:layout_alignBottom="@+id/thigh_extension_study_trial_page_LastWalkingSpeedTitle"
                 android:layout_alignStart="@+id/thigh_extension_study_trial_page_LeftThighTitle"
-                android:text="NO DATA"
+                android:text="@string/NoDataPlaceholder"
                 android:textAlignment="center"/>
 
             <TextView
@@ -852,27 +893,27 @@
                 android:layout_height="wrap_content"
                 android:layout_alignBottom="@+id/thigh_extension_study_trial_page_LastWalkingSpeedTitle"
                 android:layout_alignStart="@+id/thigh_extension_study_trial_page_RightThighTitle"
-                android:text="NO DATA"
+                android:text="@string/NoDataPlaceholder"
                 android:textAlignment="center"/>
 
             <TextView
-                android:id="@+id/thigh_extension_study_trial_page_StepCycleTitle"
+                android:id="@+id/thigh_extension_study_trial_page_ThighCycleTitle"
                 style="@style/ExperimentalPageNormalText"
                 android:layout_width="120dp"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/thigh_extension_study_trial_page_LastWalkingSpeedTitle"
                 android:layout_toStartOf="@+id/thigh_extension_study_trial_page_LeftThighTitle"
                 android:layout_marginTop="2dp"
-                android:text="# of Cycles"/>
+                android:text="@string/PTECycleCountLabel"/>
 
             <TextView
                 android:id="@+id/thigh_extension_study_trial_page_LeftThighCycle"
                 style="@style/ExperimentalPageNormalText"
                 android:layout_width="120dp"
                 android:layout_height="wrap_content"
-                android:layout_alignBottom="@+id/thigh_extension_study_trial_page_StepCycleTitle"
+                android:layout_alignBottom="@+id/thigh_extension_study_trial_page_ThighCycleTitle"
                 android:layout_alignStart="@+id/thigh_extension_study_trial_page_LeftThighTitle"
-                android:text="NO DATA"
+                android:text="@string/NoDataPlaceholder"
                 android:textAlignment="center"/>
 
             <TextView
@@ -880,9 +921,39 @@
                 style="@style/ExperimentalPageNormalText"
                 android:layout_width="120dp"
                 android:layout_height="wrap_content"
-                android:layout_alignBottom="@+id/thigh_extension_study_trial_page_StepCycleTitle"
+                android:layout_alignBottom="@+id/thigh_extension_study_trial_page_ThighCycleTitle"
                 android:layout_alignStart="@+id/thigh_extension_study_trial_page_RightThighTitle"
-                android:text="NO DATA"
+                android:text="@string/NoDataPlaceholder"
+                android:textAlignment="center"/>
+
+            <TextView
+                android:id="@+id/thigh_extension_study_trial_page_FootCycleTitle"
+                style="@style/ExperimentalPageNormalText"
+                android:layout_width="120dp"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/thigh_extension_study_trial_page_ThighCycleTitle"
+                android:layout_toStartOf="@+id/thigh_extension_study_trial_page_LeftThighTitle"
+                android:layout_marginTop="2dp"
+                android:text="@string/HeelStrikeCycleCountLabel"/>
+
+            <TextView
+                android:id="@+id/thigh_extension_study_trial_page_LeftFootCycle"
+                style="@style/ExperimentalPageNormalText"
+                android:layout_width="120dp"
+                android:layout_height="wrap_content"
+                android:layout_alignBottom="@+id/thigh_extension_study_trial_page_FootCycleTitle"
+                android:layout_alignStart="@+id/thigh_extension_study_trial_page_LeftThighTitle"
+                android:text="@string/NoDataPlaceholder"
+                android:textAlignment="center"/>
+
+            <TextView
+                android:id="@+id/thigh_extension_study_trial_page_RightFootCycle"
+                style="@style/ExperimentalPageNormalText"
+                android:layout_width="120dp"
+                android:layout_height="wrap_content"
+                android:layout_alignBottom="@+id/thigh_extension_study_trial_page_FootCycleTitle"
+                android:layout_alignStart="@+id/thigh_extension_study_trial_page_RightThighTitle"
+                android:text="@string/NoDataPlaceholder"
                 android:textAlignment="center"/>
 
             <TextView
@@ -890,10 +961,10 @@
                 style="@style/ExperimentalPageNormalText"
                 android:layout_width="120dp"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/thigh_extension_study_trial_page_StepCycleTitle"
+                android:layout_below="@id/thigh_extension_study_trial_page_FootCycleTitle"
                 android:layout_toStartOf="@+id/thigh_extension_study_trial_page_LeftThighTitle"
                 android:layout_marginTop="2dp"
-                android:text="Target Angle"/>
+                android:text="@string/TargetAngleLabel"/>
 
             <TextView
                 android:id="@+id/thigh_extension_study_trial_page_LeftThighTargetAngle"
@@ -902,7 +973,7 @@
                 android:layout_height="wrap_content"
                 android:layout_alignBottom="@+id/thigh_extension_study_trial_page_TargetAngleTitle"
                 android:layout_alignStart="@+id/thigh_extension_study_trial_page_LeftThighTitle"
-                android:text="NO DATA"
+                android:text="@string/NoDataPlaceholder"
                 android:textAlignment="center"/>
 
             <TextView
@@ -912,7 +983,7 @@
                 android:layout_height="wrap_content"
                 android:layout_alignBottom="@+id/thigh_extension_study_trial_page_TargetAngleTitle"
                 android:layout_alignStart="@+id/thigh_extension_study_trial_page_RightThighTitle"
-                android:text="NO DATA"
+                android:text="@string/NoDataPlaceholder"
                 android:textAlignment="center"/>
 
             <TextView
@@ -923,7 +994,7 @@
                 android:layout_below="@id/thigh_extension_study_trial_page_TargetAngleTitle"
                 android:layout_toStartOf="@+id/thigh_extension_study_trial_page_LeftThighTitle"
                 android:layout_marginTop="2dp"
-                android:text="Target Cadence"/>
+                android:text="@string/TargetCadenceLabel"/>
 
             <TextView
                 android:id="@+id/thigh_extension_study_trial_page_LeftThighTargetCadence"
@@ -932,7 +1003,7 @@
                 android:layout_height="wrap_content"
                 android:layout_alignBottom="@+id/thigh_extension_study_trial_page_TargetCadenceTitle"
                 android:layout_alignStart="@+id/thigh_extension_study_trial_page_LeftThighTitle"
-                android:text="NO DATA"
+                android:text="@string/NoDataPlaceholder"
                 android:textAlignment="center"/>
 
             <TextView
@@ -942,7 +1013,7 @@
                 android:layout_height="wrap_content"
                 android:layout_alignBottom="@+id/thigh_extension_study_trial_page_TargetCadenceTitle"
                 android:layout_alignStart="@+id/thigh_extension_study_trial_page_RightThighTitle"
-                android:text="NO DATA"
+                android:text="@string/NoDataPlaceholder"
                 android:textAlignment="center"/>
             
         </RelativeLayout>

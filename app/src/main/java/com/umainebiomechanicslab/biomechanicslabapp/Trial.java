@@ -5,10 +5,10 @@ import java.util.ArrayList;
 public abstract class Trial {
 
     //Variable to store the name of the trial
-    private final String trialName;
+    protected final String trialName;
 
     //Variable to store trialTimeStamp
-    private final String trialTimeStamp;
+    protected final String trialTimeStamp;
 
     public Trial(String trialName, String trialTimeStamp){
 

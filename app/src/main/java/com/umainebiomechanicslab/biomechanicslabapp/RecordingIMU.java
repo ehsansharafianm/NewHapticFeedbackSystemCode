@@ -18,6 +18,8 @@ import java.util.concurrent.TimeUnit;
 public class RecordingIMU extends UniversalIMU implements DotRecordingCallback {
 
     private final String TAG = "RecordingIMU";
+    
+    IMUManagerWithRecordingIMUs imuManagerWithRecordingIMUs;
 
     private DotRecordingManager movellaDotRecordingManager;
     private final byte[] mSelectedExportedDataIds;
@@ -31,8 +33,11 @@ public class RecordingIMU extends UniversalIMU implements DotRecordingCallback {
     private boolean isErased;
     private boolean isExporting;
 
-    public RecordingIMU(String nameOfIMU, Context context, IMUManager imuManager, UserInterfaceWithIMU userInterface, FileManager fileManager, int measurementMode) {
-        super(nameOfIMU, context, imuManager, userInterface, fileManager, measurementMode);
+    public RecordingIMU(String nameOfIMU, Context context, IMUManagerWithRecordingIMUs imuManagerWithRecordingIMUs, UserInterfaceWithIMU userInterface, FileManager fileManager, int measurementMode) {
+        
+        super(nameOfIMU, context, imuManagerWithRecordingIMUs, userInterface, fileManager, measurementMode);
+        
+        this.imuManagerWithRecordingIMUs = imuManagerWithRecordingIMUs;
 
         //Initialize the mSelectedExportedDataIds based on the measurementMode
         mSelectedExportedDataIds = new byte[4];
@@ -133,7 +138,7 @@ public class RecordingIMU extends UniversalIMU implements DotRecordingCallback {
     }
 
     @Override
-    public void startTrial(String trialName, String timeStamp, int trialDurationMin, boolean logData) {
+    public void startTrial(String trialName, String timeStamp, Trial trial, int trialDurationMin, boolean logData) {
 
         trialNames.add(trialName);
         trialTimeStamps.add(timeStamp);
@@ -266,13 +271,64 @@ public class RecordingIMU extends UniversalIMU implements DotRecordingCallback {
     }
 
     @Override
-    public void onDotRequestFlashInfoDone(String s, int i, int i1) {
+    public void onDotRequestFlashInfoDone(String address, int usedFlashSpace, int totalFlashSpace) {
+        fileManager.writeToLogFile(nameOfIMU + " Flash Information Received");
+        fileManager.writeToLogFile(nameOfIMU + " Used Flash: " + usedFlashSpace);
+        fileManager.writeToLogFile(nameOfIMU + " Total Flash: " + totalFlashSpace);
 
+        double percent = (double) usedFlashSpace/totalFlashSpace;
+
+        //Pause for 2 seconds
+        try {
+            TimeUnit.MILLISECONDS.sleep(2000);
+        } catch (InterruptedException e) {
+            Log.e(TAG, "uploadFilesToFirebaseCloudStorage", e);
+        }
+
+        if(imuManager.getIsScanning()){
+            if ((percent>0.001) || (Double.isNaN(percent)) || (totalFlashSpace == 0)){
+                fileManager.writeToLogFile(nameOfIMU + " Erasing IMU Recording Memory");
+                userInterface.updateIMUStatus(nameOfIMU, "Erasing");
+                if(!movellaDotRecordingManager.eraseRecordingData()){
+                    fileManager.writeToLogFile(nameOfIMU + " !Error Erasing IMU Recording Memory");
+                    userInterface.errorMessagePopUp("!Memory Erase Error");
+                }
+            }
+            else{
+                fileManager.writeToLogFile(nameOfIMU + " No Need To Erase (%" + (percent*100) + ")");
+                userInterface.updateIMUStatus(nameOfIMU, "Ready");
+                isErased = true;
+                imuManager.onInitializationComplete();
+            }
+        }
+        else if(isExporting){
+
+            int availableRecordingTime;
+
+            if(movellaDotDevice.isProductV2()){
+                availableRecordingTime = 365; //V2 Devices Have about 365 minutes of recording time at 60Hz
+            }
+            else{
+                availableRecordingTime = 90; //V1 Devices Have about 90 minutes of recording time at 60Hz
+            }
+
+            totalPacketsToExport = (int)(percent * availableRecordingTime * outputFrequency * 60);
+            fileManager.writeToLogFile(nameOfIMU + " Packets to Export: " + totalPacketsToExport);
+
+            fileManager.writeToLogFile(nameOfIMU + " Requesting File Info");
+            imuManagerWithRecordingIMUs.updateExportLoadingPage(0, "Requesting File Info");
+            movellaDotRecordingManager.requestFileInfo();
+        }
     }
 
     @Override
-    public void onDotRecordingAck(String s, int i, boolean b, DotRecordingState dotRecordingState) {
-
+    public void onDotRecordingAck(String address, int recordingId, boolean isSuccess, DotRecordingState recordingState) {
+        if(recordingId == DotRecordingManager.RECORDING_ID_START_RECORDING){
+            fileManager.writeToLogFile(nameOfIMU + " Recording Started");
+        }
+        else if(recordingId == DotRecordingManager.RECORDING_ID_STOP_RECORDING){
+            fileManager.writeToLogFile(nameOfIMU + " Recording Stopped");
+        }
     }
 
     @Override
@@ -281,23 +337,107 @@ public class RecordingIMU extends UniversalIMU implements DotRecordingCallback {
     }
 
     @Override
-    public void onDotRequestFileInfoDone(String s, ArrayList<DotRecordingFileInfo> arrayList, boolean b) {
+    public void onDotRequestFileInfoDone(String address, ArrayList<DotRecordingFileInfo> recordingList, boolean isSuccess) {
+        if(recordingList.size() != trialNames.size()){
+
+            //Pause for 1 seconds
+            try {
+                TimeUnit.MILLISECONDS.sleep(1000);
+            } catch (InterruptedException e) {
+                Log.e(TAG, "uploadFilesToFirebaseCloudStorage", e);
+            }
+
+            fileManager.writeToLogFile("Requesting " + nameOfIMU + " recording files again. Only received " +
+                    recordingList.size() + " out of " + trialNames.size() + " files");
+
+            //Request the file info again (hopefully it will update to the correct number of files)
+            movellaDotRecordingManager.requestFileInfo();
+
+        }
+        else{
+            mSelectedExportedDataIds[0] = DotRecordingManager.RECORDING_DATA_ID_TIMESTAMP;
+            mSelectedExportedDataIds[1] = DotRecordingManager.RECORDING_DATA_ID_ORIENTATION;
+            mSelectedExportedDataIds[2] = DotRecordingManager.RECORDING_DATA_ID_CALIBRATED_ACC;
+            mSelectedExportedDataIds[3] = DotRecordingManager.RECORDING_DATA_ID_CALIBRATED_GYR;
+
+            //Pause for 1 seconds
+            try {
+                TimeUnit.MILLISECONDS.sleep(1000);
+            } catch (InterruptedException e) {
+                Log.e(TAG, "uploadFilesToFirebaseCloudStorage", e);
+            }
+
+            if(movellaDotRecordingManager.selectExportedData(mSelectedExportedDataIds)){
+                fileManager.writeToLogFile(nameOfIMU + " Data Values Selected For Export");
+
+                //Pause for 1 second
+                try {
+                    TimeUnit.MILLISECONDS.sleep(1000);
+                } catch (InterruptedException e) {
+                    Log.e(TAG, "uploadFilesToFirebaseCloudStorage", e);
+                }
+
+                if(movellaDotRecordingManager.startExporting(recordingList)){
+                    fileManager.writeToLogFile(nameOfIMU + " Files Selected For Export");
+                    imuManagerWithRecordingIMUs.updateExportLoadingPage(0, "Files Selected For Export");
+                }
+                else{
+                    fileManager.writeToLogFile(nameOfIMU + " !Error Selecting Files For Export");
+                    userInterface.errorMessagePopUp("!File Selection Error");
+                }
+            }
+            else{
+                fileManager.writeToLogFile(nameOfIMU + " !Error Selecting Data Values For Export");
+                userInterface.errorMessagePopUp("!Data Selection Error");
+            }
+
+
+        }
 
     }
 
     @Override
-    public void onDotDataExported(String s, DotRecordingFileInfo dotRecordingFileInfo, DotData dotData) {
+    public void onDotDataExported(String address, DotRecordingFileInfo dotRecordingFileInfo, DotData dotData) {
+
+        if(dotLogFiles.size() == exportedFilesCounter){
+            dotLogFiles.add(createDataLog(trialNames.get(exportedFilesCounter), trialTimeStamps.get(exportedFilesCounter)));
+
+            //Pause for 1 second
+            try {
+                TimeUnit.MILLISECONDS.sleep(1000);
+            } catch (InterruptedException e) {
+                Log.e(TAG, "uploadFilesToFirebaseCloudStorage", e);
+            }
+        }
+
+        dotLogFiles.get(exportedFilesCounter).getDotLogger().update(dotData);
+
+        exportedPacketsCounter++;
+        if(exportedPacketsCounter%(totalPacketsToExport/100) == 0){
+            imuManagerWithRecordingIMUs.updateExportLoadingPage((exportedPacketsCounter/(totalPacketsToExport/100)), 
+                    "Recording Files Exported:\t\t\t" + exportedFilesCounter + "/" + trialNames.size());
+            
+        }
 
     }
 
     @Override
     public void onDotDataExported(String s, DotRecordingFileInfo dotRecordingFileInfo) {
+        exportedFilesCounter++;
+        fileManager.writeToLogFile(nameOfIMU + " A File Was Exported");
 
+        //Pause for 2 seconds
+        try {
+            TimeUnit.MILLISECONDS.sleep(2000);
+        } catch (InterruptedException e) {
+            Log.e(TAG, "uploadFilesToFirebaseCloudStorage", e);
+        }
     }
 
     @Override
     public void onDotAllDataExported(String s) {
-
+        fileManager.writeToLogFile(nameOfIMU + " All Files Exported");
+        imuManagerWithRecordingIMUs.onRecordingExportComplete(nameOfIMU);
     }
 
     @Override

@@ -10,8 +10,9 @@ import android.os.Looper;
 public class LoadingWindowUI extends UserInterface {
 
     // Declare UI Text Views
-    private final TextView instructionsTextView;
+    private final TextView pageTitleTextView;
     private final TextView insideSpinnerTextView;
+    private final TextView loadingCommentTextView;
 
     // Declare the LoadingPageListener interface
     public interface LoadingPageListener {
@@ -39,8 +40,9 @@ public class LoadingWindowUI extends UserInterface {
         super(activity, pageID);
 
         // Declare UI Text Views
-        instructionsTextView = activity.findViewById(R.id.loading_page_LoadingInstructions);
-        insideSpinnerTextView = activity.findViewById(R.id.loading_page_LoadingText);
+        pageTitleTextView = activity.findViewById(R.id.loading_page_LoadingTitle);
+        insideSpinnerTextView = activity.findViewById(R.id.loading_page_InsideSpinnerLoadingText);
+        loadingCommentTextView = activity.findViewById(R.id.loading_page_LoadingCommentText);
 
         // Declare UI Progress Bar
         loadingSpinner = activity.findViewById(R.id.loading_page_ProgressSpinner);
@@ -67,11 +69,14 @@ public class LoadingWindowUI extends UserInterface {
         //Set the loadingPageListener to the provided listener code
         this.loadingPageListener = loadingPageListener;
 
-        //Update the instructions text view
-        updateTextViewText(instructionsTextView, instructionsText);
+        //Update the title text view
+        updateTextViewText(pageTitleTextView, instructionsText);
 
         //Update the inside spinner text view
         updateTextViewText(insideSpinnerTextView, "Loading...");
+
+        //Update the loading comment text view
+        updateTextViewText(loadingCommentTextView, "");
 
         //Start the loading animation
         startProgressAnimation();
@@ -132,5 +137,9 @@ public class LoadingWindowUI extends UserInterface {
 
     public void updateInnerSpinnerText(String text){
         updateTextViewText(insideSpinnerTextView, text);
+    }
+
+    public void updateLoadingCommentText(String text){
+        updateTextViewText(loadingCommentTextView, text);
     }
 }

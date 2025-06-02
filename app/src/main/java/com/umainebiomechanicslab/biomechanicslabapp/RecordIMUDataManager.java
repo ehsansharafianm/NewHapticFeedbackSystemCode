@@ -5,6 +5,7 @@ import static com.xsens.dot.android.sdk.models.DotPayload.PAYLOAD_TYPE_CUSTOM_MO
 import android.content.Context;
 
 import java.util.Date;
+import java.util.Locale;
 
 public class RecordIMUDataManager extends IMUManager{
 
@@ -14,30 +15,35 @@ public class RecordIMUDataManager extends IMUManager{
 
     }
 
+    @Override
     public void updateIMUCode(String imuName, String imuCode){
 
-        //If an IMU with the given name exists in the IMU ArrayList, update its code
-        for(UniversalIMU IMU : IMUArrayList){
-            if(IMU.getNameOfIMU().equals(imuName)){
-                setIMUMACAddress(imuName, imuCode);
-                return;
+        //If the imuCode is "--", delete the IMU with the given name
+        if(imuCode.equals("--")){
+
+            //Loop through all the IMUs in the IMU ArrayList and remove the one with the given name
+            for(UniversalIMU IMU : IMUArrayList) {
+                if (IMU.getNameOfIMU().equals(imuName)) {
+                    IMUArrayList.remove(IMU);
+                    return;
+                }
             }
+
         }
+        else{
 
-        //If an IMU with the given name doesn't exist in the IMU ArrayList, create a new IMU
-        IMUArrayList.add(new StreamingIMU(imuName, context, this, userInterface, fileManager, PAYLOAD_TYPE_CUSTOM_MODE_1));
-        setIMUMACAddress(imuName, imuCode);
-
-    }
-
-    public void deleteIMU(String imuName){
-
-        //Loop through all the IMUs in the IMU ArrayList and remove the one with the given name
-        for(UniversalIMU IMU : IMUArrayList) {
-            if (IMU.getNameOfIMU().equals(imuName)) {
-                IMUArrayList.remove(IMU);
-                return;
+            //If an IMU with the given name exists in the IMU ArrayList, update its code
+            for(UniversalIMU IMU : IMUArrayList){
+                if(IMU.getNameOfIMU().equals(imuName)){
+                    setIMUMACAddress(imuName, imuCode);
+                    return;
+                }
             }
+
+            //If an IMU with the given name doesn't exist in the IMU ArrayList, create a new IMU
+            IMUArrayList.add(new StreamingIMU(imuName, context, this, userInterface, fileManager, PAYLOAD_TYPE_CUSTOM_MODE_1));
+            setIMUMACAddress(imuName, imuCode);
+
         }
 
     }
@@ -77,9 +83,16 @@ public class RecordIMUDataManager extends IMUManager{
         //Get the current date and time
         String currentTimeStamp = java.text.DateFormat.getDateTimeInstance().format(new Date());
 
+        //Log the offset angles for all IMUs in the IMU ArrayList
+        for(UniversalIMU IMU : IMUArrayList){
+            if (IMU instanceof StreamingIMU) {
+                fileManager.writeToLogFile(String.format(Locale.US, "Offset Angle for %s: %.3f", IMU.getNameOfIMU(), ((StreamingIMU) IMU).getOffsetEulerAngle()));
+            }
+        }
+
         //Start trial for all IMUs in the IMU ArrayList
         for(UniversalIMU IMU : IMUArrayList){
-            IMU.startTrial(trialName, currentTimeStamp, 0, true);
+            IMU.startTrial(trialName, currentTimeStamp, null, 0, true);
         }
 
     }

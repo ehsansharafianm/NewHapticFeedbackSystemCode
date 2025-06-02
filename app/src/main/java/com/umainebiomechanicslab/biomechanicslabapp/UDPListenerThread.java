@@ -11,9 +11,12 @@ public class UDPListenerThread extends Thread {
         void onUDPReceived(int block1, int block2, int block3);
     }
 
+    private final String TAG = "UDPListenerThread";
+
     private final LoadingWindowUI loadingWindowUI;
     private final ExperimenterMenuUI experimenterMenuUI;
     private final TestHapticCellsUI testHapticCellsUI;
+    private final UserInterfaceWithIMU userInterfaceWithIMU;
 
     private DatagramSocket socket;
 
@@ -29,10 +32,23 @@ public class UDPListenerThread extends Thread {
         this.experimenterMenuUI = experimenterMenuUI;
         this.testHapticCellsUI = testHapticCellsUI;
         this.loadingWindowUI = loadingWindowUI;
+        this.userInterfaceWithIMU = null;
 
         this.listener = listener;
 
+        //Initialize the loadingCanceled variable to false
+        loadingCanceled = false;
 
+    }
+
+    public UDPListenerThread(ExperimenterMenuUI experimenterMenuUI, UserInterfaceWithIMU userInterfaceWithIMU, LoadingWindowUI loadingWindowUI, onUDPReceivedListener listener) {
+
+        this.experimenterMenuUI = experimenterMenuUI;
+        this.testHapticCellsUI = null;
+        this.loadingWindowUI = loadingWindowUI;
+        this.userInterfaceWithIMU = userInterfaceWithIMU;
+
+        this.listener = listener;
 
         //Initialize the loadingCanceled variable to false
         loadingCanceled = false;
@@ -47,7 +63,12 @@ public class UDPListenerThread extends Thread {
         loadingWindowUI.startLoadingPage("Turn On Haptic Control Module (If Previously Turned On, Turn Off Then Back On)", new LoadingWindowUI.LoadingPageListener() {
             @Override
             public void onLoadingPageFinished() {
-                testHapticCellsUI.showPage();
+                if(userInterfaceWithIMU != null){
+                    userInterfaceWithIMU.showPage();
+                }
+                else if (testHapticCellsUI != null) {
+                    testHapticCellsUI.showPage();
+                }
             }
 
             @Override
@@ -104,7 +125,7 @@ public class UDPListenerThread extends Thread {
                 }
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            Log.e(TAG, "Error listening for ESP8266 IP", e);
         }
     }
 

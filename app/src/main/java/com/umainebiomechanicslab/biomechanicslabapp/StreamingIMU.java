@@ -18,7 +18,7 @@ public class StreamingIMU extends UniversalIMU{
     protected String trialName;
     protected int sampleCounter;
     protected int trialDurationMin;
-    protected double initAngleSum;
+    protected double trialAngleSum;
 
     protected FileManager.DotLogFile dotLogFile;
     protected boolean offsetAnglesInitialized;
@@ -48,7 +48,7 @@ public class StreamingIMU extends UniversalIMU{
     public void startOffsetInitialization(){
         trialName = "Initialization";
         sampleCounter = 0;
-        initAngleSum = 0;
+        trialAngleSum = 0;
 
         try{
             if(movellaDotDevice.startMeasuring()) {
@@ -91,7 +91,7 @@ public class StreamingIMU extends UniversalIMU{
     }
 
     @Override
-    public void startTrial(String trialName, String timeStamp, int trialDurationMin, boolean logData) {
+    public void startTrial(String trialName, String timeStamp, Trial trial, int trialDurationMin, boolean logData) {
 
         this.trialName = trialName;
         this.trialDurationMin = trialDurationMin;
@@ -197,9 +197,9 @@ public class StreamingIMU extends UniversalIMU{
                 if ((sampleCounter % outputFrequency) == 0) {
                     userInterface.updateIMUDataOutput(nameOfIMU, "Initializing...");
                 }
-                initAngleSum += eulerAngleX;
+                trialAngleSum += eulerAngleX;
             } else if (sampleCounter == (outputFrequency * offsetInitializationDurationSec)){
-                offsetEulerAngle = initAngleSum / (outputFrequency * offsetInitializationDurationSec);
+                offsetEulerAngle = trialAngleSum / (outputFrequency * offsetInitializationDurationSec);
                 userInterface.updateIMUDataOutput(nameOfIMU, String.format(Locale.US,"Initialized %.3f",offsetEulerAngle));
                 fileManager.writeToLogFile(nameOfIMU + " Initialized Angle Offset: " + offsetEulerAngle);
                 offsetAnglesInitialized = true;

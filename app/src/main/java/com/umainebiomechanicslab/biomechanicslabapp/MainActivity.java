@@ -39,12 +39,14 @@ public class MainActivity extends AppCompatActivity {
 
         //Instantiate UI Objects
         TestHapticCellsUI testHapticCellsUI = new TestHapticCellsUI(this, R.id.test_haptic_cells_page);
+        OptimizedThighExtensionStudyUI thighExtensionStudyUI = new OptimizedThighExtensionStudyUI(this, R.id.thigh_extension_study_trial_page, logPopupWindowUI, fileManager);
         IMURecordingPageUI imuRecordingPageUI = new IMURecordingPageUI(this, R.id.imu_recording_page, logPopupWindowUI, fileManager);
-        ExperimenterMenuUI experimenterMenuUI = new ExperimenterMenuUI(this, R.id.experimenter_menu, testHapticCellsUI, imuRecordingPageUI, loadingWindowUI);
+        ExperimenterMenuUI experimenterMenuUI = new ExperimenterMenuUI(this, R.id.experimenter_menu, imuRecordingPageUI, testHapticCellsUI, thighExtensionStudyUI);
         ParticipantMenuUI participantMenuUI = new ParticipantMenuUI(this, R.id.participant_menu);
         StartPageUI startPageUI = new StartPageUI(this, R.id.start_page, experimenterMenuUI, participantMenuUI);
 
         //Link User Interfaces
+        thighExtensionStudyUI.linkUserInterfaceForBackButton(experimenterMenuUI);
         testHapticCellsUI.linkUserInterfaceForBackButton(experimenterMenuUI);
         imuRecordingPageUI.linkUserInterfaceForBackButton(experimenterMenuUI);
         experimenterMenuUI.linkUserInterfaceForBackButton(startPageUI);
@@ -53,10 +55,12 @@ public class MainActivity extends AppCompatActivity {
         //Instantiate Trial Manager Objects
         TestHapticCellsManager testHapticCellsManager = new TestHapticCellsManager(testHapticCellsUI, experimenterMenuUI, loadingWindowUI);
         RecordIMUDataManager recordIMUDataManager = new RecordIMUDataManager(imuRecordingPageUI, this, fileManager);
+        OptimizedThighExtensionStudyManager thighExtensionStudyManager = new OptimizedThighExtensionStudyManager(thighExtensionStudyUI, experimenterMenuUI, loadingWindowUI, this, fileManager);
 
         //Link Trial Manager Objects
         testHapticCellsUI.linkTestHapticCellsManager(testHapticCellsManager);
         imuRecordingPageUI.linkIMUManager(recordIMUDataManager);
+        thighExtensionStudyUI.linkIMUManager(thighExtensionStudyManager);
 
         //Show Start Page
         startPageUI.showPage();

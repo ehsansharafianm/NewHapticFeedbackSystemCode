@@ -84,7 +84,7 @@ public class IMURecordingPageUI extends UserInterfaceWithIMU {
 
                 //If the selected item is "--", delete the IMU
                 if(spinnerSelection.equals("--")){
-                    imuManager.deleteIMU("IMU1");
+                    imuManager.updateIMUCode("IMU1", "--");
 
                     //Disable Start Scan Button if all other spinners are "--"
                     if(IMU2Spinner.getSelectedItem().toString().equals("--") && IMU3Spinner.getSelectedItem().toString().equals("--") && IMU4Spinner.getSelectedItem().toString().equals("--")){
@@ -119,7 +119,7 @@ public class IMURecordingPageUI extends UserInterfaceWithIMU {
 
                 //If the selected item is "--", delete the IMU
                 if(spinnerSelection.equals("--")){
-                    imuManager.deleteIMU("IMU2");
+                    imuManager.updateIMUCode("IMU1", "--");
 
                     //Disable Start Scan Button if all other spinners are "--"
                     if(IMU1Spinner.getSelectedItem().toString().equals("--") && IMU3Spinner.getSelectedItem().toString().equals("--") && IMU4Spinner.getSelectedItem().toString().equals("--")){
@@ -154,7 +154,7 @@ public class IMURecordingPageUI extends UserInterfaceWithIMU {
 
                 //If the selected item is "--", delete the IMU
                 if(spinnerSelection.equals("--")){
-                    imuManager.deleteIMU("IMU3");
+                    imuManager.updateIMUCode("IMU1", "--");
 
                     //Disable Start Scan Button if all other spinners are "--"
                     if(IMU1Spinner.getSelectedItem().toString().equals("--") && IMU2Spinner.getSelectedItem().toString().equals("--") && IMU4Spinner.getSelectedItem().toString().equals("--")){
@@ -189,7 +189,7 @@ public class IMURecordingPageUI extends UserInterfaceWithIMU {
 
                 //If the selected item is "--", delete the IMU
                 if(spinnerSelection.equals("--")){
-                    imuManager.deleteIMU("IMU4");
+                    imuManager.updateIMUCode("IMU1", "--");
 
                     //Disable Start Scan Button if all other spinners are "--"
                     if(IMU1Spinner.getSelectedItem().toString().equals("--") && IMU2Spinner.getSelectedItem().toString().equals("--") && IMU3Spinner.getSelectedItem().toString().equals("--")){

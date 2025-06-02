@@ -5,9 +5,7 @@ import android.widget.Button;
 
 public class ExperimenterMenuUI extends UserInterface{
 
-    private TestHapticCellsManager testHapticCellsManager;
-
-    public ExperimenterMenuUI(Activity activity, int pageID, TestHapticCellsUI testHapticCellsUI, IMURecordingPageUI imuRecordingPageUI, LoadingWindowUI loadingWindowUI) {
+    public ExperimenterMenuUI(Activity activity, int pageID, IMURecordingPageUI imuRecordingPageUI, TestHapticCellsUI testHapticCellsUI, OptimizedThighExtensionStudyUI thighExtensionStudyUI) {
 
         super(activity, pageID);
 
@@ -27,7 +25,7 @@ public class ExperimenterMenuUI extends UserInterface{
         testHapticCellsButton.setOnClickListener(view -> testHapticCellsUI.showPage());
 
         //Set Thigh Extension Study Button Click Listener
-        thighExtensionStudyButton.setOnClickListener(view -> textPopUp("Thigh Extension Study Button Clicked"));
+        thighExtensionStudyButton.setOnClickListener(view -> thighExtensionStudyUI.showPage());
 
         //Set Walking Classification Study Button Click Listener
         walkingClassificationStudyButton.setOnClickListener(view -> textPopUp("Walking Classification Study Button Clicked"));
@@ -42,13 +40,4 @@ public class ExperimenterMenuUI extends UserInterface{
         goBackButton.setOnClickListener(view -> userInterfaceForBackButton.showPage());
 
     }
-
-    public void linkTrialManagers(TestHapticCellsManager testHapticCellsManager){
-
-        //Link Trial Managers
-        this.testHapticCellsManager = testHapticCellsManager;
-
-    }
-
-
 }

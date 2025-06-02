@@ -121,7 +121,7 @@ public abstract class UniversalIMU implements DotDeviceCallback {
         movellaDotDevice.setMeasurementMode(measurementMode);
     }
 
-    public abstract void startTrial(String trialName, String timeStamp, int trialDurationMin, boolean logData);
+    public abstract void startTrial(String trialName, String timeStamp, Trial trial, int trialDurationMin, boolean logData);
 
     public abstract FileManager.DotLogFile stopTrial(boolean logData);
 

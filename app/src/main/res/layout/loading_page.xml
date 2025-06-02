@@ -12,23 +12,32 @@
         android:layout_centerInParent="true"/>
 
     <TextView
-        android:id="@+id/loading_page_LoadingText"
+        android:id="@+id/loading_page_InsideSpinnerLoadingText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"
-        android:text="Loading..."
+        android:text="@string/NoDataPlaceholder"
         android:textSize="24sp"/>
 
     <TextView
-        android:id="@+id/loading_page_LoadingInstructions"
+        android:id="@+id/loading_page_LoadingCommentText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@id/loading_page_ProgressSpinner"
+        android:text="@string/NoDataPlaceholder"
+        android:textSize="24sp"/>
+
+    <TextView
+        android:id="@+id/loading_page_LoadingTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:layout_above="@+id/loading_page_ProgressSpinner"
         android:layout_marginStart="30dp"
         android:layout_marginEnd="30dp"
-        android:text="Turn On Haptic Control Module (If Previously Turned On, Turn Off Then Back On)"
+        android:text="@string/NoDataPlaceholder"
         android:gravity="center"
         android:textSize="32sp"/>
 

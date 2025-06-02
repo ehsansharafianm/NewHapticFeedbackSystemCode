@@ -68,6 +68,8 @@ public abstract class IMUManager implements DotScannerCallback, DotSyncCallback 
 
     }
 
+    public abstract void updateIMUCode(String imuName, String imuCode);
+
     public abstract void startAngleOffsetInitialization();
 
     public abstract void onAngleOffsetInitializationComplete();
@@ -121,6 +123,9 @@ public abstract class IMUManager implements DotScannerCallback, DotSyncCallback 
             case "V2–05":
                 macAddress = "D4:22:CD:00:9F:C3";
                 break;
+            case "V2–06":
+                macAddress = "D4:22:CD:00:9F:88";
+                break;
             case "V2–LA":
                 macAddress = "D4:22:CD:00:63:8A";
                 break;
@@ -150,9 +155,6 @@ public abstract class IMUManager implements DotScannerCallback, DotSyncCallback 
                 break;
             case "V2–X1":
                 macAddress = "D4:22:CD:00:63:D6";
-                break;
-            case "V2–X2":
-                macAddress = "D4:22:CD:00:9F:88";
                 break;
             case "ES–LT":
                 macAddress = "D4:22:CD:00:63:8B";
@@ -316,11 +318,11 @@ public abstract class IMUManager implements DotScannerCallback, DotSyncCallback 
             return;
         }
 
-        //Pause for 0.5 seconds to allow the IMU to connect
+        //Pause for 0.5 seconds to prevent multiple scans of the same IMU while it is connecting
         try {
             TimeUnit.MILLISECONDS.sleep(500);
         } catch (InterruptedException e) {
-            Log.e(TAG, "uploadFilesToFirebaseCloudStorage", e);
+            Log.e(TAG, "Error sleeping", e);
         }
 
         //Loop through all the IMUs to find the one that matches the macAddress
