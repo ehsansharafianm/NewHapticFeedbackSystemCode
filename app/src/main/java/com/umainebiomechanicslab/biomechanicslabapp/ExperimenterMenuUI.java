@@ -5,14 +5,17 @@ import android.widget.Button;
 
 public class ExperimenterMenuUI extends UserInterface{
 
-    public ExperimenterMenuUI(Activity activity, int pageID, IMURecordingPageUI imuRecordingPageUI, TestHapticCellsUI testHapticCellsUI, OptimizedThighExtensionStudyUI thighExtensionStudyUI) {
+    public ExperimenterMenuUI(Activity activity, int pageID, IMURecordingPageUI imuRecordingPageUI, TestHapticCellsUI testHapticCellsUI,
+                              OriginalThighExtensionStudyUI originalThighExtensionStudyUI,
+                              OptimizedThighExtensionStudyUI optimizedThighExtensionStudyUI) {
 
         super(activity, pageID);
 
         //Declare UI Objects
         Button recordIMUDataButton = activity.findViewById(R.id.experimenter_menu_RecordIMUData);
         Button testHapticCellsButton = activity.findViewById(R.id.experimenter_menu_TestHapticCells);
-        Button thighExtensionStudyButton = activity.findViewById(R.id.experimenter_menu_ThighExtensionStudy);
+        Button OriginalhighExtensionStudyButton = activity.findViewById(R.id.experimenter_menu_ThighExtensionStudy);
+        Button OptimizedThighExtensionStudyButton = activity.findViewById(R.id.experimenter_menu_OptimizedThighExtensionStudy);
         Button walkingClassificationStudyButton = activity.findViewById(R.id.experimenter_menu_WalkingClassificationStudy);
         Button armCuingStudyButton = activity.findViewById(R.id.experimenter_menu_ArmCuingStudy);
         Button armExtensionStudyButton = activity.findViewById(R.id.experimenter_menu_ArmExtensionStudy);
@@ -24,8 +27,11 @@ public class ExperimenterMenuUI extends UserInterface{
         //Set Test Haptic Cells Button Click Listener
         testHapticCellsButton.setOnClickListener(view -> testHapticCellsUI.showPage());
 
-        //Set Thigh Extension Study Button Click Listener
-        thighExtensionStudyButton.setOnClickListener(view -> thighExtensionStudyUI.showPage());
+        //Set Original Thigh Extension Study Button Click Listener
+        OriginalhighExtensionStudyButton.setOnClickListener(view -> originalThighExtensionStudyUI.showPage());
+
+        //Set Optimized Thigh Extension Study Button Click Listener
+        OptimizedThighExtensionStudyButton.setOnClickListener(view -> optimizedThighExtensionStudyUI.showPage());
 
         //Set Walking Classification Study Button Click Listener
         walkingClassificationStudyButton.setOnClickListener(view -> textPopUp("Walking Classification Study Button Clicked"));

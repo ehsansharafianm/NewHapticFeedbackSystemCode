@@ -54,23 +54,23 @@ public class OptimizedThighExtensionStudyUI extends UserInterfaceWithRecordingIM
         rightHapticCellIPAddress = "0.0.0.0";
 
         //Link the device IP address text views
-        leftHapticCellIPAddressTextView = activity.findViewById(R.id.thigh_extension_study_trial_page_LeftDeviceIP);
-        rightHapticCellIPAddressTextView = activity.findViewById(R.id.thigh_extension_study_trial_page_RightDeviceIP);
+        leftHapticCellIPAddressTextView = activity.findViewById(R.id.optimized_thigh_extension_study_trial_page_LeftDeviceIP);
+        rightHapticCellIPAddressTextView = activity.findViewById(R.id.optimized_thigh_extension_study_trial_page_RightDeviceIP);
 
         //Declare UI Buttons
-        goBackButton = activity.findViewById(R.id.thigh_extension_study_trial_page_GoBackButton);
-        startScanButton = activity.findViewById(R.id.thigh_extension_study_trial_page_StartScanButton);
-        startSyncButton = activity.findViewById(R.id.thigh_extension_study_trial_page_StartSyncButton);
-        showBatteryPercentageButton = activity.findViewById(R.id.thigh_extension_study_trial_page_ShowIMUsBatteryButton);
-        disconnectButton = activity.findViewById(R.id.thigh_extension_study_trial_page_DisconnectIMUsButton);
-        Button bothThighsFrontFeedbackTestButton = activity.findViewById(R.id.thigh_extension_study_trial_page_FrontFeedbackButton);
-        Button leftThighBackFeedbackTestButton = activity.findViewById(R.id.thigh_extension_study_trial_page_LeftThighFeedbackButton);
-        Button rightThighBackFeedbackTestButton = activity.findViewById(R.id.thigh_extension_study_trial_page_RightThighFeedbackButton);
-        startInitializationButton = activity.findViewById(R.id.thigh_extension_study_trial_page_StartInitializationButton);
-        startTrialButton = activity.findViewById(R.id.thigh_extension_study_trial_page_StartTrialButton);
-        showLogButton = activity.findViewById(R.id.thigh_extension_study_trial_page_ShowLogButton);
-        uploadDataToCloudButton = activity.findViewById(R.id.thigh_extension_study_trial_page_UploadDataToCloudButton);
-        exportRecordedDataButton = activity.findViewById(R.id.thigh_extension_study_trial_page_ExportRecordedDataButton);
+        goBackButton = activity.findViewById(R.id.optimized_thigh_extension_study_trial_page_GoBackButton);
+        startScanButton = activity.findViewById(R.id.optimized_thigh_extension_study_trial_page_StartScanButton);
+        startSyncButton = activity.findViewById(R.id.optimized_thigh_extension_study_trial_page_StartSyncButton);
+        showBatteryPercentageButton = activity.findViewById(R.id.optimized_thigh_extension_study_trial_page_ShowIMUsBatteryButton);
+        disconnectButton = activity.findViewById(R.id.optimized_thigh_extension_study_trial_page_DisconnectIMUsButton);
+        Button bothThighsFrontFeedbackTestButton = activity.findViewById(R.id.optimized_thigh_extension_study_trial_page_FrontFeedbackButton);
+        Button leftThighBackFeedbackTestButton = activity.findViewById(R.id.optimized_thigh_extension_study_trial_page_LeftThighFeedbackButton);
+        Button rightThighBackFeedbackTestButton = activity.findViewById(R.id.optimized_thigh_extension_study_trial_page_RightThighFeedbackButton);
+        startInitializationButton = activity.findViewById(R.id.optimized_thigh_extension_study_trial_page_StartInitializationButton);
+        startTrialButton = activity.findViewById(R.id.optimized_thigh_extension_study_trial_page_StartTrialButton);
+        showLogButton = activity.findViewById(R.id.optimized_thigh_extension_study_trial_page_ShowLogButton);
+        uploadDataToCloudButton = activity.findViewById(R.id.optimized_thigh_extension_study_trial_page_UploadDataToCloudButton);
+        exportRecordedDataButton = activity.findViewById(R.id.optimized_thigh_extension_study_trial_page_ExportRecordedDataButton);
 
         //Set enabled status of buttons that shouldn't be enabled at the start of the app
         updateButtonEnabledStatus(startScanButton, false);
@@ -80,18 +80,18 @@ public class OptimizedThighExtensionStudyUI extends UserInterfaceWithRecordingIM
         updateButtonEnabledStatus(startTrialButton, false);
 
         //Declare UI EditText
-        EditText subjectNumberEditText = activity.findViewById(R.id.thigh_extension_study_trial_page_SubjectNumberEntryBox);
-        EditText leftHapticFeedbackModuleIPEditText = activity.findViewById(R.id.thigh_extension_study_trial_page_LeftDeviceNumberEntryBox);
-        EditText rightHapticFeedbackModuleIPEditText = activity.findViewById(R.id.thigh_extension_study_trial_page_RightDeviceNumberEntryBox);
+        EditText subjectNumberEditText = activity.findViewById(R.id.optimized_thigh_extension_study_trial_page_SubjectNumberEntryBox);
+        EditText leftHapticFeedbackModuleIPEditText = activity.findViewById(R.id.optimized_thigh_extension_study_trial_page_LeftDeviceNumberEntryBox);
+        EditText rightHapticFeedbackModuleIPEditText = activity.findViewById(R.id.optimized_thigh_extension_study_trial_page_RightDeviceNumberEntryBox);
 
         //Declare UI Dropdown Spinners
-        Spinner leftArmIMUSpinner = activity.findViewById(R.id.thigh_extension_study_trial_page_LeftArmSpinner);
-        Spinner rightArmIMUSpinner = activity.findViewById(R.id.thigh_extension_study_trial_page_RightArmSpinner);
-        Spinner leftThighIMUSpinner = activity.findViewById(R.id.thigh_extension_study_trial_page_LeftThighSpinner);
-        Spinner rightThighIMUSpinner = activity.findViewById(R.id.thigh_extension_study_trial_page_RightThighSpinner);
-        Spinner leftFootIMUSpinner = activity.findViewById(R.id.thigh_extension_study_trial_page_LeftFootSpinner);
-        Spinner rightFootIMUSpinner = activity.findViewById(R.id.thigh_extension_study_trial_page_RightFootSpinner);
-        Spinner trialModeSpinner = activity.findViewById(R.id.thigh_extension_study_trial_page_TrialModeSpinner);
+        Spinner leftArmIMUSpinner = activity.findViewById(R.id.optimized_thigh_extension_study_trial_page_LeftArmSpinner);
+        Spinner rightArmIMUSpinner = activity.findViewById(R.id.optimized_thigh_extension_study_trial_page_RightArmSpinner);
+        Spinner leftThighIMUSpinner = activity.findViewById(R.id.optimized_thigh_extension_study_trial_page_LeftThighSpinner);
+        Spinner rightThighIMUSpinner = activity.findViewById(R.id.optimized_thigh_extension_study_trial_page_RightThighSpinner);
+        Spinner leftFootIMUSpinner = activity.findViewById(R.id.optimized_thigh_extension_study_trial_page_LeftFootSpinner);
+        Spinner rightFootIMUSpinner = activity.findViewById(R.id.optimized_thigh_extension_study_trial_page_RightFootSpinner);
+        Spinner trialModeSpinner = activity.findViewById(R.id.optimized_thigh_extension_study_trial_page_TrialModeSpinner);
 
         //Set the Dropdown Spinner Array Adapter
         ArrayAdapter<CharSequence> IMUMacAddresses = new ArrayAdapter<>(activity, R.layout.popup_window_for_dropdown_spinner, activity.getResources().getStringArray(R.array.IMU_MAC_Addresses)); // Use your layout for the trigger
@@ -641,27 +641,27 @@ public class OptimizedThighExtensionStudyUI extends UserInterfaceWithRecordingIM
         //Update the IMU Status based on the name of the IMU
         switch (nameOfIMU){
             case "Left Arm IMU":
-                TextView LeftArmStatus = activity.findViewById(R.id.thigh_extension_study_trial_page_LeftArmStatusView);
+                TextView LeftArmStatus = activity.findViewById(R.id.optimized_thigh_extension_study_trial_page_LeftArmStatusView);
                 LeftArmStatus.setText(status);
                 break;
             case "Right Arm IMU":
-                TextView RightArmStatus = activity.findViewById(R.id.thigh_extension_study_trial_page_RightArmStatusView);
+                TextView RightArmStatus = activity.findViewById(R.id.optimized_thigh_extension_study_trial_page_RightArmStatusView);
                 RightArmStatus.setText(status);
                 break;
             case "Left Thigh IMU":
-                TextView LeftThighStatus = activity.findViewById(R.id.thigh_extension_study_trial_page_LeftThighStatusView);
+                TextView LeftThighStatus = activity.findViewById(R.id.optimized_thigh_extension_study_trial_page_LeftThighStatusView);
                 LeftThighStatus.setText(status);
                 break;
             case "Right Thigh IMU":
-                TextView RightThighStatus = activity.findViewById(R.id.thigh_extension_study_trial_page_RightThighStatusView);
+                TextView RightThighStatus = activity.findViewById(R.id.optimized_thigh_extension_study_trial_page_RightThighStatusView);
                 RightThighStatus.setText(status);
                 break;
             case "Left Foot IMU":
-                TextView LeftFootStatus = activity.findViewById(R.id.thigh_extension_study_trial_page_LeftFootStatusView);
+                TextView LeftFootStatus = activity.findViewById(R.id.optimized_thigh_extension_study_trial_page_LeftFootStatusView);
                 LeftFootStatus.setText(status);
                 break;
             case "Right Foot IMU":
-                TextView RightFootStatus = activity.findViewById(R.id.thigh_extension_study_trial_page_RightFootStatusView);
+                TextView RightFootStatus = activity.findViewById(R.id.optimized_thigh_extension_study_trial_page_RightFootStatusView);
                 RightFootStatus.setText(status);
                 break;
         }
@@ -674,19 +674,19 @@ public class OptimizedThighExtensionStudyUI extends UserInterfaceWithRecordingIM
         //Update the IMU DataOutput based on the name of the IMU
         switch (nameOfIMU){
             case "Left Thigh IMU":
-                TextView LeftThighDataOutput = activity.findViewById(R.id.thigh_extension_study_trial_page_LeftThighDataOutputView);
+                TextView LeftThighDataOutput = activity.findViewById(R.id.optimized_thigh_extension_study_trial_page_LeftThighDataOutputView);
                 LeftThighDataOutput.setText(data);
                 break;
             case "Right Thigh IMU":
-                TextView RightThighDataOutput = activity.findViewById(R.id.thigh_extension_study_trial_page_RightThighDataOutputView);
+                TextView RightThighDataOutput = activity.findViewById(R.id.optimized_thigh_extension_study_trial_page_RightThighDataOutputView);
                 RightThighDataOutput.setText(data);
                 break;
             case "Left Foot IMU":
-                TextView LeftFootDataOutput = activity.findViewById(R.id.thigh_extension_study_trial_page_LeftFootDataOutputView);
+                TextView LeftFootDataOutput = activity.findViewById(R.id.optimized_thigh_extension_study_trial_page_LeftFootDataOutputView);
                 LeftFootDataOutput.setText(data);
                 break;
             case "Right Foot IMU":
-                TextView RightFootDataOutput = activity.findViewById(R.id.thigh_extension_study_trial_page_RightFootDataOutputView);
+                TextView RightFootDataOutput = activity.findViewById(R.id.optimized_thigh_extension_study_trial_page_RightFootDataOutputView);
                 RightFootDataOutput.setText(data);
                 break;
         }
@@ -700,12 +700,12 @@ public class OptimizedThighExtensionStudyUI extends UserInterfaceWithRecordingIM
             case "PTE":
                 //If nameOfIMU is Left Thigh, update the Left Last Stride PTE
                 if(nameOfIMU.equals("Left Thigh IMU")) {
-                    TextView LeftThighPTE = activity.findViewById(R.id.thigh_extension_study_trial_page_LeftThighLastPeak);
+                    TextView LeftThighPTE = activity.findViewById(R.id.optimized_thigh_extension_study_trial_page_LeftThighLastPeak);
                     LeftThighPTE.setText(data);
                 }
                 //If nameOfIMU is Right Thigh, update the Right Last Stride PTE
                 else if(nameOfIMU.equals("Right Thigh IMU")){
-                    TextView RightThighPTE = activity.findViewById(R.id.thigh_extension_study_trial_page_RightThighLastPeak);
+                    TextView RightThighPTE = activity.findViewById(R.id.optimized_thigh_extension_study_trial_page_RightThighLastPeak);
                     RightThighPTE.setText(data);
                 }
                 //If nameOFIMU is anything else, log as an error
@@ -716,12 +716,12 @@ public class OptimizedThighExtensionStudyUI extends UserInterfaceWithRecordingIM
             case "StrideLength":
                 //If nameOfIMU is Left Foot, update the Left Stride Length
                 if(nameOfIMU.equals("Left Foot IMU")) {
-                    TextView LeftFootStrideLength = activity.findViewById(R.id.thigh_extension_study_trial_page_LeftThighLastStrideLength);
+                    TextView LeftFootStrideLength = activity.findViewById(R.id.optimized_thigh_extension_study_trial_page_LeftThighLastStrideLength);
                     LeftFootStrideLength.setText(data);
                 }
                 //If nameOfIMU is Right Foot, update the Right Stride Length
                 else if(nameOfIMU.equals("Right Foot IMU")){
-                    TextView RightFootStrideLength = activity.findViewById(R.id.thigh_extension_study_trial_page_RightThighLastStrideLength);
+                    TextView RightFootStrideLength = activity.findViewById(R.id.optimized_thigh_extension_study_trial_page_RightThighLastStrideLength);
                     RightFootStrideLength.setText(data);
                 }
                 //If nameOFIMU is anything else, log as an error
@@ -732,12 +732,12 @@ public class OptimizedThighExtensionStudyUI extends UserInterfaceWithRecordingIM
             case "WalkingSpeed":
                 //If nameOfIMU is Left Foot, update the Left Walking Speed
                 if(nameOfIMU.equals("Left Foot IMU")) {
-                    TextView LeftFootWalkingSpeed = activity.findViewById(R.id.thigh_extension_study_trial_page_LeftThighLastSpeed);
+                    TextView LeftFootWalkingSpeed = activity.findViewById(R.id.optimized_thigh_extension_study_trial_page_LeftThighLastSpeed);
                     LeftFootWalkingSpeed.setText(data);
                 }
                 //If nameOfIMU is Right Foot, update the Right Walking Speed
                 else if(nameOfIMU.equals("Right Foot IMU")){
-                    TextView RightFootWalkingSpeed = activity.findViewById(R.id.thigh_extension_study_trial_page_RightThighLastSpeed);
+                    TextView RightFootWalkingSpeed = activity.findViewById(R.id.optimized_thigh_extension_study_trial_page_RightThighLastSpeed);
                     RightFootWalkingSpeed.setText(data);
                 }
                 //If nameOFIMU is anything else, log as an error
@@ -748,12 +748,12 @@ public class OptimizedThighExtensionStudyUI extends UserInterfaceWithRecordingIM
             case "Cadence":
                 //If nameOfIMU is Left Foot, update the Left Cadence
                 if(nameOfIMU.equals("Left Foot IMU")) {
-                    TextView LeftFootCadence = activity.findViewById(R.id.thigh_extension_study_trial_page_LeftThighLastCadence);
+                    TextView LeftFootCadence = activity.findViewById(R.id.optimized_thigh_extension_study_trial_page_LeftThighLastCadence);
                     LeftFootCadence.setText(data);
                 }
                 //If nameOfIMU is Right Foot, update the Right Cadence
                 else if(nameOfIMU.equals("Right Foot IMU")){
-                    TextView RightFootCadence = activity.findViewById(R.id.thigh_extension_study_trial_page_RightThighLastCadence);
+                    TextView RightFootCadence = activity.findViewById(R.id.optimized_thigh_extension_study_trial_page_RightThighLastCadence);
                     RightFootCadence.setText(data);
                 }
                 //If nameOFIMU is anything else, log as an error
@@ -764,12 +764,12 @@ public class OptimizedThighExtensionStudyUI extends UserInterfaceWithRecordingIM
             case "PTECycleCount":
                 //If nameOfIMU is Left Thigh, update the Left Thigh PTE Cycle Count
                 if(nameOfIMU.equals("Left Thigh IMU")) {
-                    TextView LeftThighPTECycleCount = activity.findViewById(R.id.thigh_extension_study_trial_page_LeftThighCycle);
+                    TextView LeftThighPTECycleCount = activity.findViewById(R.id.optimized_thigh_extension_study_trial_page_LeftThighCycle);
                     LeftThighPTECycleCount.setText(data);
                 }
                 //If nameOfIMU is Right Thigh, update the Right Thigh PTE Cycle Count
                 else if(nameOfIMU.equals("Right Thigh IMU")) {
-                    TextView RightThighPTECycleCount = activity.findViewById(R.id.thigh_extension_study_trial_page_RightThighCycle);
+                    TextView RightThighPTECycleCount = activity.findViewById(R.id.optimized_thigh_extension_study_trial_page_RightThighCycle);
                     RightThighPTECycleCount.setText(data);
                 }
                 //If nameOFIMU is anything else, log as an error
@@ -780,12 +780,12 @@ public class OptimizedThighExtensionStudyUI extends UserInterfaceWithRecordingIM
             case "HeelStrikeCycleCount":
                 //If nameOfIMU is Left Foot, update the Left Heel Strike Cycle Count
                 if(nameOfIMU.equals("Left Foot IMU")) {
-                    TextView LeftFootHeelStrikeCycleCount = activity.findViewById(R.id.thigh_extension_study_trial_page_LeftFootCycle);
+                    TextView LeftFootHeelStrikeCycleCount = activity.findViewById(R.id.optimized_thigh_extension_study_trial_page_LeftFootCycle);
                     LeftFootHeelStrikeCycleCount.setText(data);
                 }
                 //If nameOfIMU is Right Foot, update the Right Heel Strike Cycle Count
                 else if(nameOfIMU.equals("Right Foot IMU")){
-                    TextView RightFootHeelStrikeCycleCount = activity.findViewById(R.id.thigh_extension_study_trial_page_RightFootCycle);
+                    TextView RightFootHeelStrikeCycleCount = activity.findViewById(R.id.optimized_thigh_extension_study_trial_page_RightFootCycle);
                     RightFootHeelStrikeCycleCount.setText(data);
                 }
                 //If nameOFIMU is anything else, log as an error
@@ -796,12 +796,12 @@ public class OptimizedThighExtensionStudyUI extends UserInterfaceWithRecordingIM
             case "TargetAngle":
                 //If nameOfIMU is Left Thigh, update the Left Thigh Target Angle
                 if(nameOfIMU.equals("Left Thigh IMU")) {
-                    TextView LeftThighTargetAngle = activity.findViewById(R.id.thigh_extension_study_trial_page_LeftThighTargetAngle);
+                    TextView LeftThighTargetAngle = activity.findViewById(R.id.optimized_thigh_extension_study_trial_page_LeftThighTargetAngle);
                     LeftThighTargetAngle.setText(data);
                 }
                 //If nameOfIMU is Right Thigh, update the Right Thigh Target Angle
                 else if(nameOfIMU.equals("Right Thigh IMU")) {
-                    TextView RightThighTargetAngle = activity.findViewById(R.id.thigh_extension_study_trial_page_RightThighTargetAngle);
+                    TextView RightThighTargetAngle = activity.findViewById(R.id.optimized_thigh_extension_study_trial_page_RightThighTargetAngle);
                     RightThighTargetAngle.setText(data);
                 }
                 //If nameOFIMU is anything else, log as an error
@@ -812,12 +812,12 @@ public class OptimizedThighExtensionStudyUI extends UserInterfaceWithRecordingIM
             case "TargetCadence":
                 //If nameOfIMU is Left Foot, update the Left Target Cadence
                 if(nameOfIMU.equals("Left Foot IMU")) {
-                    TextView LeftFootTargetCadence = activity.findViewById(R.id.thigh_extension_study_trial_page_LeftThighTargetCadence);
+                    TextView LeftFootTargetCadence = activity.findViewById(R.id.optimized_thigh_extension_study_trial_page_LeftThighTargetCadence);
                     LeftFootTargetCadence.setText(data);
                 }
                 //If nameOfIMU is Right Foot, update the Right Target Cadence
                 else if(nameOfIMU.equals("Right Foot IMU")){
-                    TextView RightFootTargetCadence = activity.findViewById(R.id.thigh_extension_study_trial_page_RightThighTargetCadence);
+                    TextView RightFootTargetCadence = activity.findViewById(R.id.optimized_thigh_extension_study_trial_page_RightThighTargetCadence);
                     RightFootTargetCadence.setText(data);
                 }
                 //If nameOFIMU is anything else, log as an error

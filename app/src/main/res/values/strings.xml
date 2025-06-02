@@ -67,6 +67,8 @@
     <string name="ExportIMURecordedDataButtonText">Export IMU Recorded Data</string>
     <string name="EnterSubjectAutofill">Enter Subject Number</string>
     <string name="EnterSubjectNumberHint">Subject #</string>
+    <string name="LeftDeviceNumberLabel">Left Device Number:</string>
+    <string name="RightDeviceNumberLabel">Right Device Number:</string>
     <string name="LeftEnterDeviceNumberAutoFill">Enter Left Device IP Number (0–255)</string>
     <string name="RightEnterDeviceNumberAutoFill">Enter Right Device IP Number (0–255)</string>
     <string name="LeftEnterDeviceNumberIPHint">Left Dev# (0–255)</string>

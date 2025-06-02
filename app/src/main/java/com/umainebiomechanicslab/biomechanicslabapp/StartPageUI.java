@@ -10,11 +10,11 @@ public class StartPageUI extends UserInterface {
         super(activity, pageID);
 
         //Declare UI Objects
-        Button forEperimenersButton = activity.findViewById(R.id.start_page_ForExperimentors);
+        Button forExperimenersButton = activity.findViewById(R.id.start_page_ForExperimenters);
         Button forParticipantsButton = activity.findViewById(R.id.start_page_ForParticipants);
 
         //Set Experimenter Menu Button Click Listener
-        forEperimenersButton.setOnClickListener(view -> experimenterMenu.showPage());
+        forExperimenersButton.setOnClickListener(view -> experimenterMenu.showPage());
 
         //Set Participant Menu Button Click Listener
         forParticipantsButton.setOnClickListener(view -> participantMenu.showPage());

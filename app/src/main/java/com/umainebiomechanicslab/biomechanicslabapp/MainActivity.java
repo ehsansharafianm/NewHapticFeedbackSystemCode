@@ -39,14 +39,16 @@ public class MainActivity extends AppCompatActivity {
 
         //Instantiate UI Objects
         TestHapticCellsUI testHapticCellsUI = new TestHapticCellsUI(this, R.id.test_haptic_cells_page);
-        OptimizedThighExtensionStudyUI thighExtensionStudyUI = new OptimizedThighExtensionStudyUI(this, R.id.thigh_extension_study_trial_page, logPopupWindowUI, fileManager);
+        OptimizedThighExtensionStudyUI optimizedThighExtensionStudyUI = new OptimizedThighExtensionStudyUI(this, R.id.optimized_thigh_extension_study_trial_page, logPopupWindowUI, fileManager);
+        OriginalThighExtensionStudyUI originalThighExtensionStudyUI = new OriginalThighExtensionStudyUI(this, R.id.original_thigh_extension_study_trial_page, logPopupWindowUI, fileManager);
         IMURecordingPageUI imuRecordingPageUI = new IMURecordingPageUI(this, R.id.imu_recording_page, logPopupWindowUI, fileManager);
-        ExperimenterMenuUI experimenterMenuUI = new ExperimenterMenuUI(this, R.id.experimenter_menu, imuRecordingPageUI, testHapticCellsUI, thighExtensionStudyUI);
+        ExperimenterMenuUI experimenterMenuUI = new ExperimenterMenuUI(this, R.id.experimenter_menu, imuRecordingPageUI, testHapticCellsUI, originalThighExtensionStudyUI, optimizedThighExtensionStudyUI);
         ParticipantMenuUI participantMenuUI = new ParticipantMenuUI(this, R.id.participant_menu);
         StartPageUI startPageUI = new StartPageUI(this, R.id.start_page, experimenterMenuUI, participantMenuUI);
 
         //Link User Interfaces
-        thighExtensionStudyUI.linkUserInterfaceForBackButton(experimenterMenuUI);
+        optimizedThighExtensionStudyUI.linkUserInterfaceForBackButton(experimenterMenuUI);
+        originalThighExtensionStudyUI.linkUserInterfaceForBackButton(experimenterMenuUI);
         testHapticCellsUI.linkUserInterfaceForBackButton(experimenterMenuUI);
         imuRecordingPageUI.linkUserInterfaceForBackButton(experimenterMenuUI);
         experimenterMenuUI.linkUserInterfaceForBackButton(startPageUI);
@@ -55,12 +57,15 @@ public class MainActivity extends AppCompatActivity {
         //Instantiate Trial Manager Objects
         TestHapticCellsManager testHapticCellsManager = new TestHapticCellsManager(testHapticCellsUI, experimenterMenuUI, loadingWindowUI);
         RecordIMUDataManager recordIMUDataManager = new RecordIMUDataManager(imuRecordingPageUI, this, fileManager);
-        OptimizedThighExtensionStudyManager thighExtensionStudyManager = new OptimizedThighExtensionStudyManager(thighExtensionStudyUI, experimenterMenuUI, loadingWindowUI, this, fileManager);
+        OptimizedThighExtensionStudyManager optimizedThighExtensionStudyManager = new OptimizedThighExtensionStudyManager(optimizedThighExtensionStudyUI, experimenterMenuUI, loadingWindowUI, this, fileManager);
+        OriginalThighExtensionStudyManager originalThighExtensionStudyManager = new OriginalThighExtensionStudyManager(originalThighExtensionStudyUI, experimenterMenuUI, loadingWindowUI, this, fileManager);
+
 
         //Link Trial Manager Objects
         testHapticCellsUI.linkTestHapticCellsManager(testHapticCellsManager);
         imuRecordingPageUI.linkIMUManager(recordIMUDataManager);
-        thighExtensionStudyUI.linkIMUManager(thighExtensionStudyManager);
+        optimizedThighExtensionStudyUI.linkIMUManager(optimizedThighExtensionStudyManager);
+        originalThighExtensionStudyUI.linkIMUManager(originalThighExtensionStudyManager);
 
         //Show Start Page
         startPageUI.showPage();
