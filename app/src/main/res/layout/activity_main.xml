@@ -11,7 +11,7 @@
     <include layout="@layout/test_haptic_cells_page"/>
     <include layout="@layout/loading_page"/>
     <include layout="@layout/imu_recording_page"/>
-    <include layout="@layout/thigh_extension_study_trial_page"/>
+    <include layout="@layout/optimized_thigh_extension_study_trial_page"/>
     <include layout="@layout/log_popup_window"/>
 
 </FrameLayout>

@@ -1,11 +1,13 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/thigh_extension_study_trial_page"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="?attr/experimentalPageBackgroundColor">
+    android:background="?attr/experimentalPageBackgroundColor"
+    tools:ignore="TooManyViews">
 
     <TextView
-        android:id="@+id/thigh_extension_study_trial_page_PageTitle"
+        android:id="@+id/optimized_thigh_extension_study_trial_pagePageTitle"
         style="@style/ExperimentalPageTitleText"
         android:layout_width="200dp"
         android:layout_height="70dp"
@@ -13,55 +15,57 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="?attr/actionBarSize"
         android:layout_marginBottom="10dp"
-        android:text="@string/ThighExtensionStudyPageTitle"/>
+        android:text="@string/OptimizedThighExtensionStudyPageTitle"/>
 
     <Button
-        android:id="@+id/thigh_extension_study_trial_page_GoBackButton"
+        android:id="@+id/optimized_thigh_extension_study_trial_pageGoBackButton"
         style="?attr/defaultButtonStyle"
         android:layout_width="80dp"
         android:layout_height="50dp"
-        android:layout_alignTop="@+id/thigh_extension_study_trial_page_PageTitle"
-        android:layout_toStartOf="@+id/thigh_extension_study_trial_page_PageTitle"
+        android:layout_alignTop="@+id/optimized_thigh_extension_study_trial_pagePageTitle"
+        android:layout_toStartOf="@+id/optimized_thigh_extension_study_trial_pagePageTitle"
         android:layout_marginTop="10dp"
         android:layout_marginEnd="10dp"
         android:text="@string/GoBackButton"/>
 
     <TextView
-        android:id="@+id/thigh_extension_study_trial_page_SubjectNumberEntryBoxLabel"
+        android:id="@+id/optimized_thigh_extension_study_trial_pageSubjectNumberEntryBoxLabel"
         style="@style/ExperimentalPageLabelText"
         android:layout_width="80dp"
         android:layout_height="wrap_content"
-        android:layout_alignTop="@+id/thigh_extension_study_trial_page_PageTitle"
-        android:layout_toEndOf="@+id/thigh_extension_study_trial_page_PageTitle"
+        android:layout_alignTop="@+id/optimized_thigh_extension_study_trial_pagePageTitle"
         android:layout_marginStart="10dp"
+        android:layout_toEndOf="@+id/optimized_thigh_extension_study_trial_pagePageTitle"
         android:text="@string/SubjectNumber"/>
 
     <EditText
-        android:id="@+id/thigh_extension_study_trial_page_SubjectNumberEntryBox"
+        android:id="@+id/optimized_thigh_extension_study_trial_pageSubjectNumberEntryBox"
         style="?attr/textEntryBoxStyle"
         android:layout_width="80dp"
         android:layout_height="50dp"
-        android:layout_alignStart="@+id/thigh_extension_study_trial_page_SubjectNumberEntryBoxLabel"
-        android:layout_below="@+id/thigh_extension_study_trial_page_SubjectNumberEntryBoxLabel"
+        android:layout_alignStart="@+id/optimized_thigh_extension_study_trial_pageSubjectNumberEntryBoxLabel"
+        android:layout_below="@+id/optimized_thigh_extension_study_trial_pageSubjectNumberEntryBoxLabel"
+        android:autofillHints="@string/EnterSubjectAutofill"
+        android:hint="@string/EnterSubjectNumberHint"
         android:textAlignment="center"
         android:inputType="number"/>
 
     <View
-        android:id="@+id/thigh_extension_study_trial_page_HorizontalLine1"
+        android:id="@+id/optimized_thigh_extension_study_trial_pageHorizontalLine1"
         android:background="?attr/experimentalPageHeaderTextColor"
         android:layout_width="match_parent"
         android:layout_height="2dp"
-        android:layout_below="@id/thigh_extension_study_trial_page_PageTitle"
+        android:layout_below="@id/optimized_thigh_extension_study_trial_pagePageTitle"
         android:layout_centerHorizontal="true"/>
 
     <View
-        android:id="@+id/thigh_extension_study_trial_page_CenterSpace1"
+        android:id="@+id/optimized_thigh_extension_study_trial_pageCenterSpace1"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_centerHorizontal="true" />
+        android:layout_centerHorizontal="true"/>
 
     <Button
-        android:id="@+id/thigh_extension_study_trial_page_ShowLogButton"
+        android:id="@+id/optimized_thigh_extension_study_trial_pageShowLogButton"
         style="?attr/defaultButtonStyle"
         android:layout_width="120dp"
         android:layout_height="50dp"
@@ -72,35 +76,35 @@
         android:text="@string/ShowLogButtonText"/>
 
     <Button
-        android:id="@+id/thigh_extension_study_trial_page_UploadDataToCloudButton"
+        android:id="@+id/optimized_thigh_extension_study_trial_pageUploadDataToCloudButton"
         style="?attr/defaultButtonStyle"
         android:layout_width="120dp"
         android:layout_height="50dp"
         android:layout_alignParentBottom="true"
-        android:layout_toEndOf="@id/thigh_extension_study_trial_page_ShowLogButton"
+        android:layout_toEndOf="@id/optimized_thigh_extension_study_trial_pageShowLogButton"
         android:layout_marginTop="10dp"
         android:layout_marginStart="10dp"
         android:layout_marginBottom="25dp"
         android:text="@string/UploadDataToCloudButtonText"/>
 
     <Button
-        android:id="@+id/thigh_extension_study_trial_page_ExportRecordedDataButton"
+        android:id="@+id/optimized_thigh_extension_study_trial_pageExportRecordedDataButton"
         style="?attr/defaultButtonStyle"
         android:layout_width="120dp"
         android:layout_height="50dp"
         android:layout_alignParentBottom="true"
-        android:layout_toStartOf="@id/thigh_extension_study_trial_page_ShowLogButton"
+        android:layout_toStartOf="@id/optimized_thigh_extension_study_trial_pageShowLogButton"
         android:layout_marginTop="10dp"
         android:layout_marginEnd="10dp"
         android:layout_marginBottom="25dp"
         android:text="@string/ExportIMURecordedDataButtonText"/>
 
     <View
-        android:id="@+id/thigh_extension_study_trial_page_HorizontalLine7"
+        android:id="@+id/optimized_thigh_extension_study_trial_pageHorizontalLine7"
         android:background="?attr/experimentalPageHeaderTextColor"
         android:layout_width="match_parent"
         android:layout_height="2dp"
-        android:layout_above="@id/thigh_extension_study_trial_page_ShowLogButton"
+        android:layout_above="@id/optimized_thigh_extension_study_trial_pageShowLogButton"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="10dp"/>
 
@@ -108,8 +112,8 @@
         android:id="@+id/content_scroll_view"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_below="@id/thigh_extension_study_trial_page_HorizontalLine1"
-        android:layout_above="@+id/thigh_extension_study_trial_page_HorizontalLine7"
+        android:layout_below="@id/optimized_thigh_extension_study_trial_pageHorizontalLine1"
+        android:layout_above="@+id/optimized_thigh_extension_study_trial_pageHorizontalLine7"
         android:fillViewport="true">
         
         <RelativeLayout
@@ -117,13 +121,13 @@
             android:layout_height="wrap_content">
 
             <View
-                android:id="@+id/thigh_extension_study_trial_page_CenterSpace"
+                android:id="@+id/optimized_thigh_extension_study_trial_pageCenterSpace"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
-                android:layout_centerHorizontal="true" />
+                android:layout_centerHorizontal="true"/>
 
             <TextView
-                android:id="@+id/thigh_extension_study_trial_page_IMUSelectionTitle"
+                android:id="@+id/optimized_thigh_extension_study_trial_pageIMUSelectionTitle"
                 style="@style/ExperimentalPageHeadingText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -133,207 +137,211 @@
                 android:text="@string/SelectIMUsHeader"/>
 
             <Spinner
-                android:id="@+id/thigh_extension_study_trial_page_LeftArmSpinner"
+                android:id="@+id/optimized_thigh_extension_study_trial_pageLeftArmSpinner"
                 style="?attr/defaultDropdownSpinner"
                 android:layout_width="120dp"
                 android:layout_height="50dp"
-                android:layout_below="@+id/thigh_extension_study_trial_page_IMUSelectionTitle"
-                android:layout_toStartOf="@id/thigh_extension_study_trial_page_CenterSpace"
+                android:layout_below="@+id/optimized_thigh_extension_study_trial_pageIMUSelectionTitle"
+                android:layout_toStartOf="@id/optimized_thigh_extension_study_trial_pageCenterSpace"
                 android:layout_marginTop="10dp"
                 android:layout_marginEnd="10dp"/>
 
             <TextView
-                android:id="@+id/thigh_extension_study_trial_page_LeftArmSpinnerLabel"
+                android:id="@+id/optimized_thigh_extension_study_trial_pageLeftArmSpinnerLabel"
                 style="@style/ExperimentalPageLabelText"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
-                android:layout_alignTop="@+id/thigh_extension_study_trial_page_LeftArmSpinner"
-                android:layout_toStartOf="@+id/thigh_extension_study_trial_page_LeftArmSpinner"
+                android:layout_alignTop="@+id/optimized_thigh_extension_study_trial_pageLeftArmSpinner"
+                android:layout_toStartOf="@+id/optimized_thigh_extension_study_trial_pageLeftArmSpinner"
                 android:layout_marginEnd="10dp"
                 android:gravity="center"
                 android:text="@string/LeftArmLabel"/>
 
             <TextView
-                android:id="@+id/thigh_extension_study_trial_page_RightArmSpinnerLabel"
+                android:id="@+id/optimized_thigh_extension_study_trial_pageRightArmSpinnerLabel"
                 style="@style/ExperimentalPageLabelText"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
-                android:layout_below="@+id/thigh_extension_study_trial_page_IMUSelectionTitle"
-                android:layout_toEndOf="@id/thigh_extension_study_trial_page_CenterSpace"
+                android:layout_below="@+id/optimized_thigh_extension_study_trial_pageIMUSelectionTitle"
+                android:layout_toEndOf="@id/optimized_thigh_extension_study_trial_pageCenterSpace"
                 android:layout_marginTop="10dp"
                 android:layout_marginStart="10dp"
                 android:gravity="center"
                 android:text="@string/RightArmLabel"/>
 
             <Spinner
-                android:id="@+id/thigh_extension_study_trial_page_RightArmSpinner"
+                android:id="@+id/optimized_thigh_extension_study_trial_pageRightArmSpinner"
                 style="?attr/defaultDropdownSpinner"
                 android:layout_width="120dp"
                 android:layout_height="50dp"
-                android:layout_alignTop="@+id/thigh_extension_study_trial_page_RightArmSpinnerLabel"
-                android:layout_toEndOf="@+id/thigh_extension_study_trial_page_RightArmSpinnerLabel"
+                android:layout_alignTop="@+id/optimized_thigh_extension_study_trial_pageRightArmSpinnerLabel"
+                android:layout_toEndOf="@+id/optimized_thigh_extension_study_trial_pageRightArmSpinnerLabel"
                 android:layout_marginStart="10dp"/>
 
             <Spinner
-                android:id="@+id/thigh_extension_study_trial_page_LeftThighSpinner"
+                android:id="@+id/optimized_thigh_extension_study_trial_pageLeftThighSpinner"
                 style="?attr/defaultDropdownSpinner"
                 android:layout_width="120dp"
                 android:layout_height="50dp"
-                android:layout_below="@+id/thigh_extension_study_trial_page_LeftArmSpinner"
-                android:layout_toStartOf="@id/thigh_extension_study_trial_page_CenterSpace"
+                android:layout_below="@+id/optimized_thigh_extension_study_trial_pageLeftArmSpinner"
+                android:layout_toStartOf="@id/optimized_thigh_extension_study_trial_pageCenterSpace"
                 android:layout_marginTop="10dp"
                 android:layout_marginEnd="10dp"/>
 
             <TextView
-                android:id="@+id/thigh_extension_study_trial_page_LeftThighSpinnerLabel"
+                android:id="@+id/optimized_thigh_extension_study_trial_pageLeftThighSpinnerLabel"
                 style="@style/ExperimentalPageLabelText"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
-                android:layout_alignTop="@+id/thigh_extension_study_trial_page_LeftThighSpinner"
-                android:layout_toStartOf="@+id/thigh_extension_study_trial_page_LeftThighSpinner"
+                android:layout_alignTop="@+id/optimized_thigh_extension_study_trial_pageLeftThighSpinner"
+                android:layout_toStartOf="@+id/optimized_thigh_extension_study_trial_pageLeftThighSpinner"
                 android:layout_marginEnd="10dp"
                 android:gravity="center"
                 android:text="@string/LeftThighLabel"/>
 
             <TextView
-                android:id="@+id/thigh_extension_study_trial_page_RightThighSpinnerLabel"
+                android:id="@+id/optimized_thigh_extension_study_trial_pageRightThighSpinnerLabel"
                 style="@style/ExperimentalPageLabelText"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
-                android:layout_below="@+id/thigh_extension_study_trial_page_RightArmSpinnerLabel"
-                android:layout_toEndOf="@id/thigh_extension_study_trial_page_CenterSpace"
+                android:layout_below="@+id/optimized_thigh_extension_study_trial_pageRightArmSpinnerLabel"
+                android:layout_toEndOf="@id/optimized_thigh_extension_study_trial_pageCenterSpace"
                 android:layout_marginTop="10dp"
                 android:layout_marginStart="10dp"
                 android:gravity="center"
                 android:text="@string/RightThighLabel"/>
 
             <Spinner
-                android:id="@+id/thigh_extension_study_trial_page_RightThighSpinner"
+                android:id="@+id/optimized_thigh_extension_study_trial_pageRightThighSpinner"
                 style="?attr/defaultDropdownSpinner"
                 android:layout_width="120dp"
                 android:layout_height="50dp"
-                android:layout_alignTop="@+id/thigh_extension_study_trial_page_RightThighSpinnerLabel"
-                android:layout_toEndOf="@+id/thigh_extension_study_trial_page_RightThighSpinnerLabel"
+                android:layout_alignTop="@+id/optimized_thigh_extension_study_trial_pageRightThighSpinnerLabel"
+                android:layout_toEndOf="@+id/optimized_thigh_extension_study_trial_pageRightThighSpinnerLabel"
                 android:layout_marginStart="10dp"/>
 
             <Spinner
-                android:id="@+id/thigh_extension_study_trial_page_LeftFootSpinner"
+                android:id="@+id/optimized_thigh_extension_study_trial_pageLeftFootSpinner"
                 style="?attr/defaultDropdownSpinner"
                 android:layout_width="120dp"
                 android:layout_height="50dp"
-                android:layout_below="@+id/thigh_extension_study_trial_page_LeftThighSpinner"
-                android:layout_toStartOf="@id/thigh_extension_study_trial_page_CenterSpace"
+                android:layout_below="@+id/optimized_thigh_extension_study_trial_pageLeftThighSpinner"
+                android:layout_toStartOf="@id/optimized_thigh_extension_study_trial_pageCenterSpace"
                 android:layout_marginTop="10dp"
                 android:layout_marginEnd="10dp"/>
 
             <TextView
-                android:id="@+id/thigh_extension_study_trial_page_LeftFootSpinnerLabel"
+                android:id="@+id/optimized_thigh_extension_study_trial_pageLeftFootSpinnerLabel"
                 style="@style/ExperimentalPageLabelText"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
-                android:layout_alignTop="@+id/thigh_extension_study_trial_page_LeftFootSpinner"
-                android:layout_toStartOf="@+id/thigh_extension_study_trial_page_LeftFootSpinner"
+                android:layout_alignTop="@+id/optimized_thigh_extension_study_trial_pageLeftFootSpinner"
+                android:layout_toStartOf="@+id/optimized_thigh_extension_study_trial_pageLeftFootSpinner"
                 android:layout_marginEnd="10dp"
                 android:gravity="center"
                 android:text="@string/LeftFootLabel"/>
 
             <TextView
-                android:id="@+id/thigh_extension_study_trial_page_RightFootSpinnerLabel"
+                android:id="@+id/optimized_thigh_extension_study_trial_pageRightFootSpinnerLabel"
                 style="@style/ExperimentalPageLabelText"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
-                android:layout_below="@+id/thigh_extension_study_trial_page_RightThighSpinnerLabel"
-                android:layout_toEndOf="@id/thigh_extension_study_trial_page_CenterSpace"
+                android:layout_below="@+id/optimized_thigh_extension_study_trial_pageRightThighSpinnerLabel"
+                android:layout_toEndOf="@id/optimized_thigh_extension_study_trial_pageCenterSpace"
                 android:layout_marginTop="10dp"
                 android:layout_marginStart="10dp"
                 android:gravity="center"
                 android:text="@string/RightFootLabel"/>
 
             <Spinner
-                android:id="@+id/thigh_extension_study_trial_page_RightFootSpinner"
+                android:id="@+id/optimized_thigh_extension_study_trial_pageRightFootSpinner"
                 style="?attr/defaultDropdownSpinner"
                 android:layout_width="120dp"
                 android:layout_height="50dp"
-                android:layout_alignTop="@+id/thigh_extension_study_trial_page_RightFootSpinnerLabel"
-                android:layout_toEndOf="@+id/thigh_extension_study_trial_page_RightFootSpinnerLabel"
+                android:layout_alignTop="@+id/optimized_thigh_extension_study_trial_pageRightFootSpinnerLabel"
+                android:layout_toEndOf="@+id/optimized_thigh_extension_study_trial_pageRightFootSpinnerLabel"
                 android:layout_marginStart="10dp"/>
 
             <View
-                android:id="@+id/thigh_extension_study_trial_page_HorizontalLine2"
+                android:id="@+id/optimized_thigh_extension_study_trial_pageHorizontalLine2"
                 android:background="?attr/experimentalPageHeaderTextColor"
                 android:layout_width="match_parent"
                 android:layout_height="2dp"
-                android:layout_below="@id/thigh_extension_study_trial_page_RightFootSpinner"
+                android:layout_below="@id/optimized_thigh_extension_study_trial_pageRightFootSpinner"
                 android:layout_marginTop="10dp"
                 android:layout_centerHorizontal="true"/>
 
             <TextView
-                android:id="@+id/thigh_extension_study_trial_page_HapticCellsSelectionTitle"
+                android:id="@+id/optimized_thigh_extension_study_trial_pageHapticCellsSelectionTitle"
                 style="@style/ExperimentalPageHeadingText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/thigh_extension_study_trial_page_HorizontalLine2"
+                android:layout_below="@+id/optimized_thigh_extension_study_trial_pageHorizontalLine2"
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="10dp"
                 android:text="@string/SelectHapticCellsHeader"/>
 
             <TextView
-                android:id="@+id/thigh_extension_study_trial_page_LeftDeviceIPEntryLabel"
+                android:id="@+id/optimized_thigh_extension_study_trial_pageLeftDeviceIPEntryLabel"
                 style="?attr/colorOnSecondary"
                 android:layout_width="160dp"
                 android:layout_height="wrap_content"
-                android:layout_toStartOf="@id/thigh_extension_study_trial_page_CenterSpace"
-                android:layout_below="@+id/thigh_extension_study_trial_page_HapticCellsSelectionTitle"
+                android:layout_toStartOf="@id/optimized_thigh_extension_study_trial_pageCenterSpace"
+                android:layout_below="@+id/optimized_thigh_extension_study_trial_pageHapticCellsSelectionTitle"
                 android:layout_marginEnd="20dp"
                 android:text="@string/DeviceNumberLabel"
                 android:gravity="center"
                 android:textSize="16sp"/>
 
             <TextView
-                android:id="@+id/thigh_extension_study_trial_page_RightDeviceIPEntryLabel"
+                android:id="@+id/optimized_thigh_extension_study_trial_pageRightDeviceIPEntryLabel"
                 style="?attr/colorOnSecondary"
                 android:layout_width="160dp"
                 android:layout_height="wrap_content"
-                android:layout_toEndOf="@id/thigh_extension_study_trial_page_CenterSpace"
-                android:layout_below="@+id/thigh_extension_study_trial_page_HapticCellsSelectionTitle"
+                android:layout_toEndOf="@id/optimized_thigh_extension_study_trial_pageCenterSpace"
+                android:layout_below="@+id/optimized_thigh_extension_study_trial_pageHapticCellsSelectionTitle"
                 android:layout_marginStart="20dp"
                 android:text="@string/DeviceNumberLabel"
                 android:gravity="center"
                 android:textSize="16sp"/>
 
             <EditText
-                android:id="@+id/thigh_extension_study_trial_page_LeftDeviceNumberEntryBox"
+                android:id="@+id/optimized_thigh_extension_study_trial_pageLeftDeviceNumberEntryBox"
                 style="?attr/textEntryBoxStyle"
                 android:layout_width="160dp"
                 android:layout_height="50dp"
-                android:layout_toStartOf="@id/thigh_extension_study_trial_page_CenterSpace"
-                android:layout_below="@+id/thigh_extension_study_trial_page_LeftDeviceIPEntryLabel"
+                android:layout_toStartOf="@id/optimized_thigh_extension_study_trial_pageCenterSpace"
+                android:layout_below="@+id/optimized_thigh_extension_study_trial_pageLeftDeviceIPEntryLabel"
                 android:layout_marginTop="5dp"
                 android:layout_marginBottom="5dp"
                 android:layout_marginEnd="20dp"
+                android:autofillHints="@string/RightEnterDeviceNumberAutoFill"
+                android:hint="@string/LeftEnterDeviceNumberIPHint"
                 android:textAlignment="center"
                 android:inputType="number"/>
 
             <EditText
-                android:id="@+id/thigh_extension_study_trial_page_RightDeviceNumberEntryBox"
+                android:id="@+id/optimized_thigh_extension_study_trial_pageRightDeviceNumberEntryBox"
                 style="?attr/textEntryBoxStyle"
                 android:layout_width="160dp"
                 android:layout_height="50dp"
-                android:layout_toEndOf="@id/thigh_extension_study_trial_page_CenterSpace"
-                android:layout_below="@+id/thigh_extension_study_trial_page_RightDeviceIPEntryLabel"
+                android:layout_toEndOf="@id/optimized_thigh_extension_study_trial_pageCenterSpace"
+                android:layout_below="@+id/optimized_thigh_extension_study_trial_pageRightDeviceIPEntryLabel"
                 android:layout_marginTop="5dp"
                 android:layout_marginBottom="5dp"
                 android:layout_marginStart="20dp"
+                android:autofillHints="@string/LeftEnterDeviceNumberAutoFill"
+                android:hint="@string/RightEnterDeviceNumberIPHint"
                 android:textAlignment="center"
                 android:inputType="number"/>
 
             <TextView
-                android:id="@+id/thigh_extension_study_trial_page_LeftDeviceIP"
+                android:id="@+id/optimized_thigh_extension_study_trial_pageLeftDeviceIP"
                 style="?attr/colorOnSecondary"
                 android:layout_width="160dp"
                 android:layout_height="wrap_content"
-                android:layout_toStartOf="@id/thigh_extension_study_trial_page_CenterSpace"
-                android:layout_below="@+id/thigh_extension_study_trial_page_LeftDeviceNumberEntryBox"
+                android:layout_toStartOf="@id/optimized_thigh_extension_study_trial_pageCenterSpace"
+                android:layout_below="@+id/optimized_thigh_extension_study_trial_pageLeftDeviceNumberEntryBox"
                 android:layout_marginBottom="10dp"
                 android:layout_marginEnd="20dp"
                 android:text="@string/DefaultIPAddress"
@@ -341,12 +349,12 @@
                 android:textSize="16sp"/>
 
             <TextView
-                android:id="@+id/thigh_extension_study_trial_page_RightDeviceIP"
+                android:id="@+id/optimized_thigh_extension_study_trial_pageRightDeviceIP"
                 style="?attr/colorOnSecondary"
                 android:layout_width="160dp"
                 android:layout_height="wrap_content"
-                android:layout_toEndOf="@id/thigh_extension_study_trial_page_CenterSpace"
-                android:layout_below="@+id/thigh_extension_study_trial_page_RightDeviceNumberEntryBox"
+                android:layout_toEndOf="@id/optimized_thigh_extension_study_trial_pageCenterSpace"
+                android:layout_below="@+id/optimized_thigh_extension_study_trial_pageRightDeviceNumberEntryBox"
                 android:layout_marginBottom="10dp"
                 android:layout_marginStart="20dp"
                 android:text="@string/DefaultIPAddress"
@@ -354,665 +362,665 @@
                 android:textSize="16sp"/>
 
             <View
-                android:id="@+id/thigh_extension_study_trial_page_HorizontalLine3"
+                android:id="@+id/optimized_thigh_extension_study_trial_pageHorizontalLine3"
                 android:background="?attr/experimentalPageHeaderTextColor"
                 android:layout_width="match_parent"
                 android:layout_height="2dp"
-                android:layout_below="@id/thigh_extension_study_trial_page_LeftDeviceIP"
+                android:layout_below="@id/optimized_thigh_extension_study_trial_pageLeftDeviceIP"
                 android:layout_marginTop="10dp"
                 android:layout_centerHorizontal="true"/>
 
             <TextView
-                android:id="@+id/thigh_extension_study_trial_page_ConnectionStatusTitle"
+                android:id="@+id/optimized_thigh_extension_study_trial_pageConnectionStatusTitle"
                 style="@style/ExperimentalPageHeadingText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/thigh_extension_study_trial_page_HorizontalLine3"
+                android:layout_below="@+id/optimized_thigh_extension_study_trial_pageHorizontalLine3"
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="10dp"
                 android:text="@string/ConnectionStatusHeader"/>
 
             <Button
-                android:id="@+id/thigh_extension_study_trial_page_StartScanButton"
+                android:id="@+id/optimized_thigh_extension_study_trial_pageStartScanButton"
                 style="?attr/defaultButtonStyle"
                 android:layout_width="150dp"
                 android:layout_height="50dp"
-                android:layout_below="@+id/thigh_extension_study_trial_page_ConnectionStatusTitle"
-                android:layout_toStartOf="@id/thigh_extension_study_trial_page_CenterSpace"
+                android:layout_below="@+id/optimized_thigh_extension_study_trial_pageConnectionStatusTitle"
+                android:layout_toStartOf="@id/optimized_thigh_extension_study_trial_pageCenterSpace"
                 android:layout_marginTop="10dp"
                 android:layout_marginEnd="20dp"
                 android:layout_marginBottom="10dp"
                 android:text="@string/StartScanButtonText"/>
 
             <Button
-                android:id="@+id/thigh_extension_study_trial_page_StartSyncButton"
+                android:id="@+id/optimized_thigh_extension_study_trial_pageStartSyncButton"
                 style="?attr/defaultButtonStyle"
                 android:layout_width="150dp"
                 android:layout_height="50dp"
-                android:layout_below="@+id/thigh_extension_study_trial_page_ConnectionStatusTitle"
-                android:layout_toEndOf="@id/thigh_extension_study_trial_page_CenterSpace"
+                android:layout_below="@+id/optimized_thigh_extension_study_trial_pageConnectionStatusTitle"
+                android:layout_toEndOf="@id/optimized_thigh_extension_study_trial_pageCenterSpace"
                 android:layout_marginTop="10dp"
                 android:layout_marginStart="20dp"
                 android:layout_marginBottom="10dp"
                 android:text="@string/StartSyncButtonText"/>
 
             <TextView
-                android:id="@+id/thigh_extension_study_trial_page_LeftArmStatusTitle"
+                android:id="@+id/optimized_thigh_extension_study_trial_pageLeftArmStatusTitle"
                 style="@style/ExperimentalPageLabelText"
                 android:layout_width="90sp"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/thigh_extension_study_trial_page_StartScanButton"
-                android:layout_toStartOf="@+id/thigh_extension_study_trial_page_LeftArmStatusView"
+                android:layout_below="@id/optimized_thigh_extension_study_trial_pageStartScanButton"
+                android:layout_toStartOf="@+id/optimized_thigh_extension_study_trial_pageLeftArmStatusView"
                 android:text="@string/LeftArmLabel"
                 android:gravity="center"/>
 
             <TextView
-                android:id="@+id/thigh_extension_study_trial_page_LeftArmStatusView"
+                android:id="@+id/optimized_thigh_extension_study_trial_pageLeftArmStatusView"
                 style="@style/ExperimentalPageNormalText"
                 android:layout_width="110sp"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/thigh_extension_study_trial_page_StartScanButton"
-                android:layout_toStartOf="@id/thigh_extension_study_trial_page_CenterSpace"
+                android:layout_below="@id/optimized_thigh_extension_study_trial_pageStartScanButton"
+                android:layout_toStartOf="@id/optimized_thigh_extension_study_trial_pageCenterSpace"
                 android:text="@string/DisconnectedIMUPlaceholder"
                 android:gravity="center"/>
 
             <TextView
-                android:id="@+id/thigh_extension_study_trial_page_RightArmStatusTitle"
+                android:id="@+id/optimized_thigh_extension_study_trial_pageRightArmStatusTitle"
                 style="@style/ExperimentalPageLabelText"
                 android:layout_width="90sp"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/thigh_extension_study_trial_page_StartSyncButton"
-                android:layout_toEndOf="@+id/thigh_extension_study_trial_page_CenterSpace"
+                android:layout_below="@id/optimized_thigh_extension_study_trial_pageStartSyncButton"
+                android:layout_toEndOf="@+id/optimized_thigh_extension_study_trial_pageCenterSpace"
                 android:text="@string/RightArmLabel"
                 android:gravity="center"/>
 
             <TextView
-                android:id="@+id/thigh_extension_study_trial_page_RightArmStatusView"
+                android:id="@+id/optimized_thigh_extension_study_trial_pageRightArmStatusView"
                 style="@style/ExperimentalPageNormalText"
                 android:layout_width="110sp"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/thigh_extension_study_trial_page_StartSyncButton"
-                android:layout_toEndOf="@id/thigh_extension_study_trial_page_RightArmStatusTitle"
+                android:layout_below="@id/optimized_thigh_extension_study_trial_pageStartSyncButton"
+                android:layout_toEndOf="@id/optimized_thigh_extension_study_trial_pageRightArmStatusTitle"
                 android:text="@string/DisconnectedIMUPlaceholder"
                 android:gravity="center"/>
 
             <TextView
-                android:id="@+id/thigh_extension_study_trial_page_LeftThighStatusTitle"
+                android:id="@+id/optimized_thigh_extension_study_trial_pageLeftThighStatusTitle"
                 style="@style/ExperimentalPageLabelText"
                 android:layout_width="90sp"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/thigh_extension_study_trial_page_LeftArmStatusTitle"
-                android:layout_toStartOf="@+id/thigh_extension_study_trial_page_LeftArmStatusView"
+                android:layout_below="@id/optimized_thigh_extension_study_trial_pageLeftArmStatusTitle"
+                android:layout_toStartOf="@+id/optimized_thigh_extension_study_trial_pageLeftArmStatusView"
                 android:text="@string/LeftThighLabel"
                 android:gravity="center"/>
 
             <TextView
-                android:id="@+id/thigh_extension_study_trial_page_LeftThighStatusView"
+                android:id="@+id/optimized_thigh_extension_study_trial_pageLeftThighStatusView"
                 style="@style/ExperimentalPageNormalText"
                 android:layout_width="110sp"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/thigh_extension_study_trial_page_LeftArmStatusView"
-                android:layout_toStartOf="@id/thigh_extension_study_trial_page_CenterSpace"
+                android:layout_below="@id/optimized_thigh_extension_study_trial_pageLeftArmStatusView"
+                android:layout_toStartOf="@id/optimized_thigh_extension_study_trial_pageCenterSpace"
                 android:text="@string/DisconnectedIMUPlaceholder"
                 android:gravity="center"/>
 
             <TextView
-                android:id="@+id/thigh_extension_study_trial_page_RightThighStatusTitle"
+                android:id="@+id/optimized_thigh_extension_study_trial_pageRightThighStatusTitle"
                 style="@style/ExperimentalPageLabelText"
                 android:layout_width="90sp"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/thigh_extension_study_trial_page_RightArmStatusTitle"
-                android:layout_toEndOf="@+id/thigh_extension_study_trial_page_CenterSpace"
+                android:layout_below="@id/optimized_thigh_extension_study_trial_pageRightArmStatusTitle"
+                android:layout_toEndOf="@+id/optimized_thigh_extension_study_trial_pageCenterSpace"
                 android:text="@string/RightThighLabel"
                 android:gravity="center"/>
 
             <TextView
-                android:id="@+id/thigh_extension_study_trial_page_RightThighStatusView"
+                android:id="@+id/optimized_thigh_extension_study_trial_pageRightThighStatusView"
                 style="@style/ExperimentalPageNormalText"
                 android:layout_width="110sp"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/thigh_extension_study_trial_page_RightArmStatusView"
-                android:layout_toEndOf="@id/thigh_extension_study_trial_page_RightArmStatusTitle"
+                android:layout_below="@id/optimized_thigh_extension_study_trial_pageRightArmStatusView"
+                android:layout_toEndOf="@id/optimized_thigh_extension_study_trial_pageRightArmStatusTitle"
                 android:text="@string/DisconnectedIMUPlaceholder"
                 android:gravity="center"/>
 
             <TextView
-                android:id="@+id/thigh_extension_study_trial_page_LeftFootStatusTitle"
+                android:id="@+id/optimized_thigh_extension_study_trial_pageLeftFootStatusTitle"
                 style="@style/ExperimentalPageLabelText"
                 android:layout_width="90sp"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/thigh_extension_study_trial_page_LeftThighStatusTitle"
-                android:layout_toStartOf="@+id/thigh_extension_study_trial_page_LeftArmStatusView"
+                android:layout_below="@id/optimized_thigh_extension_study_trial_pageLeftThighStatusTitle"
+                android:layout_toStartOf="@+id/optimized_thigh_extension_study_trial_pageLeftArmStatusView"
                 android:text="@string/LeftFootLabel"
                 android:gravity="center"/>
 
             <TextView
-                android:id="@+id/thigh_extension_study_trial_page_LeftFootStatusView"
+                android:id="@+id/optimized_thigh_extension_study_trial_pageLeftFootStatusView"
                 style="@style/ExperimentalPageNormalText"
                 android:layout_width="110sp"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/thigh_extension_study_trial_page_LeftThighStatusView"
-                android:layout_toStartOf="@id/thigh_extension_study_trial_page_CenterSpace"
+                android:layout_below="@id/optimized_thigh_extension_study_trial_pageLeftThighStatusView"
+                android:layout_toStartOf="@id/optimized_thigh_extension_study_trial_pageCenterSpace"
                 android:text="@string/DisconnectedIMUPlaceholder"
                 android:gravity="center"/>
 
             <TextView
-                android:id="@+id/thigh_extension_study_trial_page_RightFootStatusTitle"
+                android:id="@+id/optimized_thigh_extension_study_trial_pageRightFootStatusTitle"
                 style="@style/ExperimentalPageLabelText"
                 android:layout_width="90sp"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/thigh_extension_study_trial_page_RightThighStatusTitle"
-                android:layout_toEndOf="@+id/thigh_extension_study_trial_page_CenterSpace"
+                android:layout_below="@id/optimized_thigh_extension_study_trial_pageRightThighStatusTitle"
+                android:layout_toEndOf="@+id/optimized_thigh_extension_study_trial_pageCenterSpace"
                 android:text="@string/RightFootLabel"
                 android:gravity="center"/>
 
             <TextView
-                android:id="@+id/thigh_extension_study_trial_page_RightFootStatusView"
+                android:id="@+id/optimized_thigh_extension_study_trial_pageRightFootStatusView"
                 style="@style/ExperimentalPageNormalText"
                 android:layout_width="110sp"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/thigh_extension_study_trial_page_RightThighStatusView"
-                android:layout_toEndOf="@id/thigh_extension_study_trial_page_RightArmStatusTitle"
+                android:layout_below="@id/optimized_thigh_extension_study_trial_pageRightThighStatusView"
+                android:layout_toEndOf="@id/optimized_thigh_extension_study_trial_pageRightArmStatusTitle"
                 android:text="@string/DisconnectedIMUPlaceholder"
                 android:gravity="center"/>
 
             <Button
-                android:id="@+id/thigh_extension_study_trial_page_ShowIMUsBatteryButton"
+                android:id="@+id/optimized_thigh_extension_study_trial_pageShowIMUsBatteryButton"
                 style="?attr/defaultButtonStyle"
                 android:layout_width="150dp"
                 android:layout_height="50dp"
-                android:layout_below="@+id/thigh_extension_study_trial_page_LeftFootStatusTitle"
-                android:layout_toStartOf="@id/thigh_extension_study_trial_page_CenterSpace"
+                android:layout_below="@+id/optimized_thigh_extension_study_trial_pageLeftFootStatusTitle"
+                android:layout_toStartOf="@id/optimized_thigh_extension_study_trial_pageCenterSpace"
                 android:layout_marginTop="10dp"
                 android:layout_marginEnd="20dp"
                 android:layout_marginBottom="10dp"
                 android:text="@string/ShowBatteryButtonText"/>
 
             <Button
-                android:id="@+id/thigh_extension_study_trial_page_DisconnectIMUsButton"
+                android:id="@+id/optimized_thigh_extension_study_trial_pageDisconnectIMUsButton"
                 style="?attr/defaultButtonStyle"
                 android:layout_width="150dp"
                 android:layout_height="50dp"
-                android:layout_below="@+id/thigh_extension_study_trial_page_LeftFootStatusTitle"
-                android:layout_toEndOf="@id/thigh_extension_study_trial_page_CenterSpace"
+                android:layout_below="@+id/optimized_thigh_extension_study_trial_pageLeftFootStatusTitle"
+                android:layout_toEndOf="@id/optimized_thigh_extension_study_trial_pageCenterSpace"
                 android:layout_marginTop="10dp"
                 android:layout_marginStart="20dp"
                 android:layout_marginBottom="10dp"
                 android:text="@string/DisconnectIMUsButtonText"/>
 
             <View
-                android:id="@+id/thigh_extension_study_trial_page_HorizontalLine4"
+                android:id="@+id/optimized_thigh_extension_study_trial_pageHorizontalLine4"
                 android:background="?attr/experimentalPageHeaderTextColor"
                 android:layout_width="match_parent"
                 android:layout_height="2dp"
-                android:layout_below="@id/thigh_extension_study_trial_page_DisconnectIMUsButton"
+                android:layout_below="@id/optimized_thigh_extension_study_trial_pageDisconnectIMUsButton"
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="10dp"/>
 
             <TextView
-                android:id="@+id/thigh_extension_study_trial_page_FeedbackTestingTitle"
+                android:id="@+id/optimized_thigh_extension_study_trial_pageFeedbackTestingTitle"
                 style="@style/ExperimentalPageHeadingText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/thigh_extension_study_trial_page_HorizontalLine4"
+                android:layout_below="@+id/optimized_thigh_extension_study_trial_pageHorizontalLine4"
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="10dp"
                 android:text="@string/FeedbackTestHeader"/>
 
             <Button
-                android:id="@+id/thigh_extension_study_trial_page_FrontFeedbackButton"
+                android:id="@+id/optimized_thigh_extension_study_trial_pageFrontFeedbackButton"
                 style="?attr/defaultButtonStyle"
                 android:layout_width="130dp"
                 android:layout_height="50dp"
-                android:layout_below="@+id/thigh_extension_study_trial_page_FeedbackTestingTitle"
+                android:layout_below="@+id/optimized_thigh_extension_study_trial_pageFeedbackTestingTitle"
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="10dp"
                 android:layout_marginBottom="10dp"
                 android:text="@string/BothThighsFrontFeedbackButtonText"/>
 
             <Button
-                android:id="@+id/thigh_extension_study_trial_page_LeftThighFeedbackButton"
+                android:id="@+id/optimized_thigh_extension_study_trial_pageLeftThighFeedbackButton"
                 style="?attr/defaultButtonStyle"
                 android:layout_width="130dp"
                 android:layout_height="50dp"
-                android:layout_below="@+id/thigh_extension_study_trial_page_FeedbackTestingTitle"
-                android:layout_toStartOf="@+id/thigh_extension_study_trial_page_FrontFeedbackButton"
+                android:layout_below="@+id/optimized_thigh_extension_study_trial_pageFeedbackTestingTitle"
+                android:layout_toStartOf="@+id/optimized_thigh_extension_study_trial_pageFrontFeedbackButton"
                 android:layout_marginTop="10dp"
                 android:layout_marginBottom="10dp"
                 android:layout_marginEnd="10dp"
                 android:text="@string/LeftThighBackFeedbackButtonText"/>
 
             <Button
-                android:id="@+id/thigh_extension_study_trial_page_RightThighFeedbackButton"
+                android:id="@+id/optimized_thigh_extension_study_trial_pageRightThighFeedbackButton"
                 style="?attr/defaultButtonStyle"
                 android:layout_width="130dp"
                 android:layout_height="50dp"
-                android:layout_below="@+id/thigh_extension_study_trial_page_FeedbackTestingTitle"
-                android:layout_toEndOf="@+id/thigh_extension_study_trial_page_FrontFeedbackButton"
+                android:layout_below="@+id/optimized_thigh_extension_study_trial_pageFeedbackTestingTitle"
+                android:layout_toEndOf="@+id/optimized_thigh_extension_study_trial_pageFrontFeedbackButton"
                 android:layout_marginTop="10dp"
                 android:layout_marginBottom="10dp"
                 android:layout_marginStart="10dp"
                 android:text="@string/RightThighBackFeedbackButtonText"/>
 
             <View
-                android:id="@+id/thigh_extension_study_trial_page_HorizontalLine5"
+                android:id="@+id/optimized_thigh_extension_study_trial_pageHorizontalLine5"
                 android:background="?attr/experimentalPageHeaderTextColor"
                 android:layout_width="match_parent"
                 android:layout_height="2dp"
-                android:layout_below="@id/thigh_extension_study_trial_page_FrontFeedbackButton"
+                android:layout_below="@id/optimized_thigh_extension_study_trial_pageFrontFeedbackButton"
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="10dp"/>
 
             <TextView
-                android:id="@+id/thigh_extension_study_trial_page_TrialModeTitle"
+                android:id="@+id/optimized_thigh_extension_study_trial_pageTrialModeTitle"
                 style="@style/ExperimentalPageHeadingText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/thigh_extension_study_trial_page_HorizontalLine5"
+                android:layout_below="@+id/optimized_thigh_extension_study_trial_pageHorizontalLine5"
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="10dp"
                 android:text="@string/TrialModeHeader"/>
 
             <Spinner
-                android:id="@+id/thigh_extension_study_trial_page_TrialModeSpinner"
+                android:id="@+id/optimized_thigh_extension_study_trial_pageTrialModeSpinner"
                 style="?attr/defaultDropdownSpinner"
                 android:layout_width="350dp"
                 android:layout_height="50dp"
-                android:layout_below="@+id/thigh_extension_study_trial_page_TrialModeTitle"
+                android:layout_below="@+id/optimized_thigh_extension_study_trial_pageTrialModeTitle"
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="10dp"
                 android:layout_marginEnd="10dp"/>
 
             <Button
-                android:id="@+id/thigh_extension_study_trial_page_StartInitializationButton"
+                android:id="@+id/optimized_thigh_extension_study_trial_pageStartInitializationButton"
                 style="?attr/defaultButtonStyle"
                 android:layout_width="150dp"
                 android:layout_height="50dp"
-                android:layout_below="@+id/thigh_extension_study_trial_page_TrialModeSpinner"
-                android:layout_toStartOf="@id/thigh_extension_study_trial_page_CenterSpace"
+                android:layout_below="@+id/optimized_thigh_extension_study_trial_pageTrialModeSpinner"
+                android:layout_toStartOf="@id/optimized_thigh_extension_study_trial_pageCenterSpace"
                 android:layout_marginTop="10dp"
                 android:layout_marginEnd="20dp"
                 android:layout_marginBottom="10dp"
                 android:text="@string/StartInitializationButtonText"/>
 
             <Button
-                android:id="@+id/thigh_extension_study_trial_page_StartTrialButton"
+                android:id="@+id/optimized_thigh_extension_study_trial_pageStartTrialButton"
                 style="?attr/defaultButtonStyle"
                 android:layout_width="150dp"
                 android:layout_height="50dp"
-                android:layout_below="@+id/thigh_extension_study_trial_page_TrialModeSpinner"
-                android:layout_toEndOf="@id/thigh_extension_study_trial_page_CenterSpace"
+                android:layout_below="@+id/optimized_thigh_extension_study_trial_pageTrialModeSpinner"
+                android:layout_toEndOf="@id/optimized_thigh_extension_study_trial_pageCenterSpace"
                 android:layout_marginTop="10dp"
                 android:layout_marginStart="20dp"
                 android:layout_marginBottom="10dp"
                 android:text="@string/StartTrialButtonText"/>
 
             <View
-                android:id="@+id/thigh_extension_study_trial_page_HorizontalLine6"
+                android:id="@+id/optimized_thigh_extension_study_trial_pageHorizontalLine6"
                 android:background="?attr/experimentalPageHeaderTextColor"
                 android:layout_width="match_parent"
                 android:layout_height="2dp"
-                android:layout_below="@id/thigh_extension_study_trial_page_StartTrialButton"
+                android:layout_below="@id/optimized_thigh_extension_study_trial_pageStartTrialButton"
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="10dp"/>
 
             <TextView
-                android:id="@+id/thigh_extension_study_trial_page_IMUOutputTitle"
+                android:id="@+id/optimized_thigh_extension_study_trial_pageIMUOutputTitle"
                 style="@style/ExperimentalPageHeadingText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/thigh_extension_study_trial_page_HorizontalLine6"
+                android:layout_below="@+id/optimized_thigh_extension_study_trial_pageHorizontalLine6"
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="10dp"
                 android:text="@string/IMUOutputHeader"/>
 
             <TextView
-                android:id="@+id/thigh_extension_study_trial_page_LeftThighDataOutputTitle"
+                android:id="@+id/optimized_thigh_extension_study_trial_pageLeftThighDataOutputTitle"
                 style="@style/ExperimentalPageLabelText"
                 android:layout_width="60sp"
                 android:layout_height="40sp"
-                android:layout_below="@id/thigh_extension_study_trial_page_IMUOutputTitle"
-                android:layout_toStartOf="@+id/thigh_extension_study_trial_page_LeftThighDataOutputView"
+                android:layout_below="@id/optimized_thigh_extension_study_trial_pageIMUOutputTitle"
+                android:layout_toStartOf="@+id/optimized_thigh_extension_study_trial_pageLeftThighDataOutputView"
                 android:layout_marginTop="10dp"
                 android:text="@string/LeftThighLabel"
                 android:gravity="center"/>
 
             <TextView
-                android:id="@+id/thigh_extension_study_trial_page_LeftThighDataOutputView"
+                android:id="@+id/optimized_thigh_extension_study_trial_pageLeftThighDataOutputView"
                 style="@style/ExperimentalPageTableText"
                 android:layout_width="120sp"
                 android:layout_height="40sp"
-                android:layout_below="@id/thigh_extension_study_trial_page_IMUOutputTitle"
-                android:layout_toStartOf="@id/thigh_extension_study_trial_page_CenterSpace"
+                android:layout_below="@id/optimized_thigh_extension_study_trial_pageIMUOutputTitle"
+                android:layout_toStartOf="@id/optimized_thigh_extension_study_trial_pageCenterSpace"
                 android:layout_marginTop="10dp"
                 android:text="@string/NoDataPlaceholder"
                 android:gravity="center"/>
 
             <TextView
-                android:id="@+id/thigh_extension_study_trial_page_RightThighDataOutputTitle"
+                android:id="@+id/optimized_thigh_extension_study_trial_pageRightThighDataOutputTitle"
                 style="@style/ExperimentalPageLabelText"
                 android:layout_width="60sp"
                 android:layout_height="40sp"
-                android:layout_below="@id/thigh_extension_study_trial_page_IMUOutputTitle"
-                android:layout_toEndOf="@+id/thigh_extension_study_trial_page_CenterSpace"
+                android:layout_below="@id/optimized_thigh_extension_study_trial_pageIMUOutputTitle"
+                android:layout_toEndOf="@+id/optimized_thigh_extension_study_trial_pageCenterSpace"
                 android:layout_marginTop="10dp"
                 android:text="@string/RightThighLabel"
                 android:gravity="center"/>
 
             <TextView
-                android:id="@+id/thigh_extension_study_trial_page_RightThighDataOutputView"
+                android:id="@+id/optimized_thigh_extension_study_trial_pageRightThighDataOutputView"
                 style="@style/ExperimentalPageTableText"
                 android:layout_width="120sp"
                 android:layout_height="40sp"
-                android:layout_below="@id/thigh_extension_study_trial_page_IMUOutputTitle"
-                android:layout_toEndOf="@id/thigh_extension_study_trial_page_RightThighDataOutputTitle"
+                android:layout_below="@id/optimized_thigh_extension_study_trial_pageIMUOutputTitle"
+                android:layout_toEndOf="@id/optimized_thigh_extension_study_trial_pageRightThighDataOutputTitle"
                 android:layout_marginTop="10dp"
                 android:text="@string/NoDataPlaceholder"
                 android:gravity="center"/>
 
             <TextView
-                android:id="@+id/thigh_extension_study_trial_page_LeftFootDataOutputTitle"
+                android:id="@+id/optimized_thigh_extension_study_trial_pageLeftFootDataOutputTitle"
                 style="@style/ExperimentalPageLabelText"
                 android:layout_width="60sp"
                 android:layout_height="40sp"
-                android:layout_below="@id/thigh_extension_study_trial_page_LeftThighDataOutputTitle"
-                android:layout_toStartOf="@+id/thigh_extension_study_trial_page_LeftThighDataOutputView"
+                android:layout_below="@id/optimized_thigh_extension_study_trial_pageLeftThighDataOutputTitle"
+                android:layout_toStartOf="@+id/optimized_thigh_extension_study_trial_pageLeftThighDataOutputView"
                 android:layout_marginTop="10dp"
                 android:text="@string/LeftFootLabel"
                 android:gravity="center"/>
 
             <TextView
-                android:id="@+id/thigh_extension_study_trial_page_LeftFootDataOutputView"
+                android:id="@+id/optimized_thigh_extension_study_trial_pageLeftFootDataOutputView"
                 style="@style/ExperimentalPageTableText"
                 android:layout_width="120sp"
                 android:layout_height="40sp"
-                android:layout_below="@id/thigh_extension_study_trial_page_LeftThighDataOutputView"
-                android:layout_toStartOf="@id/thigh_extension_study_trial_page_CenterSpace"
+                android:layout_below="@id/optimized_thigh_extension_study_trial_pageLeftThighDataOutputView"
+                android:layout_toStartOf="@id/optimized_thigh_extension_study_trial_pageCenterSpace"
                 android:layout_marginTop="10dp"
                 android:text="@string/NoDataPlaceholder"
                 android:gravity="center"/>
 
             <TextView
-                android:id="@+id/thigh_extension_study_trial_page_RightFootDataOutputTitle"
+                android:id="@+id/optimized_thigh_extension_study_trial_pageRightFootDataOutputTitle"
                 style="@style/ExperimentalPageLabelText"
                 android:layout_width="60sp"
                 android:layout_height="40sp"
-                android:layout_below="@id/thigh_extension_study_trial_page_RightThighDataOutputTitle"
-                android:layout_toEndOf="@+id/thigh_extension_study_trial_page_CenterSpace"
+                android:layout_below="@id/optimized_thigh_extension_study_trial_pageRightThighDataOutputTitle"
+                android:layout_toEndOf="@+id/optimized_thigh_extension_study_trial_pageCenterSpace"
                 android:layout_marginTop="10dp"
                 android:text="@string/RightFootLabel"
                 android:gravity="center"/>
 
             <TextView
-                android:id="@+id/thigh_extension_study_trial_page_RightFootDataOutputView"
+                android:id="@+id/optimized_thigh_extension_study_trial_pageRightFootDataOutputView"
                 style="@style/ExperimentalPageTableText"
                 android:layout_width="120sp"
                 android:layout_height="40sp"
-                android:layout_below="@id/thigh_extension_study_trial_page_RightThighDataOutputView"
-                android:layout_toEndOf="@id/thigh_extension_study_trial_page_RightThighDataOutputTitle"
+                android:layout_below="@id/optimized_thigh_extension_study_trial_pageRightThighDataOutputView"
+                android:layout_toEndOf="@id/optimized_thigh_extension_study_trial_pageRightThighDataOutputTitle"
                 android:layout_marginTop="10dp"
                 android:text="@string/NoDataPlaceholder"
                 android:gravity="center"/>
 
             <TextView
-                android:id="@+id/thigh_extension_study_trial_page_LeftThighTitle"
+                android:id="@+id/optimized_thigh_extension_study_trial_pageLeftThighTitle"
                 style="@style/ExperimentalPageNormalText"
                 android:layout_width="120dp"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/thigh_extension_study_trial_page_LeftFootDataOutputTitle"
+                android:layout_below="@id/optimized_thigh_extension_study_trial_pageLeftFootDataOutputTitle"
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="10dp"
                 android:text="@string/LeftSideLabelText"
                 android:textAlignment="center"/>
 
             <TextView
-                android:id="@+id/thigh_extension_study_trial_page_RightThighTitle"
+                android:id="@+id/optimized_thigh_extension_study_trial_pageRightThighTitle"
                 style="@style/ExperimentalPageNormalText"
                 android:layout_width="120dp"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/thigh_extension_study_trial_page_LeftFootDataOutputTitle"
-                android:layout_toEndOf="@+id/thigh_extension_study_trial_page_LeftThighTitle"
+                android:layout_below="@id/optimized_thigh_extension_study_trial_pageLeftFootDataOutputTitle"
+                android:layout_toEndOf="@+id/optimized_thigh_extension_study_trial_pageLeftThighTitle"
                 android:layout_marginTop="10dp"
                 android:text="@string/RightSideLabelText"
                 android:textAlignment="center"/>
 
             <TextView
-                android:id="@+id/thigh_extension_study_trial_page_LastPeakThighAngleTitle"
+                android:id="@+id/optimized_thigh_extension_study_trial_pageLastPeakThighAngleTitle"
                 style="@style/ExperimentalPageNormalText"
                 android:layout_width="120dp"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/thigh_extension_study_trial_page_LeftThighTitle"
-                android:layout_toStartOf="@+id/thigh_extension_study_trial_page_LeftThighTitle"
+                android:layout_below="@id/optimized_thigh_extension_study_trial_pageLeftThighTitle"
+                android:layout_toStartOf="@+id/optimized_thigh_extension_study_trial_pageLeftThighTitle"
                 android:layout_marginTop="2dp"
                 android:text="@string/PTEGaitFeatureLabel"/>
 
             <TextView
-                android:id="@+id/thigh_extension_study_trial_page_LeftThighLastPeak"
+                android:id="@+id/optimized_thigh_extension_study_trial_pageLeftThighLastPeak"
                 style="@style/ExperimentalPageNormalText"
                 android:layout_width="120dp"
                 android:layout_height="wrap_content"
-                android:layout_alignBottom="@+id/thigh_extension_study_trial_page_LastPeakThighAngleTitle"
-                android:layout_alignStart="@+id/thigh_extension_study_trial_page_LeftThighTitle"
+                android:layout_alignBottom="@+id/optimized_thigh_extension_study_trial_pageLastPeakThighAngleTitle"
+                android:layout_alignStart="@+id/optimized_thigh_extension_study_trial_pageLeftThighTitle"
                 android:text="@string/NoDataPlaceholder"
                 android:textAlignment="center"/>
 
             <TextView
-                android:id="@+id/thigh_extension_study_trial_page_RightThighLastPeak"
+                android:id="@+id/optimized_thigh_extension_study_trial_pageRightThighLastPeak"
                 style="@style/ExperimentalPageNormalText"
                 android:layout_width="120dp"
                 android:layout_height="wrap_content"
-                android:layout_alignBottom="@+id/thigh_extension_study_trial_page_LastPeakThighAngleTitle"
-                android:layout_alignStart="@+id/thigh_extension_study_trial_page_RightThighTitle"
+                android:layout_alignBottom="@+id/optimized_thigh_extension_study_trial_pageLastPeakThighAngleTitle"
+                android:layout_alignStart="@+id/optimized_thigh_extension_study_trial_pageRightThighTitle"
                 android:text="@string/NoDataPlaceholder"
                 android:textAlignment="center"/>
 
             <TextView
-                android:id="@+id/thigh_extension_study_trial_page_LastCadenceTitle"
+                android:id="@+id/optimized_thigh_extension_study_trial_pageLastCadenceTitle"
                 style="@style/ExperimentalPageNormalText"
                 android:layout_width="120dp"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/thigh_extension_study_trial_page_LastPeakThighAngleTitle"
-                android:layout_toStartOf="@+id/thigh_extension_study_trial_page_LeftThighTitle"
+                android:layout_below="@id/optimized_thigh_extension_study_trial_pageLastPeakThighAngleTitle"
+                android:layout_toStartOf="@+id/optimized_thigh_extension_study_trial_pageLeftThighTitle"
                 android:layout_marginTop="2dp"
-                android:text="@string/CadenceGaitFeatureLabel" />
+                android:text="@string/CadenceGaitFeatureLabel"/>
 
             <TextView
-                android:id="@+id/thigh_extension_study_trial_page_LeftThighLastCadence"
+                android:id="@+id/optimized_thigh_extension_study_trial_pageLeftThighLastCadence"
                 style="@style/ExperimentalPageNormalText"
                 android:layout_width="120dp"
                 android:layout_height="wrap_content"
-                android:layout_alignBottom="@+id/thigh_extension_study_trial_page_LastCadenceTitle"
-                android:layout_alignStart="@+id/thigh_extension_study_trial_page_LeftThighTitle"
+                android:layout_alignBottom="@+id/optimized_thigh_extension_study_trial_pageLastCadenceTitle"
+                android:layout_alignStart="@+id/optimized_thigh_extension_study_trial_pageLeftThighTitle"
                 android:text="@string/NoDataPlaceholder"
                 android:textAlignment="center"/>
 
             <TextView
-                android:id="@+id/thigh_extension_study_trial_page_RightThighLastCadence"
+                android:id="@+id/optimized_thigh_extension_study_trial_pageRightThighLastCadence"
                 style="@style/ExperimentalPageNormalText"
                 android:layout_width="120dp"
                 android:layout_height="wrap_content"
-                android:layout_alignBottom="@+id/thigh_extension_study_trial_page_LastCadenceTitle"
-                android:layout_alignStart="@+id/thigh_extension_study_trial_page_RightThighTitle"
+                android:layout_alignBottom="@+id/optimized_thigh_extension_study_trial_pageLastCadenceTitle"
+                android:layout_alignStart="@+id/optimized_thigh_extension_study_trial_pageRightThighTitle"
                 android:text="@string/NoDataPlaceholder"
                 android:textAlignment="center"/>
 
             <TextView
-                android:id="@+id/thigh_extension_study_trial_page_LastStrideLengthTitle"
+                android:id="@+id/optimized_thigh_extension_study_trial_pageLastStrideLengthTitle"
                 style="@style/ExperimentalPageNormalText"
                 android:layout_width="120dp"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/thigh_extension_study_trial_page_LastCadenceTitle"
-                android:layout_toStartOf="@+id/thigh_extension_study_trial_page_LeftThighTitle"
+                android:layout_below="@id/optimized_thigh_extension_study_trial_pageLastCadenceTitle"
+                android:layout_toStartOf="@+id/optimized_thigh_extension_study_trial_pageLeftThighTitle"
                 android:layout_marginTop="2dp"
                 android:text="@string/StrideLengthGaitFeatureLabel"/>
 
             <TextView
-                android:id="@+id/thigh_extension_study_trial_page_LeftThighLastStrideLength"
+                android:id="@+id/optimized_thigh_extension_study_trial_pageLeftThighLastStrideLength"
                 style="@style/ExperimentalPageNormalText"
                 android:layout_width="120dp"
                 android:layout_height="wrap_content"
-                android:layout_alignBottom="@+id/thigh_extension_study_trial_page_LastStrideLengthTitle"
-                android:layout_alignStart="@+id/thigh_extension_study_trial_page_LeftThighTitle"
+                android:layout_alignBottom="@+id/optimized_thigh_extension_study_trial_pageLastStrideLengthTitle"
+                android:layout_alignStart="@+id/optimized_thigh_extension_study_trial_pageLeftThighTitle"
                 android:text="@string/NoDataPlaceholder"
                 android:textAlignment="center"/>
 
             <TextView
-                android:id="@+id/thigh_extension_study_trial_page_RightThighLastStrideLength"
+                android:id="@+id/optimized_thigh_extension_study_trial_pageRightThighLastStrideLength"
                 style="@style/ExperimentalPageNormalText"
                 android:layout_width="120dp"
                 android:layout_height="wrap_content"
-                android:layout_alignBottom="@+id/thigh_extension_study_trial_page_LastStrideLengthTitle"
-                android:layout_alignStart="@+id/thigh_extension_study_trial_page_RightThighTitle"
+                android:layout_alignBottom="@+id/optimized_thigh_extension_study_trial_pageLastStrideLengthTitle"
+                android:layout_alignStart="@+id/optimized_thigh_extension_study_trial_pageRightThighTitle"
                 android:text="@string/NoDataPlaceholder"
                 android:textAlignment="center"/>
 
             <TextView
-                android:id="@+id/thigh_extension_study_trial_page_LastWalkingSpeedTitle"
+                android:id="@+id/optimized_thigh_extension_study_trial_pageLastWalkingSpeedTitle"
                 style="@style/ExperimentalPageNormalText"
                 android:layout_width="120dp"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/thigh_extension_study_trial_page_LastStrideLengthTitle"
-                android:layout_toStartOf="@+id/thigh_extension_study_trial_page_LeftThighTitle"
+                android:layout_below="@id/optimized_thigh_extension_study_trial_pageLastStrideLengthTitle"
+                android:layout_toStartOf="@+id/optimized_thigh_extension_study_trial_pageLeftThighTitle"
                 android:layout_marginTop="2dp"
-                android:text="@string/WalkingSpeedGaitFeatureLabel" />
+                android:text="@string/WalkingSpeedGaitFeatureLabel"/>
 
             <TextView
-                android:id="@+id/thigh_extension_study_trial_page_LeftThighLastSpeed"
+                android:id="@+id/optimized_thigh_extension_study_trial_pageLeftThighLastSpeed"
                 style="@style/ExperimentalPageNormalText"
                 android:layout_width="120dp"
                 android:layout_height="wrap_content"
-                android:layout_alignBottom="@+id/thigh_extension_study_trial_page_LastWalkingSpeedTitle"
-                android:layout_alignStart="@+id/thigh_extension_study_trial_page_LeftThighTitle"
+                android:layout_alignBottom="@+id/optimized_thigh_extension_study_trial_pageLastWalkingSpeedTitle"
+                android:layout_alignStart="@+id/optimized_thigh_extension_study_trial_pageLeftThighTitle"
                 android:text="@string/NoDataPlaceholder"
                 android:textAlignment="center"/>
 
             <TextView
-                android:id="@+id/thigh_extension_study_trial_page_RightThighLastSpeed"
+                android:id="@+id/optimized_thigh_extension_study_trial_pageRightThighLastSpeed"
                 style="@style/ExperimentalPageNormalText"
                 android:layout_width="120dp"
                 android:layout_height="wrap_content"
-                android:layout_alignBottom="@+id/thigh_extension_study_trial_page_LastWalkingSpeedTitle"
-                android:layout_alignStart="@+id/thigh_extension_study_trial_page_RightThighTitle"
+                android:layout_alignBottom="@+id/optimized_thigh_extension_study_trial_pageLastWalkingSpeedTitle"
+                android:layout_alignStart="@+id/optimized_thigh_extension_study_trial_pageRightThighTitle"
                 android:text="@string/NoDataPlaceholder"
                 android:textAlignment="center"/>
 
             <TextView
-                android:id="@+id/thigh_extension_study_trial_page_ThighCycleTitle"
+                android:id="@+id/optimized_thigh_extension_study_trial_pageThighCycleTitle"
                 style="@style/ExperimentalPageNormalText"
                 android:layout_width="120dp"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/thigh_extension_study_trial_page_LastWalkingSpeedTitle"
-                android:layout_toStartOf="@+id/thigh_extension_study_trial_page_LeftThighTitle"
+                android:layout_below="@id/optimized_thigh_extension_study_trial_pageLastWalkingSpeedTitle"
+                android:layout_toStartOf="@+id/optimized_thigh_extension_study_trial_pageLeftThighTitle"
                 android:layout_marginTop="2dp"
                 android:text="@string/PTECycleCountLabel"/>
 
             <TextView
-                android:id="@+id/thigh_extension_study_trial_page_LeftThighCycle"
+                android:id="@+id/optimized_thigh_extension_study_trial_pageLeftThighCycle"
                 style="@style/ExperimentalPageNormalText"
                 android:layout_width="120dp"
                 android:layout_height="wrap_content"
-                android:layout_alignBottom="@+id/thigh_extension_study_trial_page_ThighCycleTitle"
-                android:layout_alignStart="@+id/thigh_extension_study_trial_page_LeftThighTitle"
+                android:layout_alignBottom="@+id/optimized_thigh_extension_study_trial_pageThighCycleTitle"
+                android:layout_alignStart="@+id/optimized_thigh_extension_study_trial_pageLeftThighTitle"
                 android:text="@string/NoDataPlaceholder"
                 android:textAlignment="center"/>
 
             <TextView
-                android:id="@+id/thigh_extension_study_trial_page_RightThighCycle"
+                android:id="@+id/optimized_thigh_extension_study_trial_pageRightThighCycle"
                 style="@style/ExperimentalPageNormalText"
                 android:layout_width="120dp"
                 android:layout_height="wrap_content"
-                android:layout_alignBottom="@+id/thigh_extension_study_trial_page_ThighCycleTitle"
-                android:layout_alignStart="@+id/thigh_extension_study_trial_page_RightThighTitle"
+                android:layout_alignBottom="@+id/optimized_thigh_extension_study_trial_pageThighCycleTitle"
+                android:layout_alignStart="@+id/optimized_thigh_extension_study_trial_pageRightThighTitle"
                 android:text="@string/NoDataPlaceholder"
                 android:textAlignment="center"/>
 
             <TextView
-                android:id="@+id/thigh_extension_study_trial_page_FootCycleTitle"
+                android:id="@+id/optimized_thigh_extension_study_trial_pageFootCycleTitle"
                 style="@style/ExperimentalPageNormalText"
                 android:layout_width="120dp"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/thigh_extension_study_trial_page_ThighCycleTitle"
-                android:layout_toStartOf="@+id/thigh_extension_study_trial_page_LeftThighTitle"
+                android:layout_below="@id/optimized_thigh_extension_study_trial_pageThighCycleTitle"
+                android:layout_toStartOf="@+id/optimized_thigh_extension_study_trial_pageLeftThighTitle"
                 android:layout_marginTop="2dp"
                 android:text="@string/HeelStrikeCycleCountLabel"/>
 
             <TextView
-                android:id="@+id/thigh_extension_study_trial_page_LeftFootCycle"
+                android:id="@+id/optimized_thigh_extension_study_trial_pageLeftFootCycle"
                 style="@style/ExperimentalPageNormalText"
                 android:layout_width="120dp"
                 android:layout_height="wrap_content"
-                android:layout_alignBottom="@+id/thigh_extension_study_trial_page_FootCycleTitle"
-                android:layout_alignStart="@+id/thigh_extension_study_trial_page_LeftThighTitle"
+                android:layout_alignBottom="@+id/optimized_thigh_extension_study_trial_pageFootCycleTitle"
+                android:layout_alignStart="@+id/optimized_thigh_extension_study_trial_pageLeftThighTitle"
                 android:text="@string/NoDataPlaceholder"
                 android:textAlignment="center"/>
 
             <TextView
-                android:id="@+id/thigh_extension_study_trial_page_RightFootCycle"
+                android:id="@+id/optimized_thigh_extension_study_trial_pageRightFootCycle"
                 style="@style/ExperimentalPageNormalText"
                 android:layout_width="120dp"
                 android:layout_height="wrap_content"
-                android:layout_alignBottom="@+id/thigh_extension_study_trial_page_FootCycleTitle"
-                android:layout_alignStart="@+id/thigh_extension_study_trial_page_RightThighTitle"
+                android:layout_alignBottom="@+id/optimized_thigh_extension_study_trial_pageFootCycleTitle"
+                android:layout_alignStart="@+id/optimized_thigh_extension_study_trial_pageRightThighTitle"
                 android:text="@string/NoDataPlaceholder"
                 android:textAlignment="center"/>
 
             <TextView
-                android:id="@+id/thigh_extension_study_trial_page_TargetAngleTitle"
+                android:id="@+id/optimized_thigh_extension_study_trial_pageTargetAngleTitle"
                 style="@style/ExperimentalPageNormalText"
                 android:layout_width="120dp"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/thigh_extension_study_trial_page_FootCycleTitle"
-                android:layout_toStartOf="@+id/thigh_extension_study_trial_page_LeftThighTitle"
+                android:layout_below="@id/optimized_thigh_extension_study_trial_pageFootCycleTitle"
+                android:layout_toStartOf="@+id/optimized_thigh_extension_study_trial_pageLeftThighTitle"
                 android:layout_marginTop="2dp"
                 android:text="@string/TargetAngleLabel"/>
 
             <TextView
-                android:id="@+id/thigh_extension_study_trial_page_LeftThighTargetAngle"
+                android:id="@+id/optimized_thigh_extension_study_trial_pageLeftThighTargetAngle"
                 style="@style/ExperimentalPageNormalText"
                 android:layout_width="120dp"
                 android:layout_height="wrap_content"
-                android:layout_alignBottom="@+id/thigh_extension_study_trial_page_TargetAngleTitle"
-                android:layout_alignStart="@+id/thigh_extension_study_trial_page_LeftThighTitle"
+                android:layout_alignBottom="@+id/optimized_thigh_extension_study_trial_pageTargetAngleTitle"
+                android:layout_alignStart="@+id/optimized_thigh_extension_study_trial_pageLeftThighTitle"
                 android:text="@string/NoDataPlaceholder"
                 android:textAlignment="center"/>
 
             <TextView
-                android:id="@+id/thigh_extension_study_trial_page_RightThighTargetAngle"
+                android:id="@+id/optimized_thigh_extension_study_trial_pageRightThighTargetAngle"
                 style="@style/ExperimentalPageNormalText"
                 android:layout_width="120dp"
                 android:layout_height="wrap_content"
-                android:layout_alignBottom="@+id/thigh_extension_study_trial_page_TargetAngleTitle"
-                android:layout_alignStart="@+id/thigh_extension_study_trial_page_RightThighTitle"
+                android:layout_alignBottom="@+id/optimized_thigh_extension_study_trial_pageTargetAngleTitle"
+                android:layout_alignStart="@+id/optimized_thigh_extension_study_trial_pageRightThighTitle"
                 android:text="@string/NoDataPlaceholder"
                 android:textAlignment="center"/>
 
             <TextView
-                android:id="@+id/thigh_extension_study_trial_page_TargetCadenceTitle"
+                android:id="@+id/optimized_thigh_extension_study_trial_pageTargetCadenceTitle"
                 style="@style/ExperimentalPageNormalText"
                 android:layout_width="120dp"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/thigh_extension_study_trial_page_TargetAngleTitle"
-                android:layout_toStartOf="@+id/thigh_extension_study_trial_page_LeftThighTitle"
+                android:layout_below="@id/optimized_thigh_extension_study_trial_pageTargetAngleTitle"
+                android:layout_toStartOf="@+id/optimized_thigh_extension_study_trial_pageLeftThighTitle"
                 android:layout_marginTop="2dp"
                 android:text="@string/TargetCadenceLabel"/>
 
             <TextView
-                android:id="@+id/thigh_extension_study_trial_page_LeftThighTargetCadence"
+                android:id="@+id/optimized_thigh_extension_study_trial_pageLeftThighTargetCadence"
                 style="@style/ExperimentalPageNormalText"
                 android:layout_width="120dp"
                 android:layout_height="wrap_content"
-                android:layout_alignBottom="@+id/thigh_extension_study_trial_page_TargetCadenceTitle"
-                android:layout_alignStart="@+id/thigh_extension_study_trial_page_LeftThighTitle"
+                android:layout_alignBottom="@+id/optimized_thigh_extension_study_trial_pageTargetCadenceTitle"
+                android:layout_alignStart="@+id/optimized_thigh_extension_study_trial_pageLeftThighTitle"
                 android:text="@string/NoDataPlaceholder"
                 android:textAlignment="center"/>
 
             <TextView
-                android:id="@+id/thigh_extension_study_trial_page_RightThighTargetCadence"
+                android:id="@+id/optimized_thigh_extension_study_trial_pageRightThighTargetCadence"
                 style="@style/ExperimentalPageNormalText"
                 android:layout_width="120dp"
                 android:layout_height="wrap_content"
-                android:layout_alignBottom="@+id/thigh_extension_study_trial_page_TargetCadenceTitle"
-                android:layout_alignStart="@+id/thigh_extension_study_trial_page_RightThighTitle"
+                android:layout_alignBottom="@+id/optimized_thigh_extension_study_trial_pageTargetCadenceTitle"
+                android:layout_alignStart="@+id/optimized_thigh_extension_study_trial_pageRightThighTitle"
                 android:text="@string/NoDataPlaceholder"
                 android:textAlignment="center"/>
             

@@ -39,6 +39,7 @@
     <string name="MinusButtonText">-</string>
 
     <!-- General Trial Page Strings -->
+    <string name="SubjectNumber">Subject #:</string>
     <string name="NoDataPlaceholder">NO DATA</string>
     <string name="LeftArmLabel">Left Arm:</string>
     <string name="RightArmLabel">Right Arm:</string>
@@ -46,13 +47,6 @@
     <string name="RightThighLabel">Right Thigh:</string>
     <string name="LeftFootLabel">Left Foot:</string>
     <string name="RightFootLabel">Right Foot:</string>
-
-    <!-- Thigh Extension Study Page Strings -->
-    <string name="ThighExtensionStudyPageTitle">Thigh Extension Study</string>
-    <string name="SubjectNumber">Subject #:</string>
-    <string name="ShowLogButtonText">Show Log</string>
-    <string name="UploadDataToCloudButtonText">Upload Data\nTo Cloud</string>
-    <string name="ExportIMURecordedDataButtonText">Export IMU Recorded Data</string>
     <string name="SelectIMUsHeader">Select IMUs</string>
     <string name="SelectHapticCellsHeader">Select Haptic Cells</string>
     <string name="ConnectionStatusHeader">Connection Status</string>
@@ -62,15 +56,26 @@
     <string name="ShowBatteryButtonText">Show Battery %</string>
     <string name="DisconnectIMUsButtonText">Disconnect IMUs</string>
     <string name="FeedbackTestHeader">Feedback Test Buttons</string>
-    <string name="BothThighsFrontFeedbackButtonText">Both Thighs Front</string>
-    <string name="LeftThighBackFeedbackButtonText">Left Thigh Back</string>
-    <string name="RightThighBackFeedbackButtonText">Right Thigh Back</string>
     <string name="TrialModeHeader">Trial Mode</string>
     <string name="StartInitializationButtonText">Start\nInitialization</string>
     <string name="StartTrialButtonText">Start\nTrial</string>
     <string name="IMUOutputHeader">IMU Output</string>
     <string name="LeftSideLabelText">Left Thigh</string>
     <string name="RightSideLabelText">Right Thigh</string>
+    <string name="ShowLogButtonText">Show Log</string>
+    <string name="UploadDataToCloudButtonText">Upload Data\nTo Cloud</string>
+    <string name="ExportIMURecordedDataButtonText">Export IMU Recorded Data</string>
+    <string name="EnterSubjectAutofill">Enter Subject Number</string>
+    <string name="EnterSubjectNumberHint">Subject #</string>
+    <string name="LeftEnterDeviceNumberAutoFill">Enter Left Device IP Number (0–255)</string>
+    <string name="RightEnterDeviceNumberAutoFill">Enter Right Device IP Number (0–255)</string>
+    <string name="LeftEnterDeviceNumberIPHint">Left Dev# (0–255)</string>
+    <string name="RightEnterDeviceNumberIPHint">Right Dev# (0–255)</string>
+
+    <!-- Original Thigh Extension Study Page Strings -->
+    <string name="OriginalThighExtensionStudyPageTitle">Original Thigh Extension Study</string>
+    <string name="LeftThighFeedbackButtonText">Left Thigh Feedback</string>
+    <string name="RightThighFeedbackButtonText">Right Thigh Feedback</string>
     <string name="PTEGaitFeatureLabel">Last Stride PTE</string>
     <string name="CadenceGaitFeatureLabel">Last Stride Cad.</string>
     <string name="StrideLengthGaitFeatureLabel">Stride Length (m)</string>
@@ -78,8 +83,13 @@
     <string name="PTECycleCountLabel"># of PTEs</string>
     <string name="HeelStrikeCycleCountLabel"># of Heel Strikes</string>
     <string name="TargetAngleLabel">Target Angle</string>
-    <string name="TargetCadenceLabel">Target Cadence</string>
 
+    <!-- Optimized Thigh Extension Study Page Strings -->
+    <string name="OptimizedThighExtensionStudyPageTitle">Optimized Thigh Extension Study</string>
+    <string name="BothThighsFrontFeedbackButtonText">Both Thighs Front</string>
+    <string name="LeftThighBackFeedbackButtonText">Left Thigh Back</string>
+    <string name="RightThighBackFeedbackButtonText">Right Thigh Back</string>
+    <string name="TargetCadenceLabel">Target Cadence</string>
 
 
     <string-array name="IMU_MAC_Addresses">
