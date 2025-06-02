@@ -4,6 +4,19 @@
     <string name="app_name">BiomechanicsLabApp</string>
     <string name="GoBackButton">Go Back</string>
     <string name="CancelButtonText">Cancel</string>
+    <string name="UniversityOfMaineLogoImageDescription">University of Maine Logo</string>
+
+    <!-- Experimenter Menu Page Strings -->
+    <string name="StudySelectionMenuHeaderText">Study Selection Menu</string>
+    <string name="RecordIMUDataButtonText">Record\nIMU Data</string>
+    <string name="TestHapticCellsButtonText">Test\nHaptic Cells</string>
+    <string name="ThighExtensionStudyButtonText">Thigh Extension Study</string>
+    <string name="OptimizedThighExtensionStudyButtonText">Optimized Thigh Extension Study</string>
+    <string name="Aim2ThighExtensionStudyButtonText">Aim 2 Thigh Extension Study</string>
+    <string name="WalkingClassificationStudyButtonText">Walking Classification Study</string>
+    <string name="ArmCuingStudyButtonText">Arm Cuing Study</string>
+    <string name="ArmExtensionStudyButtonText">Arm Extension Study</string>
+
 
     <!-- Test Haptic Cells Page Strings -->
     <string name="TestHapticCellsPageTitle">Test Haptic Cells</string>
@@ -59,6 +72,8 @@
     <string name="HeelStrikeCycleCountLabel"># of Heel Strikes</string>
     <string name="TargetAngleLabel">Target Angle</string>
     <string name="TargetCadenceLabel">Target Cadence</string>
+
+
 
     <string-array name="IMU_MAC_Addresses">
         <item>--</item>
