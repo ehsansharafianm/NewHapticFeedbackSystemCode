@@ -6,6 +6,11 @@
     <string name="CancelButtonText">Cancel</string>
     <string name="UniversityOfMaineLogoImageDescription">University of Maine Logo</string>
 
+    <!-- Start Page Strings -->
+    <string name="ForExperimentersButtonText">Menu For\nExperimenters</string>
+    <string name="ForParticipantsButtonText">Menu For\nParticipants</string>
+    <string name="BiomechanicsLabLogoImageDescription">Biomechanics Lab Logo</string>
+
     <!-- Experimenter Menu Page Strings -->
     <string name="StudySelectionMenuHeaderText">Study Selection Menu</string>
     <string name="RecordIMUDataButtonText">Record\nIMU Data</string>
@@ -17,6 +22,8 @@
     <string name="ArmCuingStudyButtonText">Arm Cuing Study</string>
     <string name="ArmExtensionStudyButtonText">Arm Extension Study</string>
 
+    <!-- Participant Menu Page Strings -->
+    <string name="ParticipantMenuHeaderText">Participant Menu</string>
 
     <!-- Test Haptic Cells Page Strings -->
     <string name="TestHapticCellsPageTitle">Test Haptic Cells</string>

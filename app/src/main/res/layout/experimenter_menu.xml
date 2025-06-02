@@ -16,15 +16,14 @@
 
     <TextView
         android:id="@+id/experimenter_menu_PageTitle"
-        style="?attr/colorOnSecondary"
+        style="@style/MenuPageTitleText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:layout_below="@+id/experimenter_menu_UMaineLogo"
         android:layout_marginTop="10dp"
         android:layout_marginBottom="20dp"
-        android:text="@string/StudySelectionMenuHeaderText"
-        android:textSize="40sp"/>
+        android:text="@string/StudySelectionMenuHeaderText"/>
 
     <View
         android:id="@+id/experimenter_menu_HorizontalLine1"

@@ -11,6 +11,7 @@
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="30dp"
+        android:contentDescription="@string/UniversityOfMaineLogoImageDescription"
         android:src="@drawable/umaine_logo"/>
 
     <View
@@ -22,15 +23,14 @@
 
     <TextView
         android:id="@+id/participant_menu_PageTitle"
-        style="?attr/colorOnSecondary"
+        style="@style/MenuPageTitleText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:layout_below="@+id/participant_menu_UMaineLogo"
         android:layout_marginTop="10dp"
         android:layout_marginBottom="20dp"
-        android:text="Participant Menu"
-        android:textSize="40sp"/>
+        android:text="@string/ParticipantMenuHeaderText"/>
 
     <Button
         android:id="@+id/participant_menu_GoBack"
@@ -41,7 +41,7 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="10dp"
         android:layout_marginBottom="40dp"
-        android:text="Go Back"
+        android:text="@string/GoBackButton"
         android:textSize="20sp"/>
 
 </RelativeLayout>
