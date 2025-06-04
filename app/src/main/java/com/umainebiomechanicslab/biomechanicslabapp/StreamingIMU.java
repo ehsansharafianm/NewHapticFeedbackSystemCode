@@ -101,6 +101,9 @@ public class StreamingIMU extends UniversalIMU{
             //Stream and save results to logFile
             dotLogFile = createDataLog(trialName, timeStamp);
         }
+        else{
+            dotLogFile = null;
+        }
 
         try{
             if(movellaDotDevice.startMeasuring()) {
@@ -215,7 +218,12 @@ public class StreamingIMU extends UniversalIMU{
             if ((sampleCounter % (outputFrequency/3)) == 0){
                 userInterface.updateIMUDataOutput(nameOfIMU, String.format(Locale.US,"%.3f",(eulerAngleX - offsetEulerAngle)));
             }
-            dotLogFile.getDotLogger().update(dotData);
+
+            //If the dotLogFile is not null, update it
+            if(dotLogFile != null){
+                dotLogFile.getDotLogger().update(dotData);
+            }
+
         }
 
         else{
@@ -225,7 +233,12 @@ public class StreamingIMU extends UniversalIMU{
                 if ((sampleCounter % outputFrequency) == 0) {
                     userInterface.updateIMUDataOutput(nameOfIMU, ((sampleCounter / outputFrequency / 60) + ":" + String.format(Locale.US, "%02d", ((sampleCounter / outputFrequency) % 60))));
                 }
-                dotLogFile.getDotLogger().update(dotData);
+
+                //If the dotLogFile is not null, update it
+                if(dotLogFile != null){
+                    dotLogFile.getDotLogger().update(dotData);
+                }
+
             } else if (sampleCounter == (outputFrequency * 60 * trialDurationMin) + 1) {
                 userInterface.updateIMUDataOutput(nameOfIMU, "DONE");
             }

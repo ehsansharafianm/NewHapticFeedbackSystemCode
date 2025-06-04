@@ -132,17 +132,23 @@ public class FileManager{
     public boolean renameSessionFolder(String newFolderName) {
         if (newFolderName == null || newFolderName.isEmpty() || newFolderName.contains(File.separator)) {
             Log.e(TAG, "New folder name is invalid: " + newFolderName);
+            writeToLogFile("ERROR: New folder name is invalid: " + newFolderName);
+            UserInterface.errorMessagePopUp("Directory Error", activity);
             return false;
         }
 
         if (sessionFolderPath == null || !sessionFolderPath.exists() || !sessionFolderPath.isDirectory()) {
             Log.e(TAG, "Original session folder path is invalid or does not exist.");
+            writeToLogFile("ERROR: Original session folder path is invalid or does not exist.");
+            UserInterface.errorMessagePopUp("Directory Error", activity);
             return false;
         }
 
         File parentDir = sessionFolderPath.getParentFile();
         if (parentDir == null) {
             Log.e(TAG, "Cannot get parent directory of the session folder.");
+            writeToLogFile("ERROR: Cannot get parent directory of the session folder.");
+            UserInterface.errorMessagePopUp("Directory Error", activity);
             return false;
         }
 
@@ -150,6 +156,8 @@ public class FileManager{
 
         if (newSessionFolderPath.exists()) {
             Log.e(TAG, "A folder with the new name already exists: " + newSessionFolderPath.getAbsolutePath());
+            writeToLogFile("ERROR: A folder with the new name already exists: " + newSessionFolderPath.getAbsolutePath());
+            UserInterface.errorMessagePopUp("Directory Error", activity);
             return false;
         }
 

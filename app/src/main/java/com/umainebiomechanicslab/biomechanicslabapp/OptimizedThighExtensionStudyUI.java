@@ -111,6 +111,41 @@ public class OptimizedThighExtensionStudyUI extends UserInterfaceWithRecordingIM
         rightFootIMUSpinner.setAdapter(IMUMacAddresses);
         trialModeSpinner.setAdapter(TrialModes);
 
+        //Set the behavior for the subject number text box
+        subjectNumberEditText.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+                //Extract the subject number from the text box
+                try{
+                    int subjectNumber = Integer.parseInt(subjectNumberEditText.getText().toString());
+
+                    //Rename the session folder (if there is an error, set validSubjectEntered to false)
+                    validSubjectEntered = fileManager.renameSessionFolder("Subject " + subjectNumber);
+
+                    //If there is an error, show an error message
+                    if(!validSubjectEntered){
+                        errorMessagePopUp("ERROR: Unable to rename session folder");
+                        fileManager.writeToLogFile("ERROR: Unable to rename session folder! Please try again.");
+                    }
+                }
+                catch (NumberFormatException e){
+                    textPopUp("WARNING! Invalid Input");
+                    validSubjectEntered = false;
+                }
+            }
+        });
+
         //Set the Left Arm Dropdown Spinner Behavior
         leftArmIMUSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -603,11 +638,7 @@ public class OptimizedThighExtensionStudyUI extends UserInterfaceWithRecordingIM
         });
 
         //Set the behavior for the uploadDataToCloudButton
-        uploadDataToCloudButton.setOnClickListener(view -> {
-
-            fileManager.uploadFilesToFirebaseCloudStorage(this);
-
-        });
+        uploadDataToCloudButton.setOnClickListener(view -> fileManager.uploadFilesToFirebaseCloudStorage(this));
 
         //Set the behavior for the exportRecordedIMUDataButton
         exportRecordedDataButton.setOnClickListener(view -> {

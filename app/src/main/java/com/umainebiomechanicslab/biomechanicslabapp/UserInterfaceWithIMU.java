@@ -5,11 +5,16 @@ import android.widget.Button;
 
 public abstract class UserInterfaceWithIMU extends UserInterface{
 
-    Button startScanButton, startSyncButton, disconnectButton, showBatteryPercentageButton, startInitializationButton,
+    protected Button startScanButton, startSyncButton, disconnectButton, showBatteryPercentageButton, startInitializationButton,
             startTrialButton, goBackButton, uploadDataToCloudButton, showLogButton;
+
+    protected boolean validSubjectEntered = false;
 
     public UserInterfaceWithIMU(Activity activity, int pageID) {
         super(activity, pageID);
+
+        //Initialize validSubjectEntered to false when the app starts
+        validSubjectEntered = false;
     }
 
     public abstract void updateIMUStatus(String nameOfIMU, String status);
