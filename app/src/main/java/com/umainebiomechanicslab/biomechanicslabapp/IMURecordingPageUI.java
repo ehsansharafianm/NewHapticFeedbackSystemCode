@@ -287,6 +287,10 @@ public class IMURecordingPageUI extends UserInterfaceWithIMU {
                 updateSpinnerEnabledStatus(IMU3Spinner, false);
                 updateSpinnerEnabledStatus(IMU4Spinner, false);
 
+                //Set haveIMUsBeenScanned to true
+                haveIMUsBeenScanned = true;
+
+                //Start the scan process
                 imuManager.startScan();
             }
 
@@ -323,6 +327,9 @@ public class IMURecordingPageUI extends UserInterfaceWithIMU {
             updateSpinnerEnabledStatus(IMU2Spinner, true);
             updateSpinnerEnabledStatus(IMU3Spinner, true);
             updateSpinnerEnabledStatus(IMU4Spinner, true);
+
+            //Set haveIMUsBeenScanned to false
+            haveIMUsBeenScanned = false;
 
         });
 
@@ -449,7 +456,17 @@ public class IMURecordingPageUI extends UserInterfaceWithIMU {
         });
 
         //Set Go Back Button Click Listener
-        goBackButton.setOnClickListener(view -> userInterfaceForBackButton.showPage());
+        goBackButton.setOnClickListener(view -> {
+
+            //If any IMUs are connected, do not allow the user to go back
+            if(haveIMUsBeenScanned){
+                errorMessagePopUp("ERROR: IMUs are connected. Disconnect IMUs before going back.");
+            }
+            else{
+                userInterfaceForBackButton.showPage();
+            }
+
+        });
     }
 
     public void linkIMUManager(RecordIMUDataManager imuManager) {

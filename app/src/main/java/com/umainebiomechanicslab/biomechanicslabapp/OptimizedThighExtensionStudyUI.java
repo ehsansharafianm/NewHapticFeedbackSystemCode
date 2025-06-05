@@ -499,6 +499,10 @@ public class OptimizedThighExtensionStudyUI extends UserInterfaceWithRecordingIM
                 updateSpinnerEnabledStatus(leftFootIMUSpinner, false);
                 updateSpinnerEnabledStatus(rightFootIMUSpinner, false);
 
+                //Set haveIMUsBeenScanned to true
+                haveIMUsBeenScanned = true;
+
+                //Start the scan process
                 imuManager.startScan();
             }
         });
@@ -536,6 +540,9 @@ public class OptimizedThighExtensionStudyUI extends UserInterfaceWithRecordingIM
             updateSpinnerEnabledStatus(rightThighIMUSpinner, true);
             updateSpinnerEnabledStatus(leftFootIMUSpinner, true);
             updateSpinnerEnabledStatus(rightFootIMUSpinner, true);
+
+            //Set haveIMUsBeenScanned to false
+            haveIMUsBeenScanned = false;
 
         });
 
@@ -697,7 +704,17 @@ public class OptimizedThighExtensionStudyUI extends UserInterfaceWithRecordingIM
         });
 
         //Set Go Back Button Click Listener
-        goBackButton.setOnClickListener(view -> userInterfaceForBackButton.showPage());
+        goBackButton.setOnClickListener(view -> {
+
+            //If any IMUs are connected, do not allow the user to go back
+            if(haveIMUsBeenScanned){
+                errorMessagePopUp("ERROR: IMUs are connected. Disconnect IMUs before going back.");
+            }
+            else{
+                userInterfaceForBackButton.showPage();
+            }
+
+        });
 
     }
 

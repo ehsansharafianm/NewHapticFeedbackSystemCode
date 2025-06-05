@@ -10,11 +10,16 @@ public abstract class UserInterfaceWithIMU extends UserInterface{
 
     protected boolean validSubjectEntered;
 
+    protected boolean haveIMUsBeenScanned;
+
     public UserInterfaceWithIMU(Activity activity, int pageID) {
         super(activity, pageID);
 
         //Initialize validSubjectEntered to false when the app starts
         validSubjectEntered = false;
+
+        //Initialize haveIMUsBeenScanned to false when the app starts
+        haveIMUsBeenScanned = false;
     }
 
     public abstract void updateIMUStatus(String nameOfIMU, String status);
