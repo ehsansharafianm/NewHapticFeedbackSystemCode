@@ -55,7 +55,7 @@ public class MainActivity extends AppCompatActivity {
         participantMenuUI.linkUserInterfaceForBackButton(startPageUI);
 
         //Instantiate Trial Manager Objects
-        TestHapticCellsManager testHapticCellsManager = new TestHapticCellsManager(testHapticCellsUI, experimenterMenuUI, loadingWindowUI);
+        TestHapticCellsManager testHapticCellsManager = new TestHapticCellsManager(testHapticCellsUI, experimenterMenuUI, loadingWindowUI, fileManager);
         RecordIMUDataManager recordIMUDataManager = new RecordIMUDataManager(imuRecordingPageUI, this, fileManager);
         OptimizedThighExtensionStudyManager optimizedThighExtensionStudyManager = new OptimizedThighExtensionStudyManager(optimizedThighExtensionStudyUI, experimenterMenuUI, loadingWindowUI, this, fileManager);
         OriginalThighExtensionStudyManager originalThighExtensionStudyManager = new OriginalThighExtensionStudyManager(originalThighExtensionStudyUI, experimenterMenuUI, loadingWindowUI, this, fileManager);

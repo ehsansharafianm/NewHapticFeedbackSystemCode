@@ -13,7 +13,8 @@ import com.xsens.dot.android.sdk.utils.DotScanner;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.concurrent.TimeUnit;
+import java.util.HashSet;
+import java.util.Set;
 
 public abstract class IMUManager implements DotScannerCallback, DotSyncCallback {
 
@@ -37,6 +38,9 @@ public abstract class IMUManager implements DotScannerCallback, DotSyncCallback 
 
     //Declare the IMU Object List (abstract)
     protected final ArrayList<UniversalIMU> IMUArrayList;
+
+    //Declare the Processing or Connected Addresses Set (containing the addresses of IMUs that are connecting or connected)
+    private final Set<String> processingOrConnectedAddresses;
 
     //Declare the Scan Status and Sync Status booleans
     protected boolean isScanning, isSyncing;
@@ -66,6 +70,9 @@ public abstract class IMUManager implements DotScannerCallback, DotSyncCallback 
         isScanning = false;
         isSyncing = false;
 
+        //Initialize the Processing or Connected Addresses Set
+        processingOrConnectedAddresses = new HashSet<>();
+
     }
 
     public abstract void updateIMUCode(String imuName, String imuCode);
@@ -76,7 +83,7 @@ public abstract class IMUManager implements DotScannerCallback, DotSyncCallback 
 
     public abstract void startTrial(String trialName);
 
-    public abstract void stopTrial();
+    public abstract void stopTrial(String trialName);
 
     public boolean getScanStatus(String nameOfIMU){
 
@@ -300,8 +307,19 @@ public abstract class IMUManager implements DotScannerCallback, DotSyncCallback 
     public void onDotDisconnected(DotDevice disconnectedDotDevice){
 
         if((movellaDeviceList != null) && (disconnectedDotDevice != null) && (movellaDeviceList.contains(disconnectedDotDevice))){
+
+            //Remove the disconnected DotDevice from the DotDevice List
             movellaDeviceList.remove(disconnectedDotDevice);
+
+            //Remove the disconnected DotDevice from the Connecting or Connected Addresses Set
+            if (disconnectedDotDevice.getAddress() != null) {
+                processingOrConnectedAddresses.remove(disconnectedDotDevice.getAddress());
+            }
+
+            //Log that the disconnected DotDevice was disconnected
             fileManager.writeToLogFile(disconnectedDotDevice.getTag() + " was disconnected");
+
+            //Log the number of connected DotDevices
             fileManager.writeToLogFile("Connected Devices: " + movellaDeviceList.size());
         }
 
@@ -313,23 +331,50 @@ public abstract class IMUManager implements DotScannerCallback, DotSyncCallback 
         //Get the address of the scanned IMU
         String macAddress = bluetoothDevice.getAddress();
 
-        //If all IMUs in the IMU Array List have been scanned, skip this method
-        if(movellaDeviceList.size() == IMUArrayList.size()){
+        //Check to see if the IMU is already processing or connected
+        if (movellaDeviceList.size() >= IMUArrayList.size() || processingOrConnectedAddresses.contains(macAddress)) {
+            if (processingOrConnectedAddresses.contains(macAddress)) {
+                Log.d(TAG, "onDotScanned: Skipping " + macAddress + " as it is already processing or connected.");
+            } else {
+                Log.d(TAG, "onDotScanned: Skipping scan as all target IMUs (" + IMUArrayList.size() + ") might have been found. Current connected: " + movellaDeviceList.size());
+            }
             return;
         }
 
-        //Pause for 0.5 seconds to prevent multiple scans of the same IMU while it is connecting
-        try {
-            TimeUnit.MILLISECONDS.sleep(500);
-        } catch (InterruptedException e) {
-            Log.e(TAG, "Error sleeping", e);
+        //Add macAddress to processingOrConnectedAddresses immediately
+        processingOrConnectedAddresses.add(macAddress);
+        Log.d(TAG, "onDotScanned: Added " + macAddress + " to processingOrConnectedAddresses. Set size: " + processingOrConnectedAddresses.size());
+
+        //Create a null targetIMU (this will be filled in later)
+        UniversalIMU targetIMU = null;
+        //Loop through all the IMUs to find the one that matches the macAddress
+        for(UniversalIMU imu : IMUArrayList){
+            // *** MODIFIED: Added null check for imu.getMacAddress() ***
+            if(imu.getMacAddress() != null && imu.getMacAddress().equals(macAddress)){
+                targetIMU = imu;
+                break;
+            }
         }
 
-        //Loop through all the IMUs to find the one that matches the macAddress
-        for(UniversalIMU IMU : IMUArrayList){
-            if(IMU.getMacAddress().equals(macAddress)){
-                movellaDeviceList.add(IMU.connectMovellaDotDevice(bluetoothDevice));
+        if (targetIMU != null) {
+            fileManager.writeToLogFile("Connecting to " + targetIMU.getNameOfIMU() + " (" + macAddress + ")");
+            // *** MODIFIED: Capture result of connectMovellaDotDevice ***
+            DotDevice connectedDevice = targetIMU.connectMovellaDotDevice(bluetoothDevice);
+
+            // *** ADDED: Logic to handle connection success or failure based on connectedDevice ***
+            if (connectedDevice != null) {
+                movellaDeviceList.add(connectedDevice);
+                fileManager.writeToLogFile(targetIMU.getNameOfIMU() + " connection initiated. Total connected: " + movellaDeviceList.size());
+            } else {
+                fileManager.writeToLogFile("Failed to initiate connection with " + targetIMU.getNameOfIMU() + " (" + macAddress + ")");
+                processingOrConnectedAddresses.remove(macAddress);
+                Log.d(TAG, "onDotScanned: Removed " + macAddress + " from processingOrConnectedAddresses due to connection failure. Set size: " + processingOrConnectedAddresses.size());
             }
+        } else {
+            // *** ADDED: Handle case where scanned device is not in our target list ***
+            Log.w(TAG, "onDotScanned: Scanned device " + macAddress + " not found in target IMUArrayList or its MAC address is null.");
+            processingOrConnectedAddresses.remove(macAddress);
+            Log.d(TAG, "onDotScanned: Removed " + macAddress + " (not a target) from processingOrConnectedAddresses. Set size: " + processingOrConnectedAddresses.size());
         }
 
     }

@@ -577,7 +577,7 @@ public class OriginalThighExtensionStudyUI extends UserInterfaceWithRecordingIMU
             if(startTrialButtonActivated){
 
                 //Stop the current trial
-                imuManager.stopTrial();
+                imuManager.stopTrial(trialName);
 
                 //Update Trial Button Characteristics
                 startTrialButtonActivated = false;

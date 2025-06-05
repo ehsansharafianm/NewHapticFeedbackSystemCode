@@ -185,22 +185,38 @@ public abstract class UniversalIMU implements DotDeviceCallback {
     public void onDotInitDone(String address) {
         isReady = true;
         if (imuManager.getIsScanning()) {
-            if (!movellaDotDevice.setOutputRate(outputFrequency)) {
-                fileManager.writeToLogFile(nameOfIMU + " Error Setting Output Frequency");
-                userInterface.errorMessagePopUp("Output Frequency Error");
+
+            //Check to see if the output frequency is set to desired frequency
+            if(movellaDotDevice.getCurrentOutputRate() != outputFrequency){
+
+                //Attempt to set the output rate
+                if (!movellaDotDevice.setOutputRate(outputFrequency)) {
+                    fileManager.writeToLogFile(nameOfIMU + " Error Setting Output Frequency");
+                    userInterface.errorMessagePopUp("Output Frequency Error");
+                }
+
             }
 
+            //Check to see if the filter profile is set to General
+            if(movellaDotDevice.getCurrentFilterProfileIndex() != 0){
+
+                //Attempt to set the filter profile
+                if (!movellaDotDevice.setFilterProfile(0)) {
+                    fileManager.writeToLogFile(nameOfIMU + " Error Setting Filter Profile");
+                    userInterface.errorMessagePopUp("Filter Profile Error");
+                }
+            }
+
+
+
             //Pause for 500 milliseconds between each file upload
-            try {
+            /*try {
                 TimeUnit.MILLISECONDS.sleep(500);
             } catch (InterruptedException e) {
                 Log.e(TAG, "uploadFilesToFirebaseCloudStorage", e);
-            }
+            }*/
 
-            if (!movellaDotDevice.setFilterProfile(0)) {
-                fileManager.writeToLogFile(nameOfIMU + " Error Setting Filter Profile");
-                userInterface.errorMessagePopUp("Filter Profile Error");
-            }
+
         }
         userInterface.updateIMUStatus(nameOfIMU, "Ready");
         fileManager.writeToLogFile(nameOfIMU + " is Ready");

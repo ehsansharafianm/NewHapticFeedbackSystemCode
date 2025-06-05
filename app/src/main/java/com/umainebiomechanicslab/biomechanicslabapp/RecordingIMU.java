@@ -92,29 +92,28 @@ public class RecordingIMU extends UniversalIMU implements DotRecordingCallback {
     @Override
     public void onDotInitDone(String address) {
         isReady = true;
+
         if (imuManager.getIsScanning()) {
-            if (!movellaDotDevice.setOutputRate(outputFrequency)) {
-                fileManager.writeToLogFile(nameOfIMU + " Error Setting Output Frequency");
-                userInterface.errorMessagePopUp("Output Frequency Error");
+
+            //Check to see if the output frequency is set to desired frequency
+            if(movellaDotDevice.getCurrentOutputRate() != outputFrequency){
+
+                //Attempt to set the output rate
+                if (!movellaDotDevice.setOutputRate(outputFrequency)) {
+                    fileManager.writeToLogFile(nameOfIMU + " Error Setting Output Frequency");
+                    userInterface.errorMessagePopUp("Output Frequency Error");
+                }
+
             }
 
-            //Pause for 2 seconds
-            try {
-                TimeUnit.MILLISECONDS.sleep(2000);
-            } catch (InterruptedException e) {
-                Log.e(TAG, "uploadFilesToFirebaseCloudStorage", e);
-            }
+            //Check to see if the filter profile is set to General
+            if(movellaDotDevice.getCurrentFilterProfileIndex() != 0){
 
-            if (!movellaDotDevice.setFilterProfile(0)) {
-                fileManager.writeToLogFile(nameOfIMU + " Error Setting Filter Profile");
-                userInterface.errorMessagePopUp("Filter Profile Error");
-            }
-
-            //Pause for 2 seconds
-            try {
-                TimeUnit.MILLISECONDS.sleep(2000);
-            } catch (InterruptedException e) {
-                Log.e(TAG, "uploadFilesToFirebaseCloudStorage", e);
+                //Attempt to set the filter profile
+                if (!movellaDotDevice.setFilterProfile(0)) {
+                    fileManager.writeToLogFile(nameOfIMU + " Error Setting Filter Profile");
+                    userInterface.errorMessagePopUp("Filter Profile Error");
+                }
             }
 
             movellaDotRecordingManager = new DotRecordingManager(context.getApplicationContext(), movellaDotDevice, this);

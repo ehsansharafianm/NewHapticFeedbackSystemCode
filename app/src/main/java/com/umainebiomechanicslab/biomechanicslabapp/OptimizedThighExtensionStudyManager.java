@@ -221,8 +221,48 @@ public class OptimizedThighExtensionStudyManager extends IMUManagerWithRecording
     }
 
     @Override
-    public void stopTrial() {
+    public void stopTrial(String trialName) {
 
+        switch(trialName) {
+            case "Testing":
+            case "Optimization Familiarization":
+
+                //Stop all IMUs
+                leftThighIMU.stopTrial(false);
+                rightThighIMU.stopTrial(false);
+                leftFootIMU.stopTrial(false);
+                rightFootIMU.stopTrial(false);
+                break;
+
+            case "Baseline Normal":
+
+                //Stop all IMUs
+                leftThighIMU.stopTrial(false);
+                rightThighIMU.stopTrial(false);
+                leftFootIMU.stopTrial(false);
+                rightFootIMU.stopTrial(false);
+                leftArmIMU.stopTrial(false);
+                rightArmIMU.stopTrial(false);
+
+                //Generate the initial target
+                targetManager.generatePeakThighTarget(trialArrayList.get(trialArrayList.size() - 1));
+                break;
+
+            case "Baseline with Cognitive Task":
+            case "Fast":
+            case "Optimization Feedback":
+            case "Optimization Feedback with Cognitive Task":
+
+                //Stop all IMUs
+                leftThighIMU.stopTrial(false);
+                rightThighIMU.stopTrial(false);
+                leftFootIMU.stopTrial(false);
+                rightFootIMU.stopTrial(false);
+                leftArmIMU.stopTrial(false);
+                rightArmIMU.stopTrial(false);
+                break;
+
+        }
     }
 
     public void sendHapticFeedback(String nameOfIMU, String vibrationType){
@@ -235,17 +275,17 @@ public class OptimizedThighExtensionStudyManager extends IMUManagerWithRecording
 
                 @Override
                 public void onRequestSent() {
-
+                    fileManager.writeToLogFile("Sending vibration to " + nameOfIMU + " (" + leftHapticControlModule.getIPAddress() + "/" + vibrationType + ")");
                 }
 
                 @Override
                 public void onSuccessfulRequest() {
-
+                    fileManager.writeToLogFile("Successfully sent vibration to " + nameOfIMU + " (" + leftHapticControlModule.getIPAddress() + "/" + vibrationType + ")");
                 }
 
                 @Override
                 public void onFailedRequest() {
-
+                    fileManager.writeToLogFile("Failed to send vibration to " + nameOfIMU + " (" + leftHapticControlModule.getIPAddress() + "/" + vibrationType + ")");
                 }
             });
         }
@@ -256,17 +296,17 @@ public class OptimizedThighExtensionStudyManager extends IMUManagerWithRecording
 
                 @Override
                 public void onRequestSent() {
-
+                    fileManager.writeToLogFile("Sending vibration to " + nameOfIMU + " (" + rightHapticControlModule.getIPAddress() + "/" + vibrationType + ")");
                 }
 
                 @Override
                 public void onSuccessfulRequest() {
-
+                    fileManager.writeToLogFile("Successfully sent vibration to " + nameOfIMU + " (" + rightHapticControlModule.getIPAddress() + "/" + vibrationType + ")");
                 }
 
                 @Override
                 public void onFailedRequest() {
-
+                    fileManager.writeToLogFile("Failed to send vibration to " + nameOfIMU + " (" + rightHapticControlModule.getIPAddress() + "/" + vibrationType + ")");
                 }
             });
         }

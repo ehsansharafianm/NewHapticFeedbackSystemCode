@@ -11,6 +11,9 @@ public class TestHapticCellsManager {
     private final LoadingWindowUI loadingWindowUI;
     private final ExperimenterMenuUI experimenterMenuUI;
 
+    //Declare the FileManager
+    private final FileManager fileManager;
+
     //Declare the variable to store if the gateway IP was found
     private boolean gateWayIPFound;
 
@@ -21,7 +24,7 @@ public class TestHapticCellsManager {
     public final int MAX_VIBRATION_DURATION = 10000;
     public final int MIN_VIBRATION_DURATION = 250;
 
-    public TestHapticCellsManager(TestHapticCellsUI testHapticCellsUI, ExperimenterMenuUI experimenterMenuUI, LoadingWindowUI loadingWindowUI) {
+    public TestHapticCellsManager(TestHapticCellsUI testHapticCellsUI, ExperimenterMenuUI experimenterMenuUI, LoadingWindowUI loadingWindowUI, FileManager fileManager) {
 
         //Initialize the HapticControlModule objects
         hapticControlModule1 = new HapticControlModule();
@@ -35,6 +38,9 @@ public class TestHapticCellsManager {
 
         //Link the ExperimenterMenuUI to the TestHapticCellsManager
         this.experimenterMenuUI = experimenterMenuUI;
+
+        //Link the FileManager to the TestHapticCellsManager
+        this.fileManager = fileManager;
 
         //Set the default vibration durations for each cell (0.25 seconds)
         device1CellADuration = 250;
@@ -53,7 +59,7 @@ public class TestHapticCellsManager {
         int cellDuration;
 
         //Create the vibration type String (e.g. "A?duration=")
-        String vibrationType = cellLetter + "?duration=";
+        final String vibrationType;
 
         //Determine which module to send the feedback to
         if(moduleNumber == 1) {
@@ -66,24 +72,24 @@ public class TestHapticCellsManager {
                 cellDuration = device1CellBDuration;
             }
 
-            //Concatenate the vibration duration to the vibration type String
-            vibrationType += cellDuration;
+            //Set the vibration type String
+            vibrationType = cellLetter + "?duration=" + cellDuration;
 
             hapticControlModule1.sendHapticFeedback(vibrationType, new HttpRequestResponses() {
 
                 @Override
                 public void onRequestSent() {
-
+                    fileManager.writeToLogFile("Sending vibration to device 1 (" + hapticControlModule1.getIPAddress() + "/" + vibrationType + ")");
                 }
 
                 @Override
                 public void onSuccessfulRequest() {
-
+                    fileManager.writeToLogFile("Successfully sent vibration to device 1 (" + hapticControlModule1.getIPAddress() + "/" + vibrationType + ")");
                 }
 
                 @Override
                 public void onFailedRequest() {
-
+                    fileManager.writeToLogFile("Failed to send vibration to device 1 (" + hapticControlModule1.getIPAddress() + "/" + vibrationType + ")");
                 }
             });
         }
@@ -97,24 +103,24 @@ public class TestHapticCellsManager {
                 cellDuration = device2CellBDuration;
             }
 
-            //Concatenate the vibration duration to the vibration type String
-            vibrationType += cellDuration;
+            //Set the vibration type String
+            vibrationType = cellLetter + "?duration=" + cellDuration;
 
             hapticControlModule2.sendHapticFeedback(vibrationType, new HttpRequestResponses() {
 
                 @Override
                 public void onRequestSent() {
-
+                    fileManager.writeToLogFile("Sending vibration to device 1 (" + hapticControlModule2.getIPAddress() + "/" + vibrationType + ")");
                 }
 
                 @Override
                 public void onSuccessfulRequest() {
-
+                    fileManager.writeToLogFile("Successfully sent vibration to device 1 (" + hapticControlModule2.getIPAddress() + "/" + vibrationType + ")");
                 }
 
                 @Override
                 public void onFailedRequest() {
-
+                    fileManager.writeToLogFile("Failed to send vibration to device 1 (" + hapticControlModule2.getIPAddress() + "/" + vibrationType + ")");
                 }
             });
         }

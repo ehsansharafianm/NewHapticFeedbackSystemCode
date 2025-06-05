@@ -98,7 +98,7 @@ public class RecordIMUDataManager extends IMUManager{
     }
 
     @Override
-    public void stopTrial() {
+    public void stopTrial(String trialName) {
 
         //Stop trial for all IMUs in the IMU ArrayList
         for(UniversalIMU IMU : IMUArrayList){
