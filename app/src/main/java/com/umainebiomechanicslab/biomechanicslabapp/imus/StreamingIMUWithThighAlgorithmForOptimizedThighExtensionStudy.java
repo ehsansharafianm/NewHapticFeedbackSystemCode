@@ -169,7 +169,6 @@ public class StreamingIMUWithThighAlgorithmForOptimizedThighExtensionStudy exten
 
                     //Update the User Interface (time counter) if the sample falls on a whole number second
                     if ((sampleCounter % outputFrequency) == 0) {
-                        //thighExtensionStudyUI.updateTextViewText(outputIMUTextViewID,((sampleCounter / outputFrequency / 60) + ":" + String.format(Locale.US, "%02d", ((sampleCounter / outputFrequency) % 60))));
                         thighExtensionStudyUI.updateIMUDataOutput(nameOfIMU, String.format(Locale.US, "%d:%02d", (sampleCounter / outputFrequency / 60), ((sampleCounter / outputFrequency) % 60)));
                     }
 
