@@ -207,16 +207,6 @@ public abstract class UniversalIMU implements DotDeviceCallback {
                 }
             }
 
-
-
-            //Pause for 500 milliseconds between each file upload
-            /*try {
-                TimeUnit.MILLISECONDS.sleep(500);
-            } catch (InterruptedException e) {
-                Log.e(TAG, "uploadFilesToFirebaseCloudStorage", e);
-            }*/
-
-
         }
         userInterface.updateIMUStatus(nameOfIMU, "Ready");
         fileManager.writeToLogFile(nameOfIMU + " is Ready");

@@ -30,6 +30,13 @@ public class OriginalThighExtensionStudyUI extends UserInterfaceWithRecordingIMU
     private boolean logPopUpWindowVisible;
     private boolean validLeftHapticCellIPAddress, validRightHapticCellIPAddress;
 
+    private boolean isLeftArmIMUSpinnerDefaultSelection = true;
+    private boolean isRightArmIMUSpinnerDefaultSelection = true;
+    private boolean isLeftThighIMUSpinnerDefaultSelection = true;
+    private boolean isRightThighIMUSpinnerDefaultSelection = true;
+    private boolean isLeftFootIMUSpinnerDefaultSelection = true;
+    private boolean isRightFootIMUSpinnerDefaultSelection = true;
+
     private String trialName;
 
     public OriginalThighExtensionStudyUI(Activity activity, int pageID, LogPopupWindowUI logPopupWindowUI, FileManager fileManager) {
@@ -151,6 +158,12 @@ public class OriginalThighExtensionStudyUI extends UserInterfaceWithRecordingIMU
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int position, long l) {
 
+                //If this is the default initialization of the spinner, do not update the IMU code
+                if(isLeftArmIMUSpinnerDefaultSelection){
+                    isLeftArmIMUSpinnerDefaultSelection = false;
+                    return;
+                }
+
                 //Extract the selected item and convert it to a string
                 String spinnerSelection = adapterView.getItemAtPosition(position).toString();
 
@@ -179,6 +192,12 @@ public class OriginalThighExtensionStudyUI extends UserInterfaceWithRecordingIMU
         rightArmIMUSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int position, long l) {
+
+                //If this is the default initialization of the spinner, do not update the IMU code
+                if(isRightArmIMUSpinnerDefaultSelection){
+                    isRightArmIMUSpinnerDefaultSelection = false;
+                    return;
+                }
 
                 //Extract the selected item and convert it to a string
                 String spinnerSelection = adapterView.getItemAtPosition(position).toString();
@@ -209,6 +228,12 @@ public class OriginalThighExtensionStudyUI extends UserInterfaceWithRecordingIMU
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int position, long l) {
 
+                //If this is the default initialization of the spinner, do not update the IMU code
+                if(isLeftThighIMUSpinnerDefaultSelection){
+                    isLeftThighIMUSpinnerDefaultSelection = false;
+                    return;
+                }
+
                 //Extract the selected item and convert it to a string
                 String spinnerSelection = adapterView.getItemAtPosition(position).toString();
 
@@ -237,6 +262,12 @@ public class OriginalThighExtensionStudyUI extends UserInterfaceWithRecordingIMU
         rightThighIMUSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int position, long l) {
+
+                //If this is the default initialization of the spinner, do not update the IMU code
+                if(isRightThighIMUSpinnerDefaultSelection){
+                    isRightThighIMUSpinnerDefaultSelection = false;
+                    return;
+                }
 
                 //Extract the selected item and convert it to a string
                 String spinnerSelection = adapterView.getItemAtPosition(position).toString();
@@ -267,6 +298,12 @@ public class OriginalThighExtensionStudyUI extends UserInterfaceWithRecordingIMU
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int position, long l) {
 
+                //If this is the default initialization of the spinner, do not update the IMU code
+                if(isLeftFootIMUSpinnerDefaultSelection){
+                    isLeftFootIMUSpinnerDefaultSelection = false;
+                    return;
+                }
+
                 //Extract the selected item and convert it to a string
                 String spinnerSelection = adapterView.getItemAtPosition(position).toString();
 
@@ -295,6 +332,12 @@ public class OriginalThighExtensionStudyUI extends UserInterfaceWithRecordingIMU
         rightFootIMUSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int position, long l) {
+
+                //If this is the default initialization of the spinner, do not update the IMU code
+                if(isRightFootIMUSpinnerDefaultSelection){
+                    isRightFootIMUSpinnerDefaultSelection = false;
+                    return;
+                }
 
                 //Extract the selected item and convert it to a string
                 String spinnerSelection = adapterView.getItemAtPosition(position).toString();
@@ -595,8 +638,8 @@ public class OriginalThighExtensionStudyUI extends UserInterfaceWithRecordingIMU
             }
             else{
 
-                //Only start a trial if all IMUs are initialized
-                if(IMUsAngleOffsetInitialized){
+                //Only start a trial if all IMUs are initialized and there is a valid subject entered
+                if(IMUsAngleOffsetInitialized && validSubjectEntered){
 
                     //Start the current trial
                     imuManager.startTrial(trialName);
@@ -614,8 +657,13 @@ public class OriginalThighExtensionStudyUI extends UserInterfaceWithRecordingIMU
                     updateButtonEnabledStatus(exportRecordedDataButton, false);
                     updateButtonEnabledStatus(uploadDataToCloudButton, false);
                 }
-                else{
+                //If IMUs are not initialized, show an error message
+                else if(!IMUsAngleOffsetInitialized){
                     errorMessagePopUp("ERROR: IMUs not Initialized");
+                }
+                //If there is no subject entered, show an error message
+                else {
+                    errorMessagePopUp("ERROR: No Subject Entered");
                 }
             }
 

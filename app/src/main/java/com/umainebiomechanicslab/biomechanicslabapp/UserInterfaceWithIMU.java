@@ -8,7 +8,7 @@ public abstract class UserInterfaceWithIMU extends UserInterface{
     protected Button startScanButton, startSyncButton, disconnectButton, showBatteryPercentageButton, startInitializationButton,
             startTrialButton, goBackButton, uploadDataToCloudButton, showLogButton;
 
-    protected boolean validSubjectEntered = false;
+    protected boolean validSubjectEntered;
 
     public UserInterfaceWithIMU(Activity activity, int pageID) {
         super(activity, pageID);

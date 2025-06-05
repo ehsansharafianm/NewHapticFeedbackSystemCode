@@ -19,6 +19,11 @@ public class IMURecordingPageUI extends UserInterfaceWithIMU {
     private boolean logPopUpWindowVisible;
     private boolean validTrialName;
 
+    private boolean isIMU1SpinnerDefaultSelection = true;
+    private boolean isIMU2SpinnerDefaultSelection = true;
+    private boolean isIMU3SpinnerDefaultSelection = true;
+    private boolean isIMU4SpinnerDefaultSelection = true;
+
     private String trialName;
 
     public IMURecordingPageUI(Activity activity, int pageID, LogPopupWindowUI logPopupWindowUI, FileManager fileManager) {
@@ -79,6 +84,12 @@ public class IMURecordingPageUI extends UserInterfaceWithIMU {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int position, long l) {
 
+                //If this is the default initialization of the spinner, do not update the IMU code
+                if(isIMU1SpinnerDefaultSelection){
+                    isIMU1SpinnerDefaultSelection = false;
+                    return;
+                }
+
                 //Extract the selected item and convert it to a string
                 String spinnerSelection = adapterView.getItemAtPosition(position).toString();
 
@@ -113,6 +124,12 @@ public class IMURecordingPageUI extends UserInterfaceWithIMU {
         IMU2Spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int position, long l) {
+
+                //If this is the default initialization of the spinner, do not update the IMU code
+                if(isIMU2SpinnerDefaultSelection){
+                    isIMU2SpinnerDefaultSelection = false;
+                    return;
+                }
 
                 //Extract the selected item and convert it to a string
                 String spinnerSelection = adapterView.getItemAtPosition(position).toString();
@@ -149,6 +166,12 @@ public class IMURecordingPageUI extends UserInterfaceWithIMU {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int position, long l) {
 
+                //If this is the default initialization of the spinner, do not update the IMU code
+                if(isIMU3SpinnerDefaultSelection){
+                    isIMU3SpinnerDefaultSelection = false;
+                    return;
+                }
+
                 //Extract the selected item and convert it to a string
                 String spinnerSelection = adapterView.getItemAtPosition(position).toString();
 
@@ -183,6 +206,12 @@ public class IMURecordingPageUI extends UserInterfaceWithIMU {
         IMU4Spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int position, long l) {
+
+                //If this is the default initialization of the spinner, do not update the IMU code
+                if(isIMU4SpinnerDefaultSelection){
+                    isIMU4SpinnerDefaultSelection = false;
+                    return;
+                }
 
                 //Extract the selected item and convert it to a string
                 String spinnerSelection = adapterView.getItemAtPosition(position).toString();
