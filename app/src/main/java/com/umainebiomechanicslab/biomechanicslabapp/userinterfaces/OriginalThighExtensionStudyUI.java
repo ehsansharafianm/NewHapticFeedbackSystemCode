@@ -75,9 +75,8 @@ public class OriginalThighExtensionStudyUI extends UserInterfaceWithRecordingIMU
         startSyncButton = activity.findViewById(R.id.original_thigh_extension_study_trial_page_StartSyncButton);
         showBatteryPercentageButton = activity.findViewById(R.id.original_thigh_extension_study_trial_page_ShowIMUsBatteryButton);
         disconnectButton = activity.findViewById(R.id.original_thigh_extension_study_trial_page_DisconnectIMUsButton);
-        Button bothThighsFrontFeedbackTestButton = activity.findViewById(R.id.original_thigh_extension_study_trial_page_FrontFeedbackButton);
-        Button leftThighBackFeedbackTestButton = activity.findViewById(R.id.original_thigh_extension_study_trial_page_LeftThighFeedbackButton);
-        Button rightThighBackFeedbackTestButton = activity.findViewById(R.id.original_thigh_extension_study_trial_page_RightThighFeedbackButton);
+        Button leftThighFeedbackTestButton = activity.findViewById(R.id.original_thigh_extension_study_trial_page_LeftThighFeedbackButton);
+        Button rightThighFeedbackTestButton = activity.findViewById(R.id.original_thigh_extension_study_trial_page_RightThighFeedbackButton);
         startInitializationButton = activity.findViewById(R.id.original_thigh_extension_study_trial_page_StartInitializationButton);
         startTrialButton = activity.findViewById(R.id.original_thigh_extension_study_trial_page_StartTrialButton);
         showLogButton = activity.findViewById(R.id.original_thigh_extension_study_trial_page_ShowLogButton);
@@ -551,21 +550,7 @@ public class OriginalThighExtensionStudyUI extends UserInterfaceWithRecordingIMU
 
         });
 
-        bothThighsFrontFeedbackTestButton.setOnClickListener(view -> {
-
-            //Check to see if both haptic cells have valid device numbers
-            if(validLeftHapticCellIPAddress && validRightHapticCellIPAddress){
-                imuManager.sendHapticFeedback("Left", "A?delay=2000");
-                imuManager.sendHapticFeedback("Right", "A?delay=2000");
-            }
-            //Otherwise, show an error message
-            else{
-                errorMessagePopUp("ERROR: Invalid Device Number");
-            }
-
-        });
-
-        leftThighBackFeedbackTestButton.setOnClickListener(view -> {
+        leftThighFeedbackTestButton.setOnClickListener(view -> {
 
             //Check to see if both haptic cells have valid device numbers
             if(validLeftHapticCellIPAddress){
@@ -578,7 +563,7 @@ public class OriginalThighExtensionStudyUI extends UserInterfaceWithRecordingIMU
 
         });
 
-        rightThighBackFeedbackTestButton.setOnClickListener(view -> {
+        rightThighFeedbackTestButton.setOnClickListener(view -> {
 
             //Check to see if both haptic cells have valid device numbers
             if(validRightHapticCellIPAddress){

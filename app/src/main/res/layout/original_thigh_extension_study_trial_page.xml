@@ -58,12 +58,6 @@
         android:layout_below="@id/original_thigh_extension_study_trial_page_PageTitle"
         android:layout_centerHorizontal="true"/>
 
-    <View
-        android:id="@+id/original_thigh_extension_study_trial_page_CenterSpace1"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_centerHorizontal="true"/>
-
     <Button
         android:id="@+id/original_thigh_extension_study_trial_page_ShowLogButton"
         style="?attr/defaultButtonStyle"
@@ -564,23 +558,12 @@
                 android:text="@string/FeedbackTestHeader"/>
 
             <Button
-                android:id="@+id/original_thigh_extension_study_trial_page_FrontFeedbackButton"
-                style="?attr/defaultButtonStyle"
-                android:layout_width="130dp"
-                android:layout_height="50dp"
-                android:layout_below="@+id/original_thigh_extension_study_trial_page_FeedbackTestingTitle"
-                android:layout_centerHorizontal="true"
-                android:layout_marginTop="10dp"
-                android:layout_marginBottom="10dp"
-                android:text="@string/BothThighsFrontFeedbackButtonText"/>
-
-            <Button
                 android:id="@+id/original_thigh_extension_study_trial_page_LeftThighFeedbackButton"
                 style="?attr/defaultButtonStyle"
                 android:layout_width="130dp"
                 android:layout_height="50dp"
                 android:layout_below="@+id/original_thigh_extension_study_trial_page_FeedbackTestingTitle"
-                android:layout_toStartOf="@+id/original_thigh_extension_study_trial_page_FrontFeedbackButton"
+                android:layout_toStartOf="@+id/original_thigh_extension_study_trial_page_CenterSpace"
                 android:layout_marginTop="10dp"
                 android:layout_marginBottom="10dp"
                 android:layout_marginEnd="10dp"
@@ -592,7 +575,7 @@
                 android:layout_width="130dp"
                 android:layout_height="50dp"
                 android:layout_below="@+id/original_thigh_extension_study_trial_page_FeedbackTestingTitle"
-                android:layout_toEndOf="@+id/original_thigh_extension_study_trial_page_FrontFeedbackButton"
+                android:layout_toStartOf="@+id/original_thigh_extension_study_trial_page_CenterSpace"
                 android:layout_marginTop="10dp"
                 android:layout_marginBottom="10dp"
                 android:layout_marginStart="10dp"
@@ -603,7 +586,7 @@
                 android:background="?attr/experimentalPageHeaderTextColor"
                 android:layout_width="match_parent"
                 android:layout_height="2dp"
-                android:layout_below="@id/original_thigh_extension_study_trial_page_FrontFeedbackButton"
+                android:layout_below="@id/original_thigh_extension_study_trial_page_LeftThighFeedbackButton"
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="10dp"/>
 

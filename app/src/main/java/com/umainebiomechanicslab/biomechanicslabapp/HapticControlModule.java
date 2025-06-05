@@ -138,6 +138,9 @@ public class HapticControlModule {
             try {
                 responses.onRequestSent();
                 URL url = new URL(this.url);
+
+                Log.d("AsyncHttpRequestTask", "URL: " + url.toString());
+
                 HttpURLConnection connection = (HttpURLConnection) url.openConnection();
                 connection.setRequestMethod("GET");
 

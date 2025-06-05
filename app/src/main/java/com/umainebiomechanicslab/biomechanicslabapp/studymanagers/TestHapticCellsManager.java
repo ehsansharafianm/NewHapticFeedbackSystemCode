@@ -81,7 +81,7 @@ public class TestHapticCellsManager {
             }
 
             //Set the vibration type String
-            vibrationType = cellLetter + "?duration=" + cellDuration;
+            vibrationType = cellLetter + "?delay=" + cellDuration;
 
             hapticControlModule1.sendHapticFeedback(vibrationType, new HttpRequestResponses() {
 
@@ -112,7 +112,7 @@ public class TestHapticCellsManager {
             }
 
             //Set the vibration type String
-            vibrationType = cellLetter + "?duration=" + cellDuration;
+            vibrationType = cellLetter + "?delay=" + cellDuration;
 
             hapticControlModule2.sendHapticFeedback(vibrationType, new HttpRequestResponses() {
 
