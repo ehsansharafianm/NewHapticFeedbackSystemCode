@@ -1,4 +1,4 @@
-package com.umainebiomechanicslab.biomechanicslabapp;
+package com.umainebiomechanicslab.biomechanicslabapp.userinterfaces;
 
 import android.app.Activity;
 import android.text.Editable;
@@ -8,9 +8,13 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.umainebiomechanicslab.biomechanicslabapp.HapticControlModule;
+import com.umainebiomechanicslab.biomechanicslabapp.R;
+import com.umainebiomechanicslab.biomechanicslabapp.studymanagers.TestHapticCellsManager;
+
 import java.util.Locale;
 
-public class TestHapticCellsUI extends UserInterface{
+public class TestHapticCellsUI extends UserInterface {
 
     //Declare the variables to store the vibration durations for each cell (in seconds)
     private double device1CellADuration, device1CellBDuration, device2CellADuration, device2CellBDuration;

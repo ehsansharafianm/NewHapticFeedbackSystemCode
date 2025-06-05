@@ -10,6 +10,21 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 
+import com.umainebiomechanicslab.biomechanicslabapp.studymanagers.OptimizedThighExtensionStudyManager;
+import com.umainebiomechanicslab.biomechanicslabapp.studymanagers.OriginalThighExtensionStudyManager;
+import com.umainebiomechanicslab.biomechanicslabapp.studymanagers.RecordIMUDataManager;
+import com.umainebiomechanicslab.biomechanicslabapp.studymanagers.TestHapticCellsManager;
+import com.umainebiomechanicslab.biomechanicslabapp.userinterfaces.ExperimenterMenuUI;
+import com.umainebiomechanicslab.biomechanicslabapp.userinterfaces.IMURecordingPageUI;
+import com.umainebiomechanicslab.biomechanicslabapp.userinterfaces.LoadingWindowUI;
+import com.umainebiomechanicslab.biomechanicslabapp.userinterfaces.LogPopupWindowUI;
+import com.umainebiomechanicslab.biomechanicslabapp.userinterfaces.OptimizedThighExtensionStudyUI;
+import com.umainebiomechanicslab.biomechanicslabapp.userinterfaces.OriginalThighExtensionStudyUI;
+import com.umainebiomechanicslab.biomechanicslabapp.userinterfaces.ParticipantMenuUI;
+import com.umainebiomechanicslab.biomechanicslabapp.userinterfaces.StartPageUI;
+import com.umainebiomechanicslab.biomechanicslabapp.userinterfaces.TestHapticCellsUI;
+import com.umainebiomechanicslab.biomechanicslabapp.userinterfaces.UserInterface;
+
 import java.util.LinkedList;
 import java.util.Queue;
 

@@ -1,4 +1,12 @@
-package com.umainebiomechanicslab.biomechanicslabapp;
+package com.umainebiomechanicslab.biomechanicslabapp.studymanagers;
+
+import com.umainebiomechanicslab.biomechanicslabapp.FileManager;
+import com.umainebiomechanicslab.biomechanicslabapp.HapticControlModule;
+import com.umainebiomechanicslab.biomechanicslabapp.HttpRequestResponses;
+import com.umainebiomechanicslab.biomechanicslabapp.UDPListenerThread;
+import com.umainebiomechanicslab.biomechanicslabapp.userinterfaces.ExperimenterMenuUI;
+import com.umainebiomechanicslab.biomechanicslabapp.userinterfaces.LoadingWindowUI;
+import com.umainebiomechanicslab.biomechanicslabapp.userinterfaces.TestHapticCellsUI;
 
 public class TestHapticCellsManager {
 

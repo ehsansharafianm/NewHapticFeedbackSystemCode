@@ -1,9 +1,23 @@
-package com.umainebiomechanicslab.biomechanicslabapp;
+package com.umainebiomechanicslab.biomechanicslabapp.studymanagers;
 
 import static com.xsens.dot.android.sdk.models.DotPayload.PAYLOAD_TYPE_CUSTOM_MODE_1;
 
 import android.content.Context;
 import android.util.Log;
+
+import com.umainebiomechanicslab.biomechanicslabapp.FileManager;
+import com.umainebiomechanicslab.biomechanicslabapp.HapticControlModule;
+import com.umainebiomechanicslab.biomechanicslabapp.HttpRequestResponses;
+import com.umainebiomechanicslab.biomechanicslabapp.trials.OriginalThighExtensionStudyTrial;
+import com.umainebiomechanicslab.biomechanicslabapp.targetmanagers.ThighExtensionStudyOriginalTargetManager;
+import com.umainebiomechanicslab.biomechanicslabapp.UDPListenerThread;
+import com.umainebiomechanicslab.biomechanicslabapp.imus.RecordingIMU;
+import com.umainebiomechanicslab.biomechanicslabapp.imus.StreamingIMU;
+import com.umainebiomechanicslab.biomechanicslabapp.imus.StreamingIMUWithThighAlgorithmForOriginalThighExtensionStudy;
+import com.umainebiomechanicslab.biomechanicslabapp.imus.UniversalIMU;
+import com.umainebiomechanicslab.biomechanicslabapp.userinterfaces.ExperimenterMenuUI;
+import com.umainebiomechanicslab.biomechanicslabapp.userinterfaces.LoadingWindowUI;
+import com.umainebiomechanicslab.biomechanicslabapp.userinterfaces.OriginalThighExtensionStudyUI;
 
 import java.util.ArrayList;
 import java.util.Date;

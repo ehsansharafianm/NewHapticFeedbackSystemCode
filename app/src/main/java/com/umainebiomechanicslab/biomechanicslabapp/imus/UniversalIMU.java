@@ -1,16 +1,18 @@
-package com.umainebiomechanicslab.biomechanicslabapp;
+package com.umainebiomechanicslab.biomechanicslabapp.imus;
 
 import android.bluetooth.BluetoothDevice;
 import android.content.Context;
-import android.util.Log;
 
+import com.umainebiomechanicslab.biomechanicslabapp.FileManager;
+import com.umainebiomechanicslab.biomechanicslabapp.studymanagers.IMUManager;
+import com.umainebiomechanicslab.biomechanicslabapp.trials.Trial;
+import com.umainebiomechanicslab.biomechanicslabapp.userinterfaces.UserInterfaceWithIMU;
 import com.xsens.dot.android.sdk.events.DotData;
 import com.xsens.dot.android.sdk.interfaces.DotDeviceCallback;
 import com.xsens.dot.android.sdk.models.DotDevice;
 import com.xsens.dot.android.sdk.models.FilterProfileInfo;
 
 import java.util.ArrayList;
-import java.util.concurrent.TimeUnit;
 
 public abstract class UniversalIMU implements DotDeviceCallback {
 

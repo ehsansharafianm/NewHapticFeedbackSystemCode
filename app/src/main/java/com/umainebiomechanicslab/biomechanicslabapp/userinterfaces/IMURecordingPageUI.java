@@ -1,4 +1,4 @@
-package com.umainebiomechanicslab.biomechanicslabapp;
+package com.umainebiomechanicslab.biomechanicslabapp.userinterfaces;
 
 import android.app.Activity;
 import android.text.Editable;
@@ -9,6 +9,10 @@ import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
+
+import com.umainebiomechanicslab.biomechanicslabapp.FileManager;
+import com.umainebiomechanicslab.biomechanicslabapp.R;
+import com.umainebiomechanicslab.biomechanicslabapp.studymanagers.RecordIMUDataManager;
 
 public class IMURecordingPageUI extends UserInterfaceWithIMU {
 

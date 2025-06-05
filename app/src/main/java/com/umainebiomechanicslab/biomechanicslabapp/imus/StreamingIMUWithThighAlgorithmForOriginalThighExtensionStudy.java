@@ -1,17 +1,23 @@
-package com.umainebiomechanicslab.biomechanicslabapp;
+package com.umainebiomechanicslab.biomechanicslabapp.imus;
 
 import android.content.Context;
 
+import com.umainebiomechanicslab.biomechanicslabapp.FileManager;
+import com.umainebiomechanicslab.biomechanicslabapp.studymanagers.IMUManager;
+import com.umainebiomechanicslab.biomechanicslabapp.trials.OriginalThighExtensionStudyTrial;
+import com.umainebiomechanicslab.biomechanicslabapp.targetmanagers.ThighExtensionStudyOriginalTargetManager;
+import com.umainebiomechanicslab.biomechanicslabapp.trials.Trial;
+import com.umainebiomechanicslab.biomechanicslabapp.userinterfaces.OriginalThighExtensionStudyUI;
 import com.xsens.dot.android.sdk.events.DotData;
 
 import java.util.Arrays;
 import java.util.Locale;
 
-public class StreamingIMUWithThighAlgorithmForOptimizedThighExtensionStudy extends StreamingIMU{
+public class StreamingIMUWithThighAlgorithmForOriginalThighExtensionStudy extends StreamingIMU{
 
-    private OptimizedThighExtensionStudyTrial thighExtensionStudyTrial;
-    private final OptimizedThighExtensionStudyUI thighExtensionStudyUI;
-    private final ThighExtensionStudyOptimizedTargetManager targetManager;
+    private OriginalThighExtensionStudyTrial thighExtensionStudyTrial;
+    private final OriginalThighExtensionStudyUI thighExtensionStudyUI;
+    private final ThighExtensionStudyOriginalTargetManager targetManager;
 
     private final int MIN_SAMPLES_BETWEEN_PEAKS = 15;
     private final int MIN_EXTENSION_ANGLE = -4;
@@ -25,10 +31,10 @@ public class StreamingIMUWithThighAlgorithmForOptimizedThighExtensionStudy exten
     private int stepCounter;
     private double mostRecentPeakThighAngle;
 
-    public StreamingIMUWithThighAlgorithmForOptimizedThighExtensionStudy(String nameOfIMU, Context context, IMUManager imuManager,
-                                                                         OptimizedThighExtensionStudyUI thighExtensionStudyUI,
-                                                                         FileManager fileManager, int measurementMode,
-                                                                         ThighExtensionStudyOptimizedTargetManager targetManager) {
+    public StreamingIMUWithThighAlgorithmForOriginalThighExtensionStudy(String nameOfIMU, Context context, IMUManager imuManager,
+                                                                        OriginalThighExtensionStudyUI thighExtensionStudyUI,
+                                                                        FileManager fileManager, int measurementMode,
+                                                                        ThighExtensionStudyOriginalTargetManager targetManager) {
 
         super(nameOfIMU, context, imuManager, thighExtensionStudyUI, fileManager, measurementMode);
 
@@ -93,7 +99,7 @@ public class StreamingIMUWithThighAlgorithmForOptimizedThighExtensionStudy exten
         mostRecentPeakThighAngle = 0;
         Arrays.fill(last5Angles, 0);
 
-        this.thighExtensionStudyTrial = (OptimizedThighExtensionStudyTrial) trial;
+        this.thighExtensionStudyTrial = (OriginalThighExtensionStudyTrial) trial;
 
         /*
          * After running the startTrial lines of code unique to a Streaming IMU with a data algorithm, run the
@@ -148,6 +154,10 @@ public class StreamingIMUWithThighAlgorithmForOptimizedThighExtensionStudy exten
             case "Baseline Normal":
             case "Baseline with Cognitive Task":
             case "Fast":
+            case "Verbal Feedback":
+            case "Verbal Feedback with Cognitive Task":
+            case "Retention":
+            case "Retention with Cognitive Task":
 
                 //Update the EulerX Value To The Offset Value
                 eulerAngleX = eulerAngleX - offsetEulerAngle;
@@ -217,7 +227,8 @@ public class StreamingIMUWithThighAlgorithmForOptimizedThighExtensionStudy exten
                 }
                 break;
 
-            case "Optimization Familiarization":
+            case "Positive Feedback Familiarization":
+            case "Error Feedback Familiarization":
 
                 //Update the EulerX Value To The Offset Value
                 eulerAngleX = eulerAngleX - offsetEulerAngle;
@@ -243,7 +254,7 @@ public class StreamingIMUWithThighAlgorithmForOptimizedThighExtensionStudy exten
                         stepCounter++;
 
                         //Send PTE to target manager to see if feedback should be given
-                        targetManager.onPTEAngleDetected(mostRecentPeakThighAngle, nameOfIMU, sampleCounter, outputFrequency, null);
+                        targetManager.onPTEAngleDetected(mostRecentPeakThighAngle, nameOfIMU, sampleCounter, trialName, thighExtensionStudyTrial);
 
                         //Update the User Interface with the most recent PTE Angle
                         thighExtensionStudyUI.updateGaitParameterOutput("PTE", nameOfIMU, String.format(Locale.US,"%.3f",mostRecentPeakThighAngle));
@@ -262,7 +273,8 @@ public class StreamingIMUWithThighAlgorithmForOptimizedThighExtensionStudy exten
                 }
                 break;
 
-            case "Optimization Feedback":
+            case "Positive Feedback":
+            case "Error Feedback":
 
                 //Update the EulerX Value To The Offset Value
                 eulerAngleX = eulerAngleX - offsetEulerAngle;
@@ -301,14 +313,13 @@ public class StreamingIMUWithThighAlgorithmForOptimizedThighExtensionStudy exten
                             thighExtensionStudyTrial.appendToGaitParameterArrayList(nameOfIMU, "PTE", mostRecentPeakThighAngle);
 
                             //Send PTE to target manager to see if feedback should be given (and if target needs to be changed)
-                            boolean feedbackProvided = targetManager.onPTEAngleDetected(mostRecentPeakThighAngle, nameOfIMU,
-                                    sampleCounter, outputFrequency, thighExtensionStudyTrial);
+                            boolean feedbackProvided = targetManager.onPTEAngleDetected(mostRecentPeakThighAngle, nameOfIMU, 
+                                    sampleCounter, trialName, thighExtensionStudyTrial);
 
                             //If feedback was given, update the packet counter to show that feedback was given
                             if(feedbackProvided){
                                 dotData.setPacketCounter(FEEDBACK_GIVEN_OFFSET + (stepCounter * PACKET_COUNTER_STEP_OFFSET) + sampleCounter);
                             }
-
                         }
 
                         //Update the User Interface with the most recent PTE Angle
@@ -341,7 +352,8 @@ public class StreamingIMUWithThighAlgorithmForOptimizedThighExtensionStudy exten
                 }
                 break;
 
-            case "Optimization Feedback with Cognitive Task":
+            case "Positive Feedback with Cognitive Task":
+            case "Error Feedback with Cognitive Task":
 
                 //Update the EulerX Value To The Offset Value
                 eulerAngleX = eulerAngleX - offsetEulerAngle;
@@ -381,13 +393,13 @@ public class StreamingIMUWithThighAlgorithmForOptimizedThighExtensionStudy exten
 
                             //Send PTE to target manager to see if feedback should be given
                             boolean feedbackProvided = targetManager.onPTEAngleDetected(mostRecentPeakThighAngle, nameOfIMU,
-                                    sampleCounter, outputFrequency, thighExtensionStudyTrial);
+                                    sampleCounter, trialName, thighExtensionStudyTrial);
 
                             //If feedback was given, update the packet counter to show that feedback was given
                             if(feedbackProvided){
                                 dotData.setPacketCounter(FEEDBACK_GIVEN_OFFSET + (stepCounter * PACKET_COUNTER_STEP_OFFSET) + sampleCounter);
                             }
-
+                            
                         }
 
                         //Update the User Interface with the most recent PTE Angle

@@ -1,9 +1,9 @@
-package com.umainebiomechanicslab.biomechanicslabapp;
+package com.umainebiomechanicslab.biomechanicslabapp.userinterfaces;
 
 import android.app.Activity;
 import android.widget.Button;
 
-public abstract class UserInterfaceWithRecordingIMU extends UserInterfaceWithIMU{
+public abstract class UserInterfaceWithRecordingIMU extends UserInterfaceWithIMU {
 
     protected Button exportRecordedDataButton;
 

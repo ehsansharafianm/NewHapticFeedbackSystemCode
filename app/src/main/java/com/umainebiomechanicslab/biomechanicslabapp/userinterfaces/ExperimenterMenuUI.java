@@ -1,9 +1,11 @@
-package com.umainebiomechanicslab.biomechanicslabapp;
+package com.umainebiomechanicslab.biomechanicslabapp.userinterfaces;
 
 import android.app.Activity;
 import android.widget.Button;
 
-public class ExperimenterMenuUI extends UserInterface{
+import com.umainebiomechanicslab.biomechanicslabapp.R;
+
+public class ExperimenterMenuUI extends UserInterface {
 
     public ExperimenterMenuUI(Activity activity, int pageID, IMURecordingPageUI imuRecordingPageUI, TestHapticCellsUI testHapticCellsUI,
                               OriginalThighExtensionStudyUI originalThighExtensionStudyUI,

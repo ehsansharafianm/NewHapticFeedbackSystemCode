@@ -2,6 +2,11 @@ package com.umainebiomechanicslab.biomechanicslabapp;
 
 import android.util.Log;
 
+import com.umainebiomechanicslab.biomechanicslabapp.userinterfaces.ExperimenterMenuUI;
+import com.umainebiomechanicslab.biomechanicslabapp.userinterfaces.LoadingWindowUI;
+import com.umainebiomechanicslab.biomechanicslabapp.userinterfaces.TestHapticCellsUI;
+import com.umainebiomechanicslab.biomechanicslabapp.userinterfaces.UserInterfaceWithIMU;
+
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 

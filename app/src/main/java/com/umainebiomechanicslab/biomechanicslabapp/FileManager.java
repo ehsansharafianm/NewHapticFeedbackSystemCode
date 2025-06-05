@@ -22,6 +22,10 @@ import com.google.firebase.auth.GoogleAuthProvider;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
+import com.umainebiomechanicslab.biomechanicslabapp.trials.Trial;
+import com.umainebiomechanicslab.biomechanicslabapp.userinterfaces.LoadingWindowUI;
+import com.umainebiomechanicslab.biomechanicslabapp.userinterfaces.LogPopupWindowUI;
+import com.umainebiomechanicslab.biomechanicslabapp.userinterfaces.UserInterface;
 import com.xsens.dot.android.sdk.utils.DotLogger;
 
 import java.io.File;

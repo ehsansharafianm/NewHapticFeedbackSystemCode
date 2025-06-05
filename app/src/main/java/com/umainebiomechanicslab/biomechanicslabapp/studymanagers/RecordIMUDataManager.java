@@ -1,8 +1,13 @@
-package com.umainebiomechanicslab.biomechanicslabapp;
+package com.umainebiomechanicslab.biomechanicslabapp.studymanagers;
 
 import static com.xsens.dot.android.sdk.models.DotPayload.PAYLOAD_TYPE_CUSTOM_MODE_1;
 
 import android.content.Context;
+
+import com.umainebiomechanicslab.biomechanicslabapp.FileManager;
+import com.umainebiomechanicslab.biomechanicslabapp.imus.StreamingIMU;
+import com.umainebiomechanicslab.biomechanicslabapp.imus.UniversalIMU;
+import com.umainebiomechanicslab.biomechanicslabapp.userinterfaces.IMURecordingPageUI;
 
 import java.util.Date;
 import java.util.Locale;

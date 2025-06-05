@@ -1,4 +1,6 @@
-package com.umainebiomechanicslab.biomechanicslabapp;
+package com.umainebiomechanicslab.biomechanicslabapp.trials;
+
+import com.umainebiomechanicslab.biomechanicslabapp.FileManager;
 
 import java.util.ArrayList;
 

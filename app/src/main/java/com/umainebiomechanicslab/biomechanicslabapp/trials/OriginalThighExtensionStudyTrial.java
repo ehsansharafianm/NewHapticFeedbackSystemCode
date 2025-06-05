@@ -1,7 +1,10 @@
-package com.umainebiomechanicslab.biomechanicslabapp;
+package com.umainebiomechanicslab.biomechanicslabapp.trials;
 
 import android.content.Context;
 import android.util.Log;
+
+import com.umainebiomechanicslab.biomechanicslabapp.FileManager;
+import com.umainebiomechanicslab.biomechanicslabapp.userinterfaces.UserInterface;
 
 import java.io.File;
 import java.io.FileWriter;

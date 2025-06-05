@@ -1,6 +1,11 @@
-package com.umainebiomechanicslab.biomechanicslabapp;
+package com.umainebiomechanicslab.biomechanicslabapp.targetmanagers;
 
 import android.util.Log;
+
+import com.umainebiomechanicslab.biomechanicslabapp.FileManager;
+import com.umainebiomechanicslab.biomechanicslabapp.studymanagers.OptimizedThighExtensionStudyManager;
+import com.umainebiomechanicslab.biomechanicslabapp.trials.OptimizedThighExtensionStudyTrial;
+import com.umainebiomechanicslab.biomechanicslabapp.userinterfaces.OptimizedThighExtensionStudyUI;
 
 import java.util.Arrays;
 import java.util.Locale;

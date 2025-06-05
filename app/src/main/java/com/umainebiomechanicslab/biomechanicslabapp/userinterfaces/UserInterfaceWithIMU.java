@@ -1,9 +1,9 @@
-package com.umainebiomechanicslab.biomechanicslabapp;
+package com.umainebiomechanicslab.biomechanicslabapp.userinterfaces;
 
 import android.app.Activity;
 import android.widget.Button;
 
-public abstract class UserInterfaceWithIMU extends UserInterface{
+public abstract class UserInterfaceWithIMU extends UserInterface {
 
     protected Button startScanButton, startSyncButton, disconnectButton, showBatteryPercentageButton, startInitializationButton,
             startTrialButton, goBackButton, uploadDataToCloudButton, showLogButton;

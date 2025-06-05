@@ -1,7 +1,12 @@
-package com.umainebiomechanicslab.biomechanicslabapp;
+package com.umainebiomechanicslab.biomechanicslabapp.studymanagers;
 
 import android.content.Context;
 import android.util.Log;
+
+import com.umainebiomechanicslab.biomechanicslabapp.FileManager;
+import com.umainebiomechanicslab.biomechanicslabapp.imus.RecordingIMU;
+import com.umainebiomechanicslab.biomechanicslabapp.userinterfaces.LoadingWindowUI;
+import com.umainebiomechanicslab.biomechanicslabapp.userinterfaces.UserInterfaceWithRecordingIMU;
 
 import java.util.ArrayList;
 import java.util.concurrent.TimeUnit;

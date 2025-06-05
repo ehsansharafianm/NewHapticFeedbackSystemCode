@@ -1,8 +1,12 @@
-package com.umainebiomechanicslab.biomechanicslabapp;
+package com.umainebiomechanicslab.biomechanicslabapp.imus;
 
 import android.content.Context;
 import android.util.Log;
 
+import com.umainebiomechanicslab.biomechanicslabapp.FileManager;
+import com.umainebiomechanicslab.biomechanicslabapp.studymanagers.IMUManager;
+import com.umainebiomechanicslab.biomechanicslabapp.trials.Trial;
+import com.umainebiomechanicslab.biomechanicslabapp.userinterfaces.UserInterfaceWithIMU;
 import com.xsens.dot.android.sdk.events.DotData;
 import com.xsens.dot.android.sdk.models.DotPayload;
 import com.xsens.dot.android.sdk.utils.DotLogger;

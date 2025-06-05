@@ -1,4 +1,4 @@
-package com.umainebiomechanicslab.biomechanicslabapp;
+package com.umainebiomechanicslab.biomechanicslabapp.userinterfaces;
 
 import android.app.Activity;
 import android.text.Editable;
@@ -12,7 +12,12 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
 
-public class OptimizedThighExtensionStudyUI extends UserInterfaceWithRecordingIMU{
+import com.umainebiomechanicslab.biomechanicslabapp.FileManager;
+import com.umainebiomechanicslab.biomechanicslabapp.HapticControlModule;
+import com.umainebiomechanicslab.biomechanicslabapp.studymanagers.OptimizedThighExtensionStudyManager;
+import com.umainebiomechanicslab.biomechanicslabapp.R;
+
+public class OptimizedThighExtensionStudyUI extends UserInterfaceWithRecordingIMU {
 
     private final String TAG = "ThighExtensionStudyUI";
 

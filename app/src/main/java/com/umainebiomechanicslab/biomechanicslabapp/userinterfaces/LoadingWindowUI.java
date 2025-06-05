@@ -1,4 +1,4 @@
-package com.umainebiomechanicslab.biomechanicslabapp;
+package com.umainebiomechanicslab.biomechanicslabapp.userinterfaces;
 
 import android.app.Activity;
 import android.widget.Button;
@@ -6,6 +6,8 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.os.Handler;
 import android.os.Looper;
+
+import com.umainebiomechanicslab.biomechanicslabapp.R;
 
 public class LoadingWindowUI extends UserInterface {
 

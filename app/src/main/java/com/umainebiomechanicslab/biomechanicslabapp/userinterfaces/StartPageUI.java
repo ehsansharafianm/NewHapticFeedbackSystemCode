@@ -1,7 +1,9 @@
-package com.umainebiomechanicslab.biomechanicslabapp;
+package com.umainebiomechanicslab.biomechanicslabapp.userinterfaces;
 
 import android.app.Activity;
 import android.widget.Button;
+
+import com.umainebiomechanicslab.biomechanicslabapp.R;
 
 public class StartPageUI extends UserInterface {
 

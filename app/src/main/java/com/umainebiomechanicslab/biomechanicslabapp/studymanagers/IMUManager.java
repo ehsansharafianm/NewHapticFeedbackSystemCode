@@ -1,10 +1,13 @@
-package com.umainebiomechanicslab.biomechanicslabapp;
+package com.umainebiomechanicslab.biomechanicslabapp.studymanagers;
 
 import android.bluetooth.BluetoothDevice;
 import android.bluetooth.le.ScanSettings;
 import android.content.Context;
 import android.util.Log;
 
+import com.umainebiomechanicslab.biomechanicslabapp.FileManager;
+import com.umainebiomechanicslab.biomechanicslabapp.imus.UniversalIMU;
+import com.umainebiomechanicslab.biomechanicslabapp.userinterfaces.UserInterfaceWithIMU;
 import com.xsens.dot.android.sdk.interfaces.DotScannerCallback;
 import com.xsens.dot.android.sdk.interfaces.DotSyncCallback;
 import com.xsens.dot.android.sdk.models.DotDevice;

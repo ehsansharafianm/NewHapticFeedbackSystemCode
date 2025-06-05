@@ -1,11 +1,13 @@
-package com.umainebiomechanicslab.biomechanicslabapp;
+package com.umainebiomechanicslab.biomechanicslabapp.userinterfaces;
 
 import android.app.Activity;
 import android.text.method.ScrollingMovementMethod;
 import android.util.Log;
 import android.widget.TextView;
 
-public class LogPopupWindowUI extends UserInterface{
+import com.umainebiomechanicslab.biomechanicslabapp.R;
+
+public class LogPopupWindowUI extends UserInterface {
 
     private final String TAG = "LogPopupWindowUI";
 
