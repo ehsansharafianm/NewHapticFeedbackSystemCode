@@ -60,8 +60,8 @@
     <string name="StartInitializationButtonText">Start\nInitialization</string>
     <string name="StartTrialButtonText">Start\nTrial</string>
     <string name="IMUOutputHeader">IMU Output</string>
-    <string name="LeftSideLabelText">Left Thigh</string>
-    <string name="RightSideLabelText">Right Thigh</string>
+    <string name="LeftSideLabelText">Left Side</string>
+    <string name="RightSideLabelText">Right Side</string>
     <string name="ShowLogButtonText">Show Log</string>
     <string name="UploadDataToCloudButtonText">Upload Data\nTo Cloud</string>
     <string name="ExportIMURecordedDataButtonText">Export IMU Recorded Data</string>
@@ -92,6 +92,13 @@
     <string name="LeftThighBackFeedbackButtonText">Left Thigh Back</string>
     <string name="RightThighBackFeedbackButtonText">Right Thigh Back</string>
     <string name="TargetCadenceLabel">Target Cadence</string>
+
+    <!-- Arm Angle Feedback Study Page Strings -->
+    <string name="ArmAngleFeedbackStudyPageTitle">Arm Angle Feedback Study</string>
+    <string name="LeftArmFeedbackButtonText">Left Arm Feedback</string>
+    <string name="RightArmFeedbackButtonText">Right Arm Feedback</string>
+    <string name="PeakArmAngleLabel">Peak Arm Angle</string>"
+    <string name="NumberOfArmPeaksLabel"># of Arm Peaks</string>
 
 
     <string-array name="IMU_MAC_Addresses">
