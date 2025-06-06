@@ -742,7 +742,7 @@
                 android:gravity="center"/>
 
             <TextView
-                android:id="@+id/arm_angle_feedback_study_trial_page_LeftArmTitle"
+                android:id="@+id/arm_angle_feedback_study_trial_page_LeftSideTitle"
                 style="@style/ExperimentalPageNormalText"
                 android:layout_width="120dp"
                 android:layout_height="wrap_content"
@@ -753,7 +753,7 @@
                 android:textAlignment="center"/>
 
             <TextView
-                android:id="@+id/arm_angle_feedback_study_trial_page_RightArmTitle"
+                android:id="@+id/arm_angle_feedback_study_trial_page_RightSideTitle"
                 style="@style/ExperimentalPageNormalText"
                 android:layout_width="120dp"
                 android:layout_height="wrap_content"
@@ -804,7 +804,7 @@
                 android:text="@string/CadenceGaitFeatureLabel"/>
 
             <TextView
-                android:id="@+id/arm_angle_feedback_study_trial_page_LeftArmLastCadence"
+                android:id="@+id/arm_angle_feedback_study_trial_page_LeftSideLastCadence"
                 style="@style/ExperimentalPageNormalText"
                 android:layout_width="120dp"
                 android:layout_height="wrap_content"
@@ -814,7 +814,7 @@
                 android:textAlignment="center"/>
 
             <TextView
-                android:id="@+id/arm_angle_feedback_study_trial_page_RightArmLastCadence"
+                android:id="@+id/arm_angle_feedback_study_trial_page_RightSideLastCadence"
                 style="@style/ExperimentalPageNormalText"
                 android:layout_width="120dp"
                 android:layout_height="wrap_content"
@@ -834,7 +834,7 @@
                 android:text="@string/StrideLengthGaitFeatureLabel"/>
 
             <TextView
-                android:id="@+id/arm_angle_feedback_study_trial_page_LeftArmLastStrideLength"
+                android:id="@+id/arm_angle_feedback_study_trial_page_LeftSideLastStrideLength"
                 style="@style/ExperimentalPageNormalText"
                 android:layout_width="120dp"
                 android:layout_height="wrap_content"
@@ -844,7 +844,7 @@
                 android:textAlignment="center"/>
 
             <TextView
-                android:id="@+id/arm_angle_feedback_study_trial_page_RightArmLastStrideLength"
+                android:id="@+id/arm_angle_feedback_study_trial_page_RightSideLastStrideLength"
                 style="@style/ExperimentalPageNormalText"
                 android:layout_width="120dp"
                 android:layout_height="wrap_content"
@@ -864,7 +864,7 @@
                 android:text="@string/WalkingSpeedGaitFeatureLabel"/>
 
             <TextView
-                android:id="@+id/arm_angle_feedback_study_trial_page_LeftArmLastSpeed"
+                android:id="@+id/arm_angle_feedback_study_trial_page_LeftSideLastSpeed"
                 style="@style/ExperimentalPageNormalText"
                 android:layout_width="120dp"
                 android:layout_height="wrap_content"
@@ -874,7 +874,7 @@
                 android:textAlignment="center"/>
 
             <TextView
-                android:id="@+id/arm_angle_feedback_study_trial_page_RightArmLastSpeed"
+                android:id="@+id/arm_angle_feedback_study_trial_page_RightSideLastSpeed"
                 style="@style/ExperimentalPageNormalText"
                 android:layout_width="120dp"
                 android:layout_height="wrap_content"
