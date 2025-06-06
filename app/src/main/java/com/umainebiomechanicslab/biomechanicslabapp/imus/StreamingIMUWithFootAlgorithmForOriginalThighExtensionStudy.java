@@ -4,120 +4,34 @@ import android.content.Context;
 
 import com.umainebiomechanicslab.biomechanicslabapp.FileManager;
 import com.umainebiomechanicslab.biomechanicslabapp.FootStrideData;
-import com.umainebiomechanicslab.biomechanicslabapp.SpeedCalculationFromFootIMU;
 import com.umainebiomechanicslab.biomechanicslabapp.studymanagers.IMUManager;
-import com.umainebiomechanicslab.biomechanicslabapp.targetmanagers.ThighExtensionStudyOptimizedTargetManager;
 import com.umainebiomechanicslab.biomechanicslabapp.trials.OptimizedThighExtensionStudyTrial;
 import com.umainebiomechanicslab.biomechanicslabapp.trials.Trial;
 import com.umainebiomechanicslab.biomechanicslabapp.userinterfaces.OptimizedThighExtensionStudyUI;
 import com.xsens.dot.android.sdk.events.DotData;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Locale;
 
-public class StreamingIMUWithFootDataAlgorithmForOptimizedThighExtensionStudy extends StreamingIMU{
+public class StreamingIMUWithFootAlgorithmForOriginalThighExtensionStudy extends StreamingIMUWithFootDataAlgorithmForStrideCalculation {
 
+    //Declare the trial object for the study
     private OptimizedThighExtensionStudyTrial thighExtensionStudyTrial;
+
+    //Declare the user interface for the study
     private final OptimizedThighExtensionStudyUI thighExtensionStudyUI;
-    private final ThighExtensionStudyOptimizedTargetManager targetManager;
 
-    private final int MIN_SAMPLES_BETWEEN_PEAKS = 15;
-    private final int MIN_ANGLE_FOR_HEEL_STRIKE = 10;
-    private final int NUMBER_OF_CYCLES_UNTIL_STEADY_STATE = 10;
-    private final int PACKET_COUNTER_STEP_OFFSET = 100000;
-    private final int FEEDBACK_GIVEN_OFFSET = 100000000;
-
-    private final double[] last5Angles;
-    private final DotData[] last3Samples;
-    private final int[] last2HeelStrikes;
-    private double trialCadenceSum;
-    private double trialStrideLengthSum;
-    private double trialStrideSpeedSum;
-    private int stepCounter;
-
-    private final ArrayList<FootStrideData> strides;
-    private FootStrideData currentStride;
-
-    public StreamingIMUWithFootDataAlgorithmForOptimizedThighExtensionStudy(String nameOfIMU, Context context, IMUManager imuManager,
-                                                                            OptimizedThighExtensionStudyUI thighExtensionStudyUI,
-                                                                            FileManager fileManager, int measurementMode,
-                                                                            ThighExtensionStudyOptimizedTargetManager targetManager) {
+    public StreamingIMUWithFootAlgorithmForOriginalThighExtensionStudy(String nameOfIMU, Context context, IMUManager imuManager,
+                                                                       OptimizedThighExtensionStudyUI thighExtensionStudyUI,
+                                                                       FileManager fileManager, int measurementMode) {
 
         super(nameOfIMU, context, imuManager, thighExtensionStudyUI, fileManager, measurementMode);
 
         this.thighExtensionStudyUI = thighExtensionStudyUI;
-        this.targetManager = targetManager;
-
-        last5Angles = new double[5];
-        last2HeelStrikes = new int[2];
-        last3Samples = new DotData[3];
-
-        strides = new ArrayList<>();
-        currentStride = new FootStrideData(nameOfIMU, offsetEulerAngle);
-    }
-
-    private void updateRecentAnglesArray(double newAngle, double[] recentAngles){
-
-        //Advance all values of the recentAngles array one space (dropping the last one)
-        for(int i = (recentAngles.length-1); i > 0; i--){
-            recentAngles[i] = recentAngles[i-1];
-        }
-
-        //Set index 0 of recentAngles array to newAngle
-        recentAngles[0] = newAngle;
-
-    }
-
-    private void updateRecentSamplesArray(DotData newDotDataSample, DotData[] recentDotDataSample){
-
-        //Advance all values of the recentAngles array one space (dropping the last one)
-        for(int i = (recentDotDataSample.length-1); i > 0; i--){
-            recentDotDataSample[i] = recentDotDataSample[i-1];
-        }
-
-        //Set index 0 of recentAngles array to newAngle
-        recentDotDataSample[0] = newDotDataSample;
-
-    }
-
-    private boolean isMaxPeak(double [] recentAngles, double threshold){
-        int potentialPeakIndex = recentAngles.length/2;
-
-        /*
-         * A sample cannot be considered a heel strike unless it falls above a certain threshold.
-         * This prevents a heel strike from being detected during slight movements when the subject
-         * is standing still. The threshold we are using is 10 degrees, but this can be changed
-         * if necessary.
-         * */
-        if(recentAngles[potentialPeakIndex] < threshold){
-            return false;
-        }
-
-        for(int i = 1; i <= potentialPeakIndex; i++){
-            if(recentAngles[potentialPeakIndex] < recentAngles[potentialPeakIndex+i]){
-                return false;
-            }
-            else if(recentAngles[potentialPeakIndex] < recentAngles[potentialPeakIndex-i]){
-                return false;
-            }
-        }
-
-        return true;
 
     }
 
     @Override
     public void startTrial(String trialName, String timeStamp, Trial trial, int trialDurationMin, boolean logData) {
-
-        trialCadenceSum = 0;
-        trialStrideLengthSum = 0;
-        trialStrideSpeedSum = 0;
-        stepCounter = 0;
-
-        Arrays.fill(last5Angles, 0);
-        Arrays.fill(last2HeelStrikes, 0);
-        Arrays.fill(last3Samples, null);
 
         strides.clear();
         currentStride = new FootStrideData(nameOfIMU, offsetEulerAngle);
@@ -227,7 +141,7 @@ public class StreamingIMUWithFootDataAlgorithmForOptimizedThighExtensionStudy ex
                             trialCadenceSum += mostRecentCadence;
                             thighExtensionStudyTrial.appendToGaitParameterArrayList(nameOfIMU, "Cadence", mostRecentCadence);
 
-                            /*SpeedCalculationFromFootIMU.calculateSpeed(strides.get(strides.size() - 2), strides.get(strides.size() - 3), strides.get(strides.size() - 1), new SpeedCalculationFromFootIMU.SpeedReturn() {
+                            SpeedCalculationFromFootIMU.calculateSpeed(strides.get(strides.size() - 2), strides.get(strides.size() - 3), strides.get(strides.size() - 1), new SpeedCalculationFromFootIMU.SpeedReturn() {
                                 @Override
                                 public void onSpeedCalculated(double[] strideLengthAndSpeed) {
 
@@ -237,16 +151,19 @@ public class StreamingIMUWithFootDataAlgorithmForOptimizedThighExtensionStudy ex
                                     thighExtensionStudyTrial.appendToGaitParameterArrayList(nameOfIMU, "StrideLength", strideLength);
                                     thighExtensionStudyTrial.appendToGaitParameterArrayList(nameOfIMU, "WalkingSpeed", strideSpeed);
 
+                                    //Update the User Interface with the most recent stride length and speed
                                     thighExtensionStudyUI.updateGaitParameterOutput("StrideLength", nameOfIMU, String.valueOf(strideLength));
                                     thighExtensionStudyUI.updateGaitParameterOutput("WalkingSpeed", nameOfIMU, String.valueOf(strideSpeed));
 
+                                    //Update the sum of all stride lengths and speeds for use in the average stride length and speed calculation later
                                     trialStrideLengthSum += strideLength;
                                     trialStrideSpeedSum += strideSpeed;
 
                                 }
-                            });*/
+                            });
                         }
 
+                        //Update the User Interface with the most recent cadence and heel strike cycle count
                         thighExtensionStudyUI.updateGaitParameterOutput("Cadence", nameOfIMU, String.format(Locale.US,"%.1f steps/min", mostRecentCadence));
                         thighExtensionStudyUI.updateGaitParameterOutput("HeelStrikeCycleCount", nameOfIMU, String.valueOf(stepCounter));
 
