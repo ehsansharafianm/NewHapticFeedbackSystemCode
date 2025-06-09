@@ -136,77 +136,77 @@ public abstract class IMUManager implements DotScannerCallback, DotSyncCallback 
             case "V2–06":
                 macAddress = "D4:22:CD:00:9F:88";
                 break;
-            case "V2–LA":
+            case "V2-07":
                 macAddress = "D4:22:CD:00:63:8A";
                 break;
-            case "V2–RA":
-                macAddress = "D4:22:CD:00:63:83";
-                break;
-            case "V2–A2":
+            case "V2–08":
                 macAddress = "D4:22:CD:00:63:71";
                 break;
-            case "V2–LT":
+            case "V2–09":
+                macAddress = "D4:22:CD:00:63:83";
+                break;
+            case "V2–10":
                 macAddress = "D4:22:CD:00:63:7F";
                 break;
-            case "V2–RT":
+            case "V2–11":
                 macAddress = "D4:22:CD:00:63:70";
                 break;
-            case "V2–LS":
+            case "V2–12":
                 macAddress = "D4:22:CD:00:A1:5B";
                 break;
-            case "V2–RS":
+            case "V2–13":
                 macAddress = "D4:22:CD:00:A7:91";
                 break;
-            case "V2–LF":
+            case "V2–14":
                 macAddress = "D4:22:CD:00:64:00";
                 break;
-            case "V2–RF":
+            case "V2–15":
                 macAddress = "D4:22:CD:00:63:7D";
                 break;
-            case "V2–X1":
+            case "V2–16":
                 macAddress = "D4:22:CD:00:63:D6";
                 break;
-            case "ES–LT":
+            case "V2–17":
                 macAddress = "D4:22:CD:00:63:8B";
                 break;
-            case "ES–RT":
+            case "V2–18":
                 macAddress = "D4:22:CD:00:A1:76";
                 break;
-            case "ES–LF":
+            case "V2–19":
                 macAddress = "D4:22:CD:00:63:A4";
                 break;
-            case "ES–RF":
+            case "V2–20":
                 macAddress = "D4:22:CD:00:9F:95";
                 break;
-            case "V1–LA":
-                macAddress = "D4:CA:6E:F1:72:BF";
+            case "V1–01":
+                macAddress = "D4:CA:6E:F1:77:9B";
                 break;
-            case "V1–RA":
-                macAddress = "D4:CA:6E:F1:72:76";
-                break;
-            case "V1–A2":
-                macAddress = "D4:CA:6E:F1:78:4E";
-                break;
-            case "V1–LT":
-                macAddress = "D4:CA:6E:F1:84:BE";
-                break;
-            case "V1–RT":
-                macAddress = "D4:CA:6E:F1:66:87";
-                break;
-            case "V1–LS":
-                macAddress = "D4:22:CD:00:05:BB";
-                break;
-            case "V1–RS":
-                macAddress = "D4:22:CD:00:05:BA";
-                break;
-            case "V1–LF":
-                macAddress = "D4:22:CD:00:05:C5";
-                break;
-            case "V1–RF":
+            case "V1–02":
                 macAddress = "D4:CA:6E:F1:7D:D4";
                 break;
-            case "V1–X1":
-                macAddress = "D4:CA:6E:F1:77:9B";
+            case "V1–03":
+                macAddress = "D4:22:CD:00:05:C5";
+                break;
+            case "V1–04":
+                macAddress = "D4:22:CD:00:05:BA";
+                break;
+            case "V1–05":
+                macAddress = "D4:22:CD:00:05:BB";
+                break;
+            case "V1–06":
+                macAddress = "D4:CA:6E:F1:66:87";
+                break;
+            case "V1–07":
+                macAddress = "D4:CA:6E:F1:84:BE";
+                break;
+            case "V1–08":
+                macAddress = "D4:CA:6E:F1:78:4E";
+                break;
+            case "V1–09":
+                macAddress = "D4:CA:6E:F1:72:76";
+                break;
+            case "V1–10":
+                macAddress = "D4:CA:6E:F1:72:BF";
                 break;
             default:
                 userInterface.textPopUp("Non-Existent IMU Code");
