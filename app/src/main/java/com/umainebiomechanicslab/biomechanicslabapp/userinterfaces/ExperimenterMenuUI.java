@@ -9,7 +9,8 @@ public class ExperimenterMenuUI extends UserInterface {
 
     public ExperimenterMenuUI(Activity activity, int pageID, IMURecordingPageUI imuRecordingPageUI, TestHapticCellsUI testHapticCellsUI,
                               OriginalThighExtensionStudyUI originalThighExtensionStudyUI,
-                              OptimizedThighExtensionStudyUI optimizedThighExtensionStudyUI) {
+                              OptimizedThighExtensionStudyUI optimizedThighExtensionStudyUI,
+                              ArmAngleStudyUI armAngleStudyUI) {
 
         super(activity, pageID);
 
@@ -42,7 +43,7 @@ public class ExperimenterMenuUI extends UserInterface {
         armCuingStudyButton.setOnClickListener(view -> textPopUp("Arm Cuing Study Button Clicked"));
 
         //Set Arm Extension Study Button Click Listener
-        armExtensionStudyButton.setOnClickListener(view -> textPopUp("Arm Extension Study Button Clicked"));
+        armExtensionStudyButton.setOnClickListener(view -> armAngleStudyUI.showPage());
 
         //Set Go Back Button Click Listener
         goBackButton.setOnClickListener(view -> userInterfaceForBackButton.showPage());

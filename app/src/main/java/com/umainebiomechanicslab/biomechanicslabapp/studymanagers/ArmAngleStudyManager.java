@@ -1,24 +1,23 @@
 package com.umainebiomechanicslab.biomechanicslabapp.studymanagers;
 
-import static com.xsens.dot.android.sdk.models.DotPayload.PAYLOAD_TYPE_CUSTOM_MODE_1;
-
 import android.content.Context;
 import android.util.Log;
 
 import com.umainebiomechanicslab.biomechanicslabapp.FileManager;
 import com.umainebiomechanicslab.biomechanicslabapp.HapticControlModule;
 import com.umainebiomechanicslab.biomechanicslabapp.HttpRequestResponses;
-import com.umainebiomechanicslab.biomechanicslabapp.imus.StreamingIMUWithFootAlgorithmForOptimizedThighExtensionStudy;
-import com.umainebiomechanicslab.biomechanicslabapp.trials.OptimizedThighExtensionStudyTrial;
-import com.umainebiomechanicslab.biomechanicslabapp.targetmanagers.ThighExtensionStudyOptimizedTargetManager;
 import com.umainebiomechanicslab.biomechanicslabapp.UDPListenerThread;
 import com.umainebiomechanicslab.biomechanicslabapp.imus.RecordingIMU;
 import com.umainebiomechanicslab.biomechanicslabapp.imus.StreamingIMU;
-import com.umainebiomechanicslab.biomechanicslabapp.imus.StreamingIMUWithThighAlgorithmForOptimizedThighExtensionStudy;
+import com.umainebiomechanicslab.biomechanicslabapp.imus.StreamingIMUWithArmAlgorithmForArmAngleStudy;
+import com.umainebiomechanicslab.biomechanicslabapp.imus.StreamingIMUWithFootDataAlgorithmForStrideCalculation;
 import com.umainebiomechanicslab.biomechanicslabapp.imus.UniversalIMU;
+import com.umainebiomechanicslab.biomechanicslabapp.targetmanagers.ArmAngleStudyTargetManager;
+import com.umainebiomechanicslab.biomechanicslabapp.trials.ArmAngleStudyTrial;
+import com.umainebiomechanicslab.biomechanicslabapp.userinterfaces.ArmAngleStudyUI;
 import com.umainebiomechanicslab.biomechanicslabapp.userinterfaces.ExperimenterMenuUI;
 import com.umainebiomechanicslab.biomechanicslabapp.userinterfaces.LoadingWindowUI;
-import com.umainebiomechanicslab.biomechanicslabapp.userinterfaces.OptimizedThighExtensionStudyUI;
+import com.xsens.dot.android.sdk.models.DotPayload;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -26,16 +25,16 @@ import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 
-public class OptimizedThighExtensionStudyManager extends IMUManagerWithRecordingIMUs{
+public class ArmAngleStudyManager extends IMUManagerWithRecordingIMUs{
 
-    private final String TAG = "ThighExtensionStudyManager";
+    private final String TAG = "ArmAngleStudyManager";
 
     //Declare the HapticControlModule objects
     private final HapticControlModule leftHapticControlModule;
     private final HapticControlModule rightHapticControlModule;
 
     //Declare the ExperimenterMenuUI, ThighExtensionStudyUI and LoadingWindowUI User Interfaces
-    private final OptimizedThighExtensionStudyUI thighExtensionStudyUI;
+    private final ArmAngleStudyUI armAngleStudyUI;
     private final LoadingWindowUI loadingWindowUI;
     private final ExperimenterMenuUI experimenterMenuUI;
 
@@ -43,32 +42,32 @@ public class OptimizedThighExtensionStudyManager extends IMUManagerWithRecording
     private boolean gateWayIPFound;
 
     //Declare the IMU Objects
-    private final RecordingIMU leftArmIMU;
-    private final RecordingIMU rightArmIMU;
-    private final StreamingIMU leftThighIMU;
-    private final StreamingIMU rightThighIMU;
+    private final StreamingIMU leftArmIMU;
+    private final StreamingIMU rightArmIMU;
+    private final RecordingIMU leftThighIMU;
+    private final RecordingIMU rightThighIMU;
     private final StreamingIMU leftFootIMU;
     private final StreamingIMU rightFootIMU;
 
     //Declare the Target Manager
-    private final ThighExtensionStudyOptimizedTargetManager targetManager;
+    private final ArmAngleStudyTargetManager targetManager;
 
     //Create ArrayList to store Trial Objects
-    private final ArrayList<OptimizedThighExtensionStudyTrial> trialArrayList = new ArrayList<>();
+    private final ArrayList<ArmAngleStudyTrial> trialArrayList = new ArrayList<>();
 
     // Map to store trial names and their durations
     private final Map<String, Integer> trialDurations;
 
-    public OptimizedThighExtensionStudyManager(OptimizedThighExtensionStudyUI thighExtensionStudyUI, ExperimenterMenuUI experimenterMenuUI, LoadingWindowUI loadingWindowUI, Context context, FileManager fileManager) {
+    public ArmAngleStudyManager(ArmAngleStudyUI armAngleStudyUI, ExperimenterMenuUI experimenterMenuUI, LoadingWindowUI loadingWindowUI, Context context, FileManager fileManager) {
 
-        super(context, thighExtensionStudyUI, fileManager, loadingWindowUI);
+        super(context, armAngleStudyUI, fileManager, loadingWindowUI);
 
         //Initialize the HapticControlModule objects
         leftHapticControlModule = new HapticControlModule();
         rightHapticControlModule = new HapticControlModule();
 
         //Link the ThighExtensionStudyUI to the TestHapticCellsManager
-        this.thighExtensionStudyUI = thighExtensionStudyUI;
+        this.armAngleStudyUI = armAngleStudyUI;
 
         //Link the LoadingWindowUI to the TestHapticCellsManager
         this.loadingWindowUI = loadingWindowUI;
@@ -80,15 +79,15 @@ public class OptimizedThighExtensionStudyManager extends IMUManagerWithRecording
         gateWayIPFound = false;
 
         //Initialize the Target Manager
-        targetManager = new ThighExtensionStudyOptimizedTargetManager(this, thighExtensionStudyUI, fileManager);
+        targetManager = new ArmAngleStudyTargetManager(this, armAngleStudyUI, fileManager);
 
         //Initialize the IMU Objects
-        leftArmIMU = new RecordingIMU("Left Arm IMU", context, this, thighExtensionStudyUI, fileManager, PAYLOAD_TYPE_CUSTOM_MODE_1);
-        rightArmIMU = new RecordingIMU("Right Arm IMU", context, this, thighExtensionStudyUI, fileManager, PAYLOAD_TYPE_CUSTOM_MODE_1);
-        leftThighIMU = new StreamingIMUWithThighAlgorithmForOptimizedThighExtensionStudy("Left Thigh IMU", context, this, thighExtensionStudyUI, fileManager, PAYLOAD_TYPE_CUSTOM_MODE_1, targetManager);
-        rightThighIMU = new StreamingIMUWithThighAlgorithmForOptimizedThighExtensionStudy("Right Thigh IMU", context, this, thighExtensionStudyUI, fileManager, PAYLOAD_TYPE_CUSTOM_MODE_1, targetManager);
-        leftFootIMU = new StreamingIMUWithFootAlgorithmForOptimizedThighExtensionStudy("Left Foot IMU", context, this, thighExtensionStudyUI, fileManager, PAYLOAD_TYPE_CUSTOM_MODE_1, targetManager);
-        rightFootIMU = new StreamingIMUWithFootAlgorithmForOptimizedThighExtensionStudy("Right Foot IMU", context, this, thighExtensionStudyUI, fileManager, PAYLOAD_TYPE_CUSTOM_MODE_1, targetManager);
+        leftArmIMU = new StreamingIMUWithArmAlgorithmForArmAngleStudy("Left Arm IMU", context, this, armAngleStudyUI, fileManager, DotPayload.PAYLOAD_TYPE_COMPLETE_QUATERNION, targetManager);
+        rightArmIMU = new StreamingIMUWithArmAlgorithmForArmAngleStudy("Right Arm IMU", context, this, armAngleStudyUI, fileManager, DotPayload.PAYLOAD_TYPE_COMPLETE_QUATERNION, targetManager);
+        leftThighIMU = new RecordingIMU("Left Thigh IMU", context, this, armAngleStudyUI, fileManager, DotPayload.PAYLOAD_TYPE_CUSTOM_MODE_1);
+        rightThighIMU = new RecordingIMU("Right Thigh IMU", context, this, armAngleStudyUI, fileManager, DotPayload.PAYLOAD_TYPE_CUSTOM_MODE_1);
+        leftFootIMU = new StreamingIMUWithFootDataAlgorithmForStrideCalculation("Left Foot IMU", context, this, armAngleStudyUI, fileManager, DotPayload.PAYLOAD_TYPE_CUSTOM_MODE_1);
+        rightFootIMU = new StreamingIMUWithFootDataAlgorithmForStrideCalculation("Right Foot IMU", context, this, armAngleStudyUI, fileManager, DotPayload.PAYLOAD_TYPE_CUSTOM_MODE_1);
 
         //Add the IMU Objects to the IMU ArrayList
         IMUArrayList.add(leftArmIMU);
@@ -99,19 +98,28 @@ public class OptimizedThighExtensionStudyManager extends IMUManagerWithRecording
         IMUArrayList.add(rightFootIMU);
 
         //Add the Recording IMU Objects to the Recording IMU ArrayList
-        recordingIMUArrayList.add(leftArmIMU);
-        recordingIMUArrayList.add(rightArmIMU);
+        recordingIMUArrayList.add(leftThighIMU);
+        recordingIMUArrayList.add(rightThighIMU);
 
         // Initialize and populate the trialDurations Map
         // Example: trialDurations.put("Trial Name", durationInMinutes);
         trialDurations = new HashMap<>();
         trialDurations.put("Testing", 0);
         trialDurations.put("Baseline Normal", 2);
-        trialDurations.put("Baseline with Cognitive Task", 2);
         trialDurations.put("Fast", 2);
-        trialDurations.put("Optimization Familiarization", 1);
-        trialDurations.put("Optimization Feedback", 8);
-        trialDurations.put("Optimization Feedback with Cognitive Task", 2);
+        trialDurations.put("Positive Forward Feedback Familiarization", 1);
+        trialDurations.put("Positive Backward Feedback Familiarization", 1);
+        trialDurations.put("Error Forward Feedback Familiarization", 1);
+        trialDurations.put("Error Backward Feedback Familiarization", 1);
+        trialDurations.put("Positive Forward Feedback 50%", 5);
+        trialDurations.put("Positive Backward Feedback 50%", 5);
+        trialDurations.put("Error Forward Feedback 50%", 5);
+        trialDurations.put("Error Backward Feedback 50%", 5);
+        trialDurations.put("Positive Forward Feedback 100%", 5);
+        trialDurations.put("Positive Backward Feedback 100%", 5);
+        trialDurations.put("Error Forward Feedback 100%", 5);
+        trialDurations.put("Error Backward Feedback 100%", 5);
+
     }
 
     @Override
@@ -151,7 +159,7 @@ public class OptimizedThighExtensionStudyManager extends IMUManagerWithRecording
         }
 
         //If all streaming IMUs have their angle offset initialization complete, call onOffsetInitializationComplete
-        thighExtensionStudyUI.onOffsetInitializationComplete(true);
+        armAngleStudyUI.onOffsetInitializationComplete(true);
 
     }
 
@@ -173,8 +181,8 @@ public class OptimizedThighExtensionStudyManager extends IMUManagerWithRecording
         }
 
         //Log the offset angles for each IMU
-        fileManager.writeToLogFile(String.format(Locale.US,"Left Thigh Initialization Offset for %s mode: %.3f", trialName, leftThighIMU.getOffsetEulerAngle()));
-        fileManager.writeToLogFile(String.format(Locale.US,"Right Thigh Initialization Offset for %s mode: %.3f", trialName, rightThighIMU.getOffsetEulerAngle()));
+        fileManager.writeToLogFile(String.format(Locale.US,"Left Arm Initialization Offset for %s mode: %.3f", trialName, leftArmIMU.getOffsetEulerAngle()));
+        fileManager.writeToLogFile(String.format(Locale.US,"Right Arm Initialization Offset for %s mode: %.3f", trialName, rightArmIMU.getOffsetEulerAngle()));
         fileManager.writeToLogFile(String.format(Locale.US,"Left Foot Initialization Offset for %s mode: %.3f", trialName, leftFootIMU.getOffsetEulerAngle()));
         fileManager.writeToLogFile(String.format(Locale.US,"Right Foot Initialization Offset for %s mode: %.3f", trialName, rightFootIMU.getOffsetEulerAngle()));
 
@@ -185,42 +193,30 @@ public class OptimizedThighExtensionStudyManager extends IMUManagerWithRecording
          * */
         switch(trialName) {
             case "Testing":
-            case "Optimization Familiarization":
+            case "Positive Forward Feedback Familiarization":
+            case "Positive Backward Feedback Familiarization":
+            case "Error Forward Feedback Familiarization":
+            case "Error Backward Feedback Familiarization":
 
-                leftThighIMU.startTrial(trialName, currentTimeStamp, null, trialDurationMin, false);
-                rightThighIMU.startTrial(trialName, currentTimeStamp, null, trialDurationMin, false);
+                leftArmIMU.startTrial(trialName, currentTimeStamp, null, trialDurationMin, false);
+                rightArmIMU.startTrial(trialName, currentTimeStamp, null, trialDurationMin, false);
                 leftFootIMU.startTrial(trialName, currentTimeStamp, null, trialDurationMin, false);
                 rightFootIMU.startTrial(trialName, currentTimeStamp, null, trialDurationMin, false);
                 break;
 
             case "Baseline Normal":
-            case "Baseline with Cognitive Task":
             case "Fast":
-            case "Optimization Feedback with Cognitive Task":
+            case "Positive Forward Feedback 50%":
+            case "Positive Backward Feedback 50%":
+            case "Error Forward Feedback 50%":
+            case "Error Backward Feedback 50%":
+            case "Positive Forward Feedback 100%":
+            case "Positive Backward Feedback 100%":
+            case "Error Forward Feedback 100%":
+            case "Error Backward Feedback 100%":
 
                 //Create a new Trial Object to store data and add it to the trialArrayList
-                trialArrayList.add(new OptimizedThighExtensionStudyTrial(trialName, currentTimeStamp));
-
-                //Call each IMUs startTrial function to start streaming/recording for each IMU
-                leftThighIMU.startTrial(trialName, currentTimeStamp, trialArrayList.get(trialArrayList.size()-1), trialDurationMin, true);
-                rightThighIMU.startTrial(trialName, currentTimeStamp, trialArrayList.get(trialArrayList.size()-1), trialDurationMin, true);
-                leftFootIMU.startTrial(trialName, currentTimeStamp, trialArrayList.get(trialArrayList.size()-1), trialDurationMin, true);
-                rightFootIMU.startTrial(trialName, currentTimeStamp, trialArrayList.get(trialArrayList.size()-1), trialDurationMin, true);
-                leftArmIMU.startTrial(trialName, currentTimeStamp, trialArrayList.get(trialArrayList.size()-1), trialDurationMin, true);
-                rightArmIMU.startTrial(trialName, currentTimeStamp, trialArrayList.get(trialArrayList.size()-1), trialDurationMin, true);
-                break;
-
-            case "Optimization Feedback":
-
-                //Ensure the arrays that store the last 20 steps of data are reset before starting the trial
-                targetManager.resetLast20StepsArray("Left Thigh");
-                targetManager.resetLast20StepsArray("Right Thigh");
-                targetManager.resetLast20StepsArray("Left Foot");
-                targetManager.resetLast20StepsArray("Right Foot");
-                targetManager.resetTarget();
-
-                //Create a new Trial Object to store data and add it to the trialArrayList
-                trialArrayList.add(new OptimizedThighExtensionStudyTrial(trialName, currentTimeStamp));
+                trialArrayList.add(new ArmAngleStudyTrial(trialName, currentTimeStamp));
 
                 //Call each IMUs startTrial function to start streaming/recording for each IMU
                 leftThighIMU.startTrial(trialName, currentTimeStamp, trialArrayList.get(trialArrayList.size()-1), trialDurationMin, true);
@@ -230,7 +226,6 @@ public class OptimizedThighExtensionStudyManager extends IMUManagerWithRecording
                 leftArmIMU.startTrial(trialName, currentTimeStamp, trialArrayList.get(trialArrayList.size()-1), trialDurationMin, true);
                 rightArmIMU.startTrial(trialName, currentTimeStamp, trialArrayList.get(trialArrayList.size()-1), trialDurationMin, true);
                 break;
-
         }
 
     }
@@ -240,11 +235,14 @@ public class OptimizedThighExtensionStudyManager extends IMUManagerWithRecording
 
         switch(trialName) {
             case "Testing":
-            case "Optimization Familiarization":
+            case "Positive Forward Feedback Familiarization":
+            case "Positive Backward Feedback Familiarization":
+            case "Error Forward Feedback Familiarization":
+            case "Error Backward Feedback Familiarization":
 
                 //Stop all IMUs
-                leftThighIMU.stopTrial(false);
-                rightThighIMU.stopTrial(false);
+                leftArmIMU.stopTrial(false);
+                rightArmIMU.stopTrial(false);
                 leftFootIMU.stopTrial(false);
                 rightFootIMU.stopTrial(false);
                 break;
@@ -259,14 +257,19 @@ public class OptimizedThighExtensionStudyManager extends IMUManagerWithRecording
                 leftArmIMU.stopTrial(false);
                 rightArmIMU.stopTrial(false);
 
-                //Generate the initial target
-                targetManager.generatePeakThighTarget(trialArrayList.get(trialArrayList.size() - 1));
+                //Calculate the Arm Angle Feedback Target
+                targetManager.generatePeakArmTargets(trialArrayList.get(trialArrayList.size() - 1));
                 break;
 
-            case "Baseline with Cognitive Task":
             case "Fast":
-            case "Optimization Feedback":
-            case "Optimization Feedback with Cognitive Task":
+            case "Positive Forward Feedback 50%":
+            case "Positive Backward Feedback 50%":
+            case "Error Forward Feedback 50%":
+            case "Error Backward Feedback 50%":
+            case "Positive Forward Feedback 100%":
+            case "Positive Backward Feedback 100%":
+            case "Error Forward Feedback 100%":
+            case "Error Backward Feedback 100%":
 
                 //Stop all IMUs
                 leftThighIMU.stopTrial(false);
@@ -331,11 +334,11 @@ public class OptimizedThighExtensionStudyManager extends IMUManagerWithRecording
 
         if(sideOfBody.equals("Left")){
             leftHapticControlModule.setIPBlock(4, deviceIP);
-            thighExtensionStudyUI.updateHapticCellIPAddress("Left", 4, deviceIP);
+            armAngleStudyUI.updateHapticCellIPAddress("Left", 4, deviceIP);
         }
         else{
             rightHapticControlModule.setIPBlock(4, deviceIP);
-            thighExtensionStudyUI.updateHapticCellIPAddress("Right", 4, deviceIP);
+            armAngleStudyUI.updateHapticCellIPAddress("Right", 4, deviceIP);
         }
 
     }
@@ -347,7 +350,7 @@ public class OptimizedThighExtensionStudyManager extends IMUManagerWithRecording
     public void findGateWayIP(){
 
         //Declare the UDP Listener Thread
-        UDPListenerThread udpListenerThread = new UDPListenerThread(experimenterMenuUI, thighExtensionStudyUI, loadingWindowUI, new UDPListenerThread.onUDPReceivedListener() {
+        UDPListenerThread udpListenerThread = new UDPListenerThread(experimenterMenuUI, armAngleStudyUI, loadingWindowUI, new UDPListenerThread.onUDPReceivedListener() {
             @Override
             public void onUDPReceived(int block1, int block2, int block3) {
 
@@ -360,12 +363,12 @@ public class OptimizedThighExtensionStudyManager extends IMUManagerWithRecording
                 rightHapticControlModule.setIPBlock(3, block3);
 
                 //Set the device IP addresses in the UI
-                thighExtensionStudyUI.updateHapticCellIPAddress("Left", 1, block1);
-                thighExtensionStudyUI.updateHapticCellIPAddress("Left", 2, block2);
-                thighExtensionStudyUI.updateHapticCellIPAddress("Left", 3, block3);
-                thighExtensionStudyUI.updateHapticCellIPAddress("Right", 1, block1);
-                thighExtensionStudyUI.updateHapticCellIPAddress("Right", 2, block2);
-                thighExtensionStudyUI.updateHapticCellIPAddress("Right", 3, block3);
+                armAngleStudyUI.updateHapticCellIPAddress("Left", 1, block1);
+                armAngleStudyUI.updateHapticCellIPAddress("Left", 2, block2);
+                armAngleStudyUI.updateHapticCellIPAddress("Left", 3, block3);
+                armAngleStudyUI.updateHapticCellIPAddress("Right", 1, block1);
+                armAngleStudyUI.updateHapticCellIPAddress("Right", 2, block2);
+                armAngleStudyUI.updateHapticCellIPAddress("Right", 3, block3);
 
                 //Set the gateWayIPFound variable to true
                 gateWayIPFound = true;

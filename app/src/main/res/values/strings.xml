@@ -20,7 +20,7 @@
     <string name="Aim2ThighExtensionStudyButtonText">Aim 2 Thigh Extension Study</string>
     <string name="WalkingClassificationStudyButtonText">Walking Classification Study</string>
     <string name="ArmCuingStudyButtonText">Arm Cuing Study</string>
-    <string name="ArmExtensionStudyButtonText">Arm Extension Study</string>
+    <string name="ArmAngleStudyButtonText">Arm Angle Study</string>
 
     <!-- Participant Menu Page Strings -->
     <string name="ParticipantMenuHeaderText">Participant Menu</string>
@@ -97,8 +97,16 @@
     <string name="ArmAngleFeedbackStudyPageTitle">Arm Angle Feedback Study</string>
     <string name="LeftArmFeedbackButtonText">Left Arm Feedback</string>
     <string name="RightArmFeedbackButtonText">Right Arm Feedback</string>
-    <string name="PeakArmAngleLabel">Peak Arm Angle</string>"
-    <string name="NumberOfArmPeaksLabel"># of Arm Peaks</string>
+    <string name="PeakArmExtensionAngleLabel">Last PAE Angle</string>"
+    <string name="PeakArmFlexionAngleLabel">Last PAF Angle</string>
+    <string name="NumberOfPeakArmExtensionsLabel"># of PAEs</string>"
+    <string name="NumberOfPeakArmFlexionsLabel"># of PAFs</string>
+    <string name="LowerTargetLabelText">Upper Target</string>"
+    <string name="UpperTargetLabelText">Lower Target</string>
+    <string name="ExtensionTargetAngle50Label">50% PAE Target</string>"
+    <string name="FlexionTargetAngle50Label">50% PAF Target</string>
+    <string name="ExtensionTargetAngle100Label">100% PAE Target</string>"
+    <string name="FlexionTargetAngle100Label">100% PAF Target</string>
 
 
     <string-array name="IMU_MAC_Addresses">

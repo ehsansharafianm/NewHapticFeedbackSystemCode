@@ -176,7 +176,7 @@
                 android:layout_marginTop="10dp"
                 android:layout_marginBottom="10dp"
                 android:layout_marginStart="10dp"
-                android:text="@string/ArmExtensionStudyButtonText"
+                android:text="@string/ArmAngleStudyButtonText"
                 android:textSize="20sp"/>
 
         </RelativeLayout>

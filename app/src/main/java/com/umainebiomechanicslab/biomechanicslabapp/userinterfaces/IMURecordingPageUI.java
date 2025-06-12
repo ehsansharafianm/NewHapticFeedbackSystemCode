@@ -528,6 +528,11 @@ public class IMURecordingPageUI extends UserInterfaceWithIMU {
     }
 
     @Override
+    public void updateGaitParameterOutput(String gaitParameter, String nameOfIMU, String data) {
+        //LEAVE THIS METHOD EMPTY
+    }
+
+    @Override
     public void onScanComplete(boolean success) {
 
         updateButtonText(startScanButton, "Start Scan");

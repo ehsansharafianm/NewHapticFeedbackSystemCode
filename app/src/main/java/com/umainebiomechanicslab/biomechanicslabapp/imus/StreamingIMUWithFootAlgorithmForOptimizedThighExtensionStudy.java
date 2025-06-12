@@ -6,8 +6,6 @@ import com.umainebiomechanicslab.biomechanicslabapp.FileManager;
 import com.umainebiomechanicslab.biomechanicslabapp.FootStrideData;
 import com.umainebiomechanicslab.biomechanicslabapp.studymanagers.IMUManager;
 import com.umainebiomechanicslab.biomechanicslabapp.targetmanagers.ThighExtensionStudyOptimizedTargetManager;
-import com.umainebiomechanicslab.biomechanicslabapp.trials.OptimizedThighExtensionStudyTrial;
-import com.umainebiomechanicslab.biomechanicslabapp.trials.Trial;
 import com.umainebiomechanicslab.biomechanicslabapp.userinterfaces.OptimizedThighExtensionStudyUI;
 import com.xsens.dot.android.sdk.events.DotData;
 
@@ -17,9 +15,6 @@ public class StreamingIMUWithFootAlgorithmForOptimizedThighExtensionStudy extend
 
     //Declare the target manager for the study
     private final ThighExtensionStudyOptimizedTargetManager targetManager;
-
-    //Declare the trial object for the study
-    private OptimizedThighExtensionStudyTrial thighExtensionStudyTrial;
 
     //Declare the user interface for the study
     private final OptimizedThighExtensionStudyUI thighExtensionStudyUI;
@@ -36,22 +31,6 @@ public class StreamingIMUWithFootAlgorithmForOptimizedThighExtensionStudy extend
 
         //Initialize the user interface
         this.thighExtensionStudyUI = thighExtensionStudyUI;
-
-    }
-
-    @Override
-    public void startTrial(String trialName, String timeStamp, Trial trial, int trialDurationMin, boolean logData) {
-
-        strides.clear();
-        currentStride = new FootStrideData(nameOfIMU, offsetEulerAngle);
-
-        this.thighExtensionStudyTrial = (OptimizedThighExtensionStudyTrial) trial;
-
-        /*
-         * After running the startTrial lines of code unique to a Streaming IMU with a data algorithm, run the
-         * startTrial lines of code that all Streaming IMUs used (this is inherited from the parent StreamingIMU class
-         * */
-        super.startTrial(trialName, timeStamp, trial, trialDurationMin, logData);
 
     }
 
@@ -100,6 +79,7 @@ public class StreamingIMUWithFootAlgorithmForOptimizedThighExtensionStudy extend
             case "Baseline Normal":
             case "Baseline with Cognitive Task":
             case "Fast":
+            case "Optimized Feedback with Cognitive Task":
 
                 //Update the EulerX Value To The Offset Value
                 eulerAngleX = eulerAngleX - offsetEulerAngle;
@@ -148,7 +128,7 @@ public class StreamingIMUWithFootAlgorithmForOptimizedThighExtensionStudy extend
 
                             //Update the sum of all cadences for use in the average cadence calculation later
                             trialCadenceSum += mostRecentCadence;
-                            thighExtensionStudyTrial.appendToGaitParameterArrayList(nameOfIMU, "Cadence", mostRecentCadence);
+                            trial.appendToGaitParameterArrayList(nameOfIMU, "Cadence", mostRecentCadence);
 
                             SpeedCalculationFromFootIMU.calculateSpeed(strides.get(strides.size() - 2), strides.get(strides.size() - 3), strides.get(strides.size() - 1), new SpeedCalculationFromFootIMU.SpeedReturn() {
                                 @Override
@@ -157,8 +137,8 @@ public class StreamingIMUWithFootAlgorithmForOptimizedThighExtensionStudy extend
                                     double strideLength = strideLengthAndSpeed[0];
                                     double strideSpeed = strideLengthAndSpeed[1];
 
-                                    thighExtensionStudyTrial.appendToGaitParameterArrayList(nameOfIMU, "StrideLength", strideLength);
-                                    thighExtensionStudyTrial.appendToGaitParameterArrayList(nameOfIMU, "WalkingSpeed", strideSpeed);
+                                    trial.appendToGaitParameterArrayList(nameOfIMU, "StrideLength", strideLength);
+                                    trial.appendToGaitParameterArrayList(nameOfIMU, "WalkingSpeed", strideSpeed);
 
                                     //Update the User Interface with the most recent stride length and speed
                                     thighExtensionStudyUI.updateGaitParameterOutput("StrideLength", nameOfIMU, String.valueOf(strideLength));
@@ -195,10 +175,10 @@ public class StreamingIMUWithFootAlgorithmForOptimizedThighExtensionStudy extend
                     fileManager.writeToLogFile(nameOfIMU + " " + trialName + " Steps Taken: " + stepCounter);
 
                     //Update the completed trial data in the Trial Manager
-                    thighExtensionStudyTrial.updateCompletedTrialData(nameOfIMU, "StrideLength", averageStrideLength);
-                    thighExtensionStudyTrial.updateCompletedTrialData(nameOfIMU, "WalkingSpeed", averageStrideSpeed);
-                    thighExtensionStudyTrial.updateCompletedTrialData(nameOfIMU, "Cadence", averageCadence);
-                    thighExtensionStudyTrial.updateCompletedTrialData(nameOfIMU, "HeelStrikeCycleCount", stepCounter);
+                    trial.updateCompletedTrialData(nameOfIMU, "StrideLength", averageStrideLength);
+                    trial.updateCompletedTrialData(nameOfIMU, "WalkingSpeed", averageStrideSpeed);
+                    trial.updateCompletedTrialData(nameOfIMU, "Cadence", averageCadence);
+                    trial.updateCompletedTrialData(nameOfIMU, "HeelStrikeCycleCount", stepCounter);
 
                     //Update the User Interface to show that the trial is complete
                     thighExtensionStudyUI.updateIMUDataOutput(nameOfIMU, "DONE");
@@ -261,7 +241,7 @@ public class StreamingIMUWithFootAlgorithmForOptimizedThighExtensionStudy extend
 
                             //Update the sum of all cadences for use in the average cadence calculation later
                             trialCadenceSum += mostRecentCadence;
-                            thighExtensionStudyTrial.appendToGaitParameterArrayList(nameOfIMU, "Cadence", mostRecentCadence);
+                            trial.appendToGaitParameterArrayList(nameOfIMU, "Cadence", mostRecentCadence);
 
                             //Send the cadence to the targetManager to update the most recent cadence array
                             targetManager.onHeelStrikeDetected(mostRecentCadence, nameOfIMU);
@@ -273,8 +253,8 @@ public class StreamingIMUWithFootAlgorithmForOptimizedThighExtensionStudy extend
                                     double strideLength = strideLengthAndSpeed[0];
                                     double strideSpeed = strideLengthAndSpeed[1];
 
-                                    thighExtensionStudyTrial.appendToGaitParameterArrayList(nameOfIMU, "StrideLength", strideLength);
-                                    thighExtensionStudyTrial.appendToGaitParameterArrayList(nameOfIMU, "WalkingSpeed", strideSpeed);
+                                    trial.appendToGaitParameterArrayList(nameOfIMU, "StrideLength", strideLength);
+                                    trial.appendToGaitParameterArrayList(nameOfIMU, "WalkingSpeed", strideSpeed);
 
                                     //Update the User Interface with the most recent stride length and speed
                                     thighExtensionStudyUI.updateGaitParameterOutput("StrideLength", nameOfIMU, String.valueOf(strideLength));
@@ -311,10 +291,10 @@ public class StreamingIMUWithFootAlgorithmForOptimizedThighExtensionStudy extend
                     fileManager.writeToLogFile(nameOfIMU + " " + trialName + " Steps Taken: " + stepCounter);
 
                     //Update the completed trial data in the Trial Manager
-                    thighExtensionStudyTrial.updateCompletedTrialData(nameOfIMU, "StrideLength", averageStrideLength);
-                    thighExtensionStudyTrial.updateCompletedTrialData(nameOfIMU, "WalkingSpeed", averageStrideSpeed);
-                    thighExtensionStudyTrial.updateCompletedTrialData(nameOfIMU, "Cadence", averageCadence);
-                    thighExtensionStudyTrial.updateCompletedTrialData(nameOfIMU, "HeelStrikeCycleCount", stepCounter);
+                    trial.updateCompletedTrialData(nameOfIMU, "StrideLength", averageStrideLength);
+                    trial.updateCompletedTrialData(nameOfIMU, "WalkingSpeed", averageStrideSpeed);
+                    trial.updateCompletedTrialData(nameOfIMU, "Cadence", averageCadence);
+                    trial.updateCompletedTrialData(nameOfIMU, "HeelStrikeCycleCount", stepCounter);
 
                     //Update the User Interface to show that the trial is complete
                     thighExtensionStudyUI.updateIMUDataOutput(nameOfIMU, "DONE");

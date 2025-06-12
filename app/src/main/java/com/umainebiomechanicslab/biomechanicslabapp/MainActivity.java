@@ -10,10 +10,12 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 
+import com.umainebiomechanicslab.biomechanicslabapp.studymanagers.ArmAngleStudyManager;
 import com.umainebiomechanicslab.biomechanicslabapp.studymanagers.OptimizedThighExtensionStudyManager;
 import com.umainebiomechanicslab.biomechanicslabapp.studymanagers.OriginalThighExtensionStudyManager;
 import com.umainebiomechanicslab.biomechanicslabapp.studymanagers.RecordIMUDataManager;
 import com.umainebiomechanicslab.biomechanicslabapp.studymanagers.TestHapticCellsManager;
+import com.umainebiomechanicslab.biomechanicslabapp.userinterfaces.ArmAngleStudyUI;
 import com.umainebiomechanicslab.biomechanicslabapp.userinterfaces.ExperimenterMenuUI;
 import com.umainebiomechanicslab.biomechanicslabapp.userinterfaces.IMURecordingPageUI;
 import com.umainebiomechanicslab.biomechanicslabapp.userinterfaces.LoadingWindowUI;
@@ -54,14 +56,16 @@ public class MainActivity extends AppCompatActivity {
 
         //Instantiate UI Objects
         TestHapticCellsUI testHapticCellsUI = new TestHapticCellsUI(this, R.id.test_haptic_cells_page);
+        ArmAngleStudyUI armAngleStudyUI = new ArmAngleStudyUI(this, R.id.arm_angle_feedback_study_trial_page, logPopupWindowUI, fileManager);
         OptimizedThighExtensionStudyUI optimizedThighExtensionStudyUI = new OptimizedThighExtensionStudyUI(this, R.id.optimized_thigh_extension_study_trial_page, logPopupWindowUI, fileManager);
         OriginalThighExtensionStudyUI originalThighExtensionStudyUI = new OriginalThighExtensionStudyUI(this, R.id.original_thigh_extension_study_trial_page, logPopupWindowUI, fileManager);
         IMURecordingPageUI imuRecordingPageUI = new IMURecordingPageUI(this, R.id.imu_recording_page, logPopupWindowUI, fileManager);
-        ExperimenterMenuUI experimenterMenuUI = new ExperimenterMenuUI(this, R.id.experimenter_menu, imuRecordingPageUI, testHapticCellsUI, originalThighExtensionStudyUI, optimizedThighExtensionStudyUI);
+        ExperimenterMenuUI experimenterMenuUI = new ExperimenterMenuUI(this, R.id.experimenter_menu, imuRecordingPageUI, testHapticCellsUI, originalThighExtensionStudyUI, optimizedThighExtensionStudyUI, armAngleStudyUI);
         ParticipantMenuUI participantMenuUI = new ParticipantMenuUI(this, R.id.participant_menu);
         StartPageUI startPageUI = new StartPageUI(this, R.id.start_page, experimenterMenuUI, participantMenuUI);
 
         //Link User Interfaces
+        armAngleStudyUI.linkUserInterfaceForBackButton(experimenterMenuUI);
         optimizedThighExtensionStudyUI.linkUserInterfaceForBackButton(experimenterMenuUI);
         originalThighExtensionStudyUI.linkUserInterfaceForBackButton(experimenterMenuUI);
         testHapticCellsUI.linkUserInterfaceForBackButton(experimenterMenuUI);
@@ -70,6 +74,7 @@ public class MainActivity extends AppCompatActivity {
         participantMenuUI.linkUserInterfaceForBackButton(startPageUI);
 
         //Instantiate Trial Manager Objects
+        ArmAngleStudyManager armAngleStudyManager = new ArmAngleStudyManager(armAngleStudyUI, experimenterMenuUI, loadingWindowUI, this, fileManager);
         TestHapticCellsManager testHapticCellsManager = new TestHapticCellsManager(testHapticCellsUI, experimenterMenuUI, loadingWindowUI, fileManager);
         RecordIMUDataManager recordIMUDataManager = new RecordIMUDataManager(imuRecordingPageUI, this, fileManager);
         OptimizedThighExtensionStudyManager optimizedThighExtensionStudyManager = new OptimizedThighExtensionStudyManager(optimizedThighExtensionStudyUI, experimenterMenuUI, loadingWindowUI, this, fileManager);
@@ -81,6 +86,7 @@ public class MainActivity extends AppCompatActivity {
         imuRecordingPageUI.linkIMUManager(recordIMUDataManager);
         optimizedThighExtensionStudyUI.linkIMUManager(optimizedThighExtensionStudyManager);
         originalThighExtensionStudyUI.linkIMUManager(originalThighExtensionStudyManager);
+        armAngleStudyUI.linkIMUManager(armAngleStudyManager);
 
         //Show Start Page
         startPageUI.showPage();

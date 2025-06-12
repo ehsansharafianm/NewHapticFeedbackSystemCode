@@ -59,6 +59,7 @@ public class OptimizedThighExtensionStudyTrial extends Trial{
         return rightAverageCadence;
     }
 
+    @Override
     public String getCommaSeparatedTrialData(){
 
         return trialName + "," + trialTimeStamp + "," + leftPeakThighExtensions + "," + leftPeakThighAngleAverage + "," + leftHeelStrikes +
@@ -72,6 +73,7 @@ public class OptimizedThighExtensionStudyTrial extends Trial{
         return null;
     }
 
+    @Override
     public void appendToGaitParameterArrayList(String nameOfIMU, String gaitParameter, double data){
 
         //Update the IMU Gait Parameter Output on the Screen based on the name of the IMU
@@ -150,6 +152,7 @@ public class OptimizedThighExtensionStudyTrial extends Trial{
 
     }
 
+    @Override
     public void updateCompletedTrialData(String nameOfIMU, String gaitParameter, double data){
 
         //Update the IMU Gait Parameter Output on the Screen based on the name of the IMU
@@ -241,6 +244,7 @@ public class OptimizedThighExtensionStudyTrial extends Trial{
 
     }
 
+    @Override
     public File createTrialCSVFile(String subjectTitle, Context context, FileManager fileManager, UserInterface userInterface){
         FileWriter fileWriter = null;
         File csvFile;

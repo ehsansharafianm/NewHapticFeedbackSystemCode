@@ -11,52 +11,63 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 
-public class OriginalThighExtensionStudyTrial extends Trial{
+public class ArmAngleStudyTrial extends Trial{
 
-    private static final String TAG = "ThighExtensionStudyTrial";
+    private static final String TAG = "ArmAngleStudyTrial";
 
     //Variables to store the full-trial gait parameters (averages/totals)
-    private int leftPeakThighExtensions, rightPeakThighExtensions, leftHeelStrikes, rightHeelStrikes;
-    private double leftPeakThighAngleAverage, rightPeakThighAngleAverage;
+    private int leftArmAngleExtensionCount, rightArmAngleExtensionCount, leftArmAngleFlexionCount, rightArmAngleFlexionCount, leftHeelStrikeCount, rightHeelStrikeCount;
+    private double leftPeakArmExtensionAngleAverage, rightPeakArmExtensionAngleAverage, leftPeakArmFlexionAngleAverage, rightPeakArmFlexionAngleAverage;
     private double leftAverageSpeed, rightAverageSpeed;
     private double leftAverageStrideLength, rightAverageStrideLength;
     private double leftAverageCadence, rightAverageCadence;
 
     //ArrayLists to store the individual gait parameters for the trial
-    private final ArrayList<String> leftPeakThighAngles, leftPeakThighAngleTarget, leftStrideLength, leftSpeed, leftCadence;
-    private final ArrayList<String> rightPeakThighAngles, rightPeakThighAngleTarget, rightStrideLength, rightSpeed, rightCadence;
+    private final ArrayList<String> leftPeakArmFlexionAngles, leftPeakArmExtensionAngles, leftStrideLength, leftSpeed, leftCadence;
+    private final ArrayList<String> rightPeakArmFlexionAngles, rightPeakArmExtensionAngles, rightStrideLength, rightSpeed, rightCadence;
 
-    public OriginalThighExtensionStudyTrial(String trialName, String trialTimeStamp) {
+    public ArmAngleStudyTrial(String trialName, String trialTimeStamp) {
         super(trialName, trialTimeStamp);
 
         //Initializing ArrayLists to store the gait parameters for the trial
-        leftPeakThighAngles = new ArrayList<>();
-        leftPeakThighAngleTarget = new ArrayList<>();
+        leftPeakArmFlexionAngles = new ArrayList<>();
+        leftPeakArmExtensionAngles = new ArrayList<>();
         leftStrideLength = new ArrayList<>();
         leftSpeed = new ArrayList<>();
         leftCadence = new ArrayList<>();
-        rightPeakThighAngles = new ArrayList<>();
-        rightPeakThighAngleTarget = new ArrayList<>();
+        rightPeakArmFlexionAngles = new ArrayList<>();
+        rightPeakArmExtensionAngles = new ArrayList<>();
         rightStrideLength = new ArrayList<>();
         rightSpeed = new ArrayList<>();
         rightCadence = new ArrayList<>();
 
     }
 
-    public double getLeftPeakThighAngleAverage(){
-        return leftPeakThighAngleAverage;
+    public double getLeftPeakArmFlexionAngleAverage(){
+        return leftPeakArmFlexionAngleAverage;
     }
 
-    public double getRightPeakThighAngleAverage(){
-        return rightPeakThighAngleAverage;
+    public double getRightPeakArmFlexionAngleAverage(){
+        return rightPeakArmFlexionAngleAverage;
+    }
+
+    public double getLeftPeakArmExtensionAngleAverage(){
+        return leftPeakArmExtensionAngleAverage;
+    }
+
+    public double getRightPeakArmExtensionAngleAverage(){
+        return rightPeakArmExtensionAngleAverage;
     }
 
     @Override
     public String getCommaSeparatedTrialData(){
 
-        return trialName + "," + trialTimeStamp + "," + leftPeakThighExtensions + "," + leftPeakThighAngleAverage + "," + leftHeelStrikes +
-                "," + leftAverageStrideLength + "," + leftAverageSpeed + "," + leftAverageCadence + "," + rightPeakThighExtensions + "," +
-                rightPeakThighAngleAverage + "," + rightHeelStrikes +  "," + rightAverageStrideLength + "," + rightAverageSpeed + "," + rightAverageCadence;
+        return trialName + "," + trialTimeStamp + "," + leftArmAngleExtensionCount + "," + leftPeakArmExtensionAngleAverage +
+                "," + leftArmAngleFlexionCount + "," + leftPeakArmFlexionAngleAverage + "," + leftHeelStrikeCount +
+                "," + leftAverageStrideLength + "," + leftAverageSpeed + "," + leftAverageCadence +
+                "," + rightArmAngleExtensionCount + "," + rightPeakArmExtensionAngleAverage +
+                "," + rightArmAngleFlexionCount + "," + rightPeakArmFlexionAngleAverage + "," + rightHeelStrikeCount +
+                "," + rightAverageStrideLength + "," + rightAverageSpeed + "," + rightAverageCadence;
 
     }
 
@@ -70,18 +81,32 @@ public class OriginalThighExtensionStudyTrial extends Trial{
 
         //Update the IMU Gait Parameter Output on the Screen based on the name of the IMU
         switch (gaitParameter){
-            case "PTE":
-                //If nameOfIMU is Left Thigh, update the Left Last Stride PTE
-                if(nameOfIMU.equals("Left Thigh IMU")) {
-                    leftPeakThighAngles.add(String.valueOf(data));
+            case "PAE":
+                //If nameOfIMU is Left Arm, update the Left Last Stride PAE
+                if(nameOfIMU.equals("Left Arm IMU")) {
+                    leftPeakArmExtensionAngles.add(String.valueOf(data));
                 }
-                //If nameOfIMU is Right Thigh, update the Right Last Stride PTE
-                else if(nameOfIMU.equals("Right Thigh IMU")){
-                    rightPeakThighAngles.add(String.valueOf(data));
+                //If nameOfIMU is Right Arm, update the Right Last Stride PAE
+                else if(nameOfIMU.equals("Right Arm IMU")){
+                    rightPeakArmExtensionAngles.add(String.valueOf(data));
                 }
                 //If nameOFIMU is anything else, log as an error
                 else{
-                    Log.e(TAG + "appendToGaitParameterArrayList", "ERROR: Invalid IMU Name for PTE Update");
+                    Log.e(TAG + "appendToGaitParameterArrayList", "ERROR: Invalid IMU Name for PAE Update");
+                }
+                break;
+            case "PAF":
+                //If nameOfIMU is Left Arm, update the Left Last Stride PAF
+                if(nameOfIMU.equals("Left Arm IMU")) {
+                    leftPeakArmFlexionAngles.add(String.valueOf(data));
+                }
+                //If nameOfIMU is Right Arm, update the Right Last Stride PAF
+                else if(nameOfIMU.equals("Right Arm IMU")){
+                    rightPeakArmFlexionAngles.add(String.valueOf(data));
+                }
+                //If nameOFIMU is anything else, log as an error
+                else{
+                    Log.e(TAG + "appendToGaitParameterArrayList", "ERROR: Invalid IMU Name for PAF Update");
                 }
                 break;
             case "StrideLength":
@@ -126,20 +151,6 @@ public class OriginalThighExtensionStudyTrial extends Trial{
                     Log.e(TAG + "appendToGaitParameterArrayList", "ERROR: Invalid IMU Name for Cadence Update");
                 }
                 break;
-            case "TargetAngle":
-                //If nameOfIMU is Left Thigh, update the Left Thigh Target Angle
-                if(nameOfIMU.equals("Left Thigh IMU")) {
-                    leftPeakThighAngleTarget.add(String.valueOf(data));
-                }
-                //If nameOfIMU is Right Thigh, update the Right Thigh Target Angle
-                else if(nameOfIMU.equals("Right Thigh IMU")) {
-                    rightPeakThighAngleTarget.add(String.valueOf(data));
-                }
-                //If nameOFIMU is anything else, log as an error
-                else{
-                    Log.e(TAG + "appendToGaitParameterArrayList", "ERROR: Invalid IMU Name for Target Angle Update");
-                }
-                break;
         }
 
     }
@@ -149,18 +160,32 @@ public class OriginalThighExtensionStudyTrial extends Trial{
 
         //Update the IMU Gait Parameter Output on the Screen based on the name of the IMU
         switch (gaitParameter){
-            case "PTE":
-                //If nameOfIMU is Left Thigh, update the Left Last Stride PTE
-                if(nameOfIMU.equals("Left Thigh IMU")) {
-                    leftPeakThighAngleAverage = data;
+            case "PAE":
+                //If nameOfIMU is Left Arm, update the Left Last Stride PAE
+                if(nameOfIMU.equals("Left Arm IMU")) {
+                    leftPeakArmExtensionAngleAverage = data;
                 }
-                //If nameOfIMU is Right Thigh, update the Right Last Stride PTE
-                else if(nameOfIMU.equals("Right Thigh IMU")){
-                    rightPeakThighAngleAverage = data;
+                //If nameOfIMU is Right Arm, update the Right Last Stride PAE
+                else if(nameOfIMU.equals("Right Arm IMU")){
+                    rightPeakArmExtensionAngleAverage = data;
                 }
                 //If nameOFIMU is anything else, log as an error
                 else{
-                    Log.e(TAG + "updateCompletedTrialData", "ERROR: Invalid IMU Name for PTE Update");
+                    Log.e(TAG + "updateCompletedTrialData", "ERROR: Invalid IMU Name for PAE Update");
+                }
+                break;
+            case "PAF":
+                //If nameOfIMU is Left Arm, update the Left Last Stride PAF
+                if(nameOfIMU.equals("Left Arm IMU")) {
+                    leftPeakArmFlexionAngleAverage = data;
+                }
+                //If nameOfIMU is Right Arm, update the Right Last Stride PAF
+                else if(nameOfIMU.equals("Right Arm IMU")){
+                    rightPeakArmFlexionAngleAverage = data;
+                }
+                //If nameOFIMU is anything else, log as an error
+                else{
+                    Log.e(TAG + "updateCompletedTrialData", "ERROR: Invalid IMU Name for PAF Update");
                 }
                 break;
             case "StrideLength":
@@ -205,28 +230,42 @@ public class OriginalThighExtensionStudyTrial extends Trial{
                     Log.e(TAG + "updateCompletedTrialData", "ERROR: Invalid IMU Name for Cadence Update");
                 }
                 break;
-            case "PTECycleCount":
-                //If nameOfIMU is Left Thigh, update the Left Thigh Target Angle
-                if(nameOfIMU.equals("Left Thigh IMU")) {
-                    leftPeakThighExtensions = (int) data;
+            case "PAECycleCount":
+                //If nameOfIMU is Left Arm, update the Left Arm Extension Cycle Count
+                if(nameOfIMU.equals("Left Arm IMU")) {
+                    leftArmAngleExtensionCount = (int) data;
                 }
-                //If nameOfIMU is Right Thigh, update the Right Thigh Target Angle
-                else if(nameOfIMU.equals("Right Thigh IMU")) {
-                    rightPeakThighExtensions = (int) data;
+                //If nameOfIMU is Right Arm, update the Right Arm Extension Cycle Count
+                else if(nameOfIMU.equals("Right Arm IMU")) {
+                    rightArmAngleExtensionCount = (int) data;
                 }
                 //If nameOFIMU is anything else, log as an error
                 else{
-                    Log.e(TAG + "updateCompletedTrialData", "ERROR: Invalid IMU Name for PTE Cycle Count Update");
+                    Log.e(TAG + "updateCompletedTrialData", "ERROR: Invalid IMU Name for PAE Cycle Count Update");
+                }
+                break;
+            case "PAFCycleCount":
+                //If nameOfIMU is Left Arm, update the Left Arm Extension Cycle Count
+                if(nameOfIMU.equals("Left Arm IMU")) {
+                    leftArmAngleFlexionCount = (int) data;
+                }
+                //If nameOfIMU is Right Arm, update the Right Arm Extension Cycle Count
+                else if(nameOfIMU.equals("Right Arm IMU")) {
+                    rightArmAngleFlexionCount = (int) data;
+                }
+                //If nameOFIMU is anything else, log as an error
+                else{
+                    Log.e(TAG + "updateCompletedTrialData", "ERROR: Invalid IMU Name for PAF Cycle Count Update");
                 }
                 break;
             case "HeelStrikeCycleCount":
                 //If nameOfIMU is Left Foot, update the Left Target Cadence
                 if(nameOfIMU.equals("Left Foot IMU")) {
-                    leftHeelStrikes = (int) data;
+                    leftHeelStrikeCount = (int) data;
                 }
                 //If nameOfIMU is Right Foot, update the Right Target Cadence
                 else if(nameOfIMU.equals("Right Foot IMU")){
-                    rightHeelStrikes = (int) data;
+                    rightHeelStrikeCount = (int) data;
                 }
                 //If nameOFIMU is anything else, log as an error
                 else{
@@ -311,11 +350,15 @@ public class OriginalThighExtensionStudyTrial extends Trial{
 
             String entry = "";
 
-            if(i<leftPeakThighAngles.size()){
-                entry = entry + leftPeakThighAngles.get(i) + ",";
-                if(trialName.contains("Feedback")){
-                    entry = entry + leftPeakThighAngleTarget.get(i) + ",";
-                }
+            if(i<leftPeakArmFlexionAngles.size()){
+                entry = entry + leftPeakArmFlexionAngles.get(i) + ",";
+            }
+            else{
+                entry = entry + " ,";
+            }
+
+            if(i<leftPeakArmExtensionAngles.size()){
+                entry = entry + leftPeakArmExtensionAngles.get(i) + ",";
             }
             else{
                 entry = entry + " ,";
@@ -342,11 +385,15 @@ public class OriginalThighExtensionStudyTrial extends Trial{
                 entry = entry + " ,";
             }
 
-            if(i<rightPeakThighAngles.size()){
-                entry = entry + rightPeakThighAngles.get(i) + ",";
-                if(trialName.contains("Feedback")){
-                    entry = entry + rightPeakThighAngleTarget.get(i) + ",";
-                }
+            if(i<rightPeakArmFlexionAngles.size()){
+                entry = entry + rightPeakArmFlexionAngles.get(i) + ",";
+            }
+            else{
+                entry = entry + " ,";
+            }
+
+            if(i<rightPeakArmExtensionAngles.size()){
+                entry = entry + rightPeakArmExtensionAngles.get(i) + ",";
             }
             else{
                 entry = entry + " ,";
@@ -384,8 +431,12 @@ public class OriginalThighExtensionStudyTrial extends Trial{
     private int getLargestArraySize() {
         int largestArraySize = 0;
 
-        if(leftPeakThighAngles.size() > largestArraySize){
-            largestArraySize = leftPeakThighAngles.size();
+        if(leftPeakArmExtensionAngles.size() > largestArraySize){
+            largestArraySize = leftPeakArmExtensionAngles.size();
+        }
+
+        if(leftPeakArmFlexionAngles.size() > largestArraySize){
+            largestArraySize = leftPeakArmFlexionAngles.size();
         }
 
         if(leftStrideLength.size() > largestArraySize){
@@ -400,8 +451,12 @@ public class OriginalThighExtensionStudyTrial extends Trial{
             largestArraySize = leftCadence.size();
         }
 
-        if(rightPeakThighAngles.size() > largestArraySize){
-            largestArraySize = rightPeakThighAngles.size();
+        if(rightPeakArmExtensionAngles.size() > largestArraySize){
+            largestArraySize = rightPeakArmExtensionAngles.size();
+        }
+
+        if(rightPeakArmFlexionAngles.size() > largestArraySize){
+            largestArraySize = rightPeakArmFlexionAngles.size();
         }
 
         if(rightStrideLength.size() > largestArraySize){

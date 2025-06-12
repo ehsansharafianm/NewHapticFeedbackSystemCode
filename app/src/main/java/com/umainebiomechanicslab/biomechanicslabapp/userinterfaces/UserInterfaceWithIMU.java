@@ -26,6 +26,8 @@ public abstract class UserInterfaceWithIMU extends UserInterface {
 
     public abstract void updateIMUDataOutput(String nameOfIMU, String data);
 
+    public abstract void updateGaitParameterOutput(String gaitParameter, String nameOfIMU, String data);
+
     public abstract void onScanComplete(boolean success);
 
     public abstract void onSyncComplete(boolean success);
