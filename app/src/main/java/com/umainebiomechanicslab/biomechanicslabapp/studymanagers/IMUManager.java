@@ -334,6 +334,8 @@ public abstract class IMUManager implements DotScannerCallback, DotSyncCallback 
         //Get the address of the scanned IMU
         String macAddress = bluetoothDevice.getAddress();
 
+        Log.d(TAG, "IMUArrayList Size ");
+
         //Check to see if the IMU is already processing or connected
         if (movellaDeviceList.size() >= IMUArrayList.size() || processingOrConnectedAddresses.contains(macAddress)) {
             if (processingOrConnectedAddresses.contains(macAddress)) {
@@ -345,8 +347,8 @@ public abstract class IMUManager implements DotScannerCallback, DotSyncCallback 
         }
 
         //Add macAddress to processingOrConnectedAddresses immediately
-        processingOrConnectedAddresses.add(macAddress);
-        Log.d(TAG, "onDotScanned: Added " + macAddress + " to processingOrConnectedAddresses. Set size: " + processingOrConnectedAddresses.size());
+        //processingOrConnectedAddresses.add(macAddress);
+        //Log.d(TAG, "onDotScanned: Added " + macAddress + " to processingOrConnectedAddresses. Set size: " + processingOrConnectedAddresses.size());
 
         //Create a null targetIMU (this will be filled in later)
         UniversalIMU targetIMU = null;
@@ -360,6 +362,10 @@ public abstract class IMUManager implements DotScannerCallback, DotSyncCallback 
         }
 
         if (targetIMU != null) {
+
+            processingOrConnectedAddresses.add(macAddress);
+            Log.d(TAG, "onDotScanned: Added " + macAddress + " to processingOrConnectedAddresses. Set size: " + processingOrConnectedAddresses.size());
+
             fileManager.writeToLogFile("Connecting to " + targetIMU.getNameOfIMU() + " (" + macAddress + ")");
             // *** MODIFIED: Capture result of connectMovellaDotDevice ***
             DotDevice connectedDevice = targetIMU.connectMovellaDotDevice(bluetoothDevice);

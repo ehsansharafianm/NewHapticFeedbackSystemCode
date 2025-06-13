@@ -140,6 +140,7 @@ public class ArmAngleStudyManager extends IMUManagerWithRecordingIMUs{
         //For all the streaming IMUs in the IMU ArrayList, start their angle offset initialization
         for(UniversalIMU IMU : IMUArrayList){
             if(IMU instanceof StreamingIMU){
+                Log.d(TAG, "Starting angle offset initialization for " + IMU.getNameOfIMU());
                 ((StreamingIMU) IMU).startOffsetInitialization();
             }
         }

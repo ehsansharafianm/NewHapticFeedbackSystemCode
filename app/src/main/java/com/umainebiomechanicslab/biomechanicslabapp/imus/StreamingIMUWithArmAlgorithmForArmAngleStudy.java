@@ -1,6 +1,7 @@
 package com.umainebiomechanicslab.biomechanicslabapp.imus;
 
 import android.content.Context;
+import android.util.Log;
 
 import com.umainebiomechanicslab.biomechanicslabapp.FileManager;
 import com.umainebiomechanicslab.biomechanicslabapp.studymanagers.IMUManager;
@@ -14,6 +15,8 @@ import java.util.Arrays;
 import java.util.Locale;
 
 public class StreamingIMUWithArmAlgorithmForArmAngleStudy extends StreamingIMU{
+
+    private final String TAG = "StreamingIMUWithArmAlgorithmForArmAngleStudy";
 
     private ArmAngleStudyTrial armAngleStudyTrial;
     private final ArmAngleStudyUI armAngleStudyUI;
@@ -148,6 +151,8 @@ public class StreamingIMUWithArmAlgorithmForArmAngleStudy extends StreamingIMU{
     @Override
     public void onDotDataChanged(String address, DotData dotData) {
 
+        Log.d(TAG, trialName + sampleCounter + nameOfIMU);
+
         float[] quat = dotData.getQuat();
 
         double r23 = 2*(quat[2]*quat[3] - quat[0]*quat[1]);
@@ -161,6 +166,15 @@ public class StreamingIMUWithArmAlgorithmForArmAngleStudy extends StreamingIMU{
         double r12 = 2*(quat[1]*quat[2] - quat[0]*quat[3]);
 
         double eulerAngleZ = Math.toDegrees(Math.atan2(r21*Math.cos(phi) - r11*Math.sin(phi), r22*Math.cos(phi) - r12*Math.sin(phi)));
+        //Log.d(TAG, "EulerZ: " + eulerAngleZ);
+
+        //Log the first sample
+        //if(sampleCounter == 1){
+        //    Log.d(TAG, trialName + sampleCounter + nameOfIMU);
+        //}
+
+
+
 
         /*
          * Different trial modes require different handling of the IMU Data. Initialization doesn't
@@ -171,9 +185,11 @@ public class StreamingIMUWithArmAlgorithmForArmAngleStudy extends StreamingIMU{
          * */
         switch(trialName) {
             case "Initialization":
+                //Log.d(TAG, trialName + sampleCounter + nameOfIMU);
                 if (sampleCounter < (outputFrequency * offsetInitializationDurationSec)) {
                     if ((sampleCounter % outputFrequency) == 0) {
                         armAngleStudyUI.updateIMUDataOutput(nameOfIMU, "Initializing...");
+                        Log.d(TAG, "Initializing...");
                     }
                     trialAngleSum += eulerAngleZ;
                 } else if (sampleCounter == (outputFrequency * offsetInitializationDurationSec)) {
@@ -186,9 +202,10 @@ public class StreamingIMUWithArmAlgorithmForArmAngleStudy extends StreamingIMU{
                 break;
             case "Testing":
                 if ((sampleCounter % (outputFrequency / 3)) == 0) {
+                    Log.d(TAG, trialName + sampleCounter + nameOfIMU);
                     if (offsetAnglesInitialized) {
 
-                        //Update the EulerX Value To The Offset Value
+                        //Update the EulerZ Value To The Offset Value
                         eulerAngleZ = eulerAngleZ - offsetEulerAngle;
 
                         if (eulerAngleZ >= 180) {
@@ -201,9 +218,9 @@ public class StreamingIMUWithArmAlgorithmForArmAngleStudy extends StreamingIMU{
                             eulerAngleZ = -eulerAngleZ;
                         }
 
-                        armAngleStudyUI.updateIMUDataOutput(nameOfIMU, String.format(Locale.US, "%.3f", eulerAngleZ - offsetEulerAngle));
+                        armAngleStudyUI.updateIMUDataOutput(nameOfIMU, String.format(Locale.US, "%.3f", eulerAngleZ));
                     } else {
-                        armAngleStudyUI.updateIMUDataOutput(nameOfIMU, ("*" + String.format(Locale.US, "%.3f", eulerAngleZ)));
+                        userInterface.errorMessagePopUp(nameOfIMU + " not initialized");
                     }
                 }
                 break;
@@ -211,7 +228,7 @@ public class StreamingIMUWithArmAlgorithmForArmAngleStudy extends StreamingIMU{
             case "Baseline Normal":
             case "Fast":
 
-                //Update the EulerX Value To The Offset Value
+                //Update the EulerZ Value To The Offset Value
                 eulerAngleZ = eulerAngleZ - offsetEulerAngle;
 
                 if (eulerAngleZ >= 180) {

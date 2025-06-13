@@ -791,35 +791,35 @@ public class ArmAngleStudyUI extends UserInterfaceWithRecordingIMU {
         //Update the IMU Gait Parameter Output on the Screen based on the name of the IMU
         switch (gaitParameter){
             case "PAE":
-                //If nameOfIMU is Left Thigh, update the Left Last Stride PTE
-                if(nameOfIMU.equals("Left Thigh IMU")) {
+                //If nameOfIMU is Left Arm, update the Left Last Stride PAE
+                if(nameOfIMU.equals("Left Arm IMU")) {
                     TextView LeftThighPTE = activity.findViewById(R.id.arm_angle_feedback_study_trial_page_LeftArmLastPeakExtension);
                     LeftThighPTE.setText(data);
                 }
-                //If nameOfIMU is Right Thigh, update the Right Last Stride PTE
-                else if(nameOfIMU.equals("Right Thigh IMU")){
+                //If nameOfIMU is Right Arm, update the Right Last Stride PAE
+                else if(nameOfIMU.equals("Right Arm IMU")){
                     TextView RightThighPTE = activity.findViewById(R.id.arm_angle_feedback_study_trial_page_RightArmLastPeakExtension);
                     RightThighPTE.setText(data);
                 }
                 //If nameOFIMU is anything else, log as an error
                 else{
-                    Log.e(TAG + "updateGaitParameterOutput", "ERROR: Invalid IMU Name for PTE Update");
+                    Log.e(TAG + "updateGaitParameterOutput", "ERROR: Invalid IMU Name for PAE Update");
                 }
                 break;
             case "PAF":
-                //If nameOfIMU is Left Thigh, update the Left Last Stride PTE
-                if(nameOfIMU.equals("Left Thigh IMU")) {
+                //If nameOfIMU is Left Arm, update the Left Last Stride PAF
+                if(nameOfIMU.equals("Left Arm IMU")) {
                     TextView LeftThighPTE = activity.findViewById(R.id.arm_angle_feedback_study_trial_page_LeftArmLastPeakFlexion);
                     LeftThighPTE.setText(data);
                 }
-                //If nameOfIMU is Right Thigh, update the Right Last Stride PTE
-                else if(nameOfIMU.equals("Right Thigh IMU")){
+                //If nameOfIMU is Right Arm, update the Right Last Stride PAF
+                else if(nameOfIMU.equals("Right Arm IMU")){
                     TextView RightThighPTE = activity.findViewById(R.id.arm_angle_feedback_study_trial_page_RightArmLastPeakFlexion);
                     RightThighPTE.setText(data);
                 }
                 //If nameOFIMU is anything else, log as an error
                 else{
-                    Log.e(TAG + "updateGaitParameterOutput", "ERROR: Invalid IMU Name for PTE Update");
+                    Log.e(TAG + "updateGaitParameterOutput", "ERROR: Invalid IMU Name for PAF Update");
                 }
                 break;
             case "StrideLength":

@@ -1,11 +1,11 @@
 package com.umainebiomechanicslab.biomechanicslabapp.imus;
 
 import android.content.Context;
+import android.util.Log;
 
 import com.umainebiomechanicslab.biomechanicslabapp.FileManager;
 import com.umainebiomechanicslab.biomechanicslabapp.FootStrideData;
 import com.umainebiomechanicslab.biomechanicslabapp.studymanagers.IMUManager;
-import com.umainebiomechanicslab.biomechanicslabapp.trials.OptimizedThighExtensionStudyTrial;
 import com.umainebiomechanicslab.biomechanicslabapp.trials.Trial;
 import com.umainebiomechanicslab.biomechanicslabapp.userinterfaces.UserInterfaceWithIMU;
 import com.xsens.dot.android.sdk.events.DotData;
@@ -15,6 +15,8 @@ import java.util.Arrays;
 import java.util.Locale;
 
 public class StreamingIMUWithFootDataAlgorithmForStrideCalculation extends StreamingIMU{
+
+    private final String TAG = "StreamingIMUWithFootDataAlgorithmForStrideCalculation";
 
     protected final int MIN_SAMPLES_BETWEEN_PEAKS = 15;
     protected final int MIN_ANGLE_FOR_HEEL_STRIKE = 10;
@@ -133,6 +135,14 @@ public class StreamingIMUWithFootDataAlgorithmForStrideCalculation extends Strea
          * */
         //double eulerAngleX = DotParser.quaternion2Euler(dotData.getQuat())[0];
         double eulerAngleX = dotData.getEuler()[0];
+        //Log.d(TAG, "EulerX: " + eulerAngleX);
+
+        //Log the first sample
+        //if(sampleCounter == 1){
+        //    Log.d(TAG, trialName + sampleCounter + nameOfIMU);
+        //}
+
+        Log.d(TAG, trialName + sampleCounter + nameOfIMU);
 
         /*
          * Different trial modes require different handling of the IMU Data. Initialization doesn't
@@ -146,6 +156,7 @@ public class StreamingIMUWithFootDataAlgorithmForStrideCalculation extends Strea
                 if (sampleCounter < (outputFrequency * offsetInitializationDurationSec)){
                     if ((sampleCounter % outputFrequency) == 0) {
                         userInterface.updateIMUDataOutput(nameOfIMU, "Initializing...");
+                        Log.d(TAG, "Initializing...");
                     }
                     trialAngleSum += eulerAngleX;
                 } else if (sampleCounter == (outputFrequency * offsetInitializationDurationSec)){
