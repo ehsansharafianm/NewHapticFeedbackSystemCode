@@ -558,7 +558,7 @@
                 android:text="@string/FeedbackTestHeader"/>
 
             <Button
-                android:id="@+id/arm_angle_feedback_study_trial_page_LeftThighFeedbackButton"
+                android:id="@+id/arm_angle_feedback_study_trial_page_LeftArmFrontFeedbackButton"
                 style="?attr/defaultButtonStyle"
                 android:layout_width="130dp"
                 android:layout_height="50dp"
@@ -567,10 +567,10 @@
                 android:layout_marginTop="10dp"
                 android:layout_marginBottom="10dp"
                 android:layout_marginEnd="10dp"
-                android:text="@string/LeftArmFeedbackButtonText"/>
+                android:text="@string/LeftArmFrontFeedbackButtonText"/>
 
             <Button
-                android:id="@+id/arm_angle_feedback_study_trial_page_RightThighFeedbackButton"
+                android:id="@+id/arm_angle_feedback_study_trial_page_RightArmFrontFeedbackButton"
                 style="?attr/defaultButtonStyle"
                 android:layout_width="130dp"
                 android:layout_height="50dp"
@@ -579,14 +579,38 @@
                 android:layout_marginTop="10dp"
                 android:layout_marginBottom="10dp"
                 android:layout_marginStart="10dp"
-                android:text="@string/RightArmFeedbackButtonText"/>
+                android:text="@string/RightArmFrontFeedbackButtonText"/>
+
+            <Button
+                android:id="@+id/arm_angle_feedback_study_trial_page_LeftArmBackFeedbackButton"
+                style="?attr/defaultButtonStyle"
+                android:layout_width="130dp"
+                android:layout_height="50dp"
+                android:layout_below="@+id/arm_angle_feedback_study_trial_page_LeftArmFrontFeedbackButton"
+                android:layout_toStartOf="@+id/arm_angle_feedback_study_trial_page_CenterSpace"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                android:layout_marginEnd="10dp"
+                android:text="@string/LeftArmBackFeedbackButtonText"/>
+
+            <Button
+                android:id="@+id/arm_angle_feedback_study_trial_page_RightArmBackFeedbackButton"
+                style="?attr/defaultButtonStyle"
+                android:layout_width="130dp"
+                android:layout_height="50dp"
+                android:layout_below="@+id/arm_angle_feedback_study_trial_page_RightArmFrontFeedbackButton"
+                android:layout_toEndOf="@+id/arm_angle_feedback_study_trial_page_CenterSpace"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                android:layout_marginStart="10dp"
+                android:text="@string/RightArmBackFeedbackButtonText"/>
 
             <View
                 android:id="@+id/arm_angle_feedback_study_trial_page_HorizontalLine5"
                 android:background="?attr/experimentalPageHeaderTextColor"
                 android:layout_width="match_parent"
                 android:layout_height="2dp"
-                android:layout_below="@id/arm_angle_feedback_study_trial_page_LeftThighFeedbackButton"
+                android:layout_below="@id/arm_angle_feedback_study_trial_page_LeftArmBackFeedbackButton"
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="10dp"/>
 

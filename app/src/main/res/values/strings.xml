@@ -95,8 +95,10 @@
 
     <!-- Arm Angle Feedback Study Page Strings -->
     <string name="ArmAngleFeedbackStudyPageTitle">Arm Angle Feedback Study</string>
-    <string name="LeftArmFeedbackButtonText">Left Arm Feedback</string>
-    <string name="RightArmFeedbackButtonText">Right Arm Feedback</string>
+    <string name="LeftArmFrontFeedbackButtonText">Left Arm Front Feedback</string>
+    <string name="RightArmFrontFeedbackButtonText">Right Arm Front Feedback</string>
+    <string name="LeftArmBackFeedbackButtonText">Left Arm Back Feedback</string>
+    <string name="RightArmBackFeedbackButtonText">Right Arm Back Feedback</string>
     <string name="PeakArmExtensionAngleLabel">Last PAE Angle</string>"
     <string name="PeakArmFlexionAngleLabel">Last PAF Angle</string>
     <string name="NumberOfPeakArmExtensionsLabel"># of PAEs</string>"

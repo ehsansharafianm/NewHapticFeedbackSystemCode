@@ -75,8 +75,10 @@ public class ArmAngleStudyUI extends UserInterfaceWithRecordingIMU {
         startSyncButton = activity.findViewById(R.id.arm_angle_feedback_study_trial_page_StartSyncButton);
         showBatteryPercentageButton = activity.findViewById(R.id.arm_angle_feedback_study_trial_page_ShowIMUsBatteryButton);
         disconnectButton = activity.findViewById(R.id.arm_angle_feedback_study_trial_page_DisconnectIMUsButton);
-        Button leftThighFeedbackTestButton = activity.findViewById(R.id.arm_angle_feedback_study_trial_page_LeftThighFeedbackButton);
-        Button rightThighFeedbackTestButton = activity.findViewById(R.id.arm_angle_feedback_study_trial_page_RightThighFeedbackButton);
+        Button leftArmFrontFeedbackTestButton = activity.findViewById(R.id.arm_angle_feedback_study_trial_page_LeftArmFrontFeedbackButton);
+        Button rightArmFrontFeedbackTestButton = activity.findViewById(R.id.arm_angle_feedback_study_trial_page_RightArmFrontFeedbackButton);
+        Button leftArmBackFeedbackTestButton = activity.findViewById(R.id.arm_angle_feedback_study_trial_page_LeftArmBackFeedbackButton);
+        Button rightArmBackFeedbackTestButton = activity.findViewById(R.id.arm_angle_feedback_study_trial_page_RightArmBackFeedbackButton);
         startInitializationButton = activity.findViewById(R.id.arm_angle_feedback_study_trial_page_StartInitializationButton);
         startTrialButton = activity.findViewById(R.id.arm_angle_feedback_study_trial_page_StartTrialButton);
         showLogButton = activity.findViewById(R.id.arm_angle_feedback_study_trial_page_ShowLogButton);
@@ -550,7 +552,33 @@ public class ArmAngleStudyUI extends UserInterfaceWithRecordingIMU {
 
         });
 
-        leftThighFeedbackTestButton.setOnClickListener(view -> {
+        leftArmFrontFeedbackTestButton.setOnClickListener(view -> {
+
+            //Check to see if both haptic cells have valid device numbers
+            if(validLeftHapticCellIPAddress){
+                imuManager.sendHapticFeedback("Left", "A?delay=500");
+            }
+            //Otherwise, show an error message
+            else{
+                errorMessagePopUp("ERROR: Invalid Device Number");
+            }
+
+        });
+
+        rightArmFrontFeedbackTestButton.setOnClickListener(view -> {
+
+            //Check to see if both haptic cells have valid device numbers
+            if(validRightHapticCellIPAddress){
+                imuManager.sendHapticFeedback("Right", "A?delay=500");
+            }
+            //Otherwise, show an error message
+            else{
+                errorMessagePopUp("ERROR: Invalid Device Number");
+            }
+
+        });
+
+        leftArmBackFeedbackTestButton.setOnClickListener(view -> {
 
             //Check to see if both haptic cells have valid device numbers
             if(validLeftHapticCellIPAddress){
@@ -563,7 +591,7 @@ public class ArmAngleStudyUI extends UserInterfaceWithRecordingIMU {
 
         });
 
-        rightThighFeedbackTestButton.setOnClickListener(view -> {
+        rightArmBackFeedbackTestButton.setOnClickListener(view -> {
 
             //Check to see if both haptic cells have valid device numbers
             if(validRightHapticCellIPAddress){
