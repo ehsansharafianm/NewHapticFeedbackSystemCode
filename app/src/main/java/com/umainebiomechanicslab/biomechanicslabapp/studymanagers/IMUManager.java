@@ -136,7 +136,7 @@ public abstract class IMUManager implements DotScannerCallback, DotSyncCallback 
             case "V2–06":
                 macAddress = "D4:22:CD:00:9F:88";
                 break;
-            case "V2-07":
+            case "V2–07":
                 macAddress = "D4:22:CD:00:63:8A";
                 break;
             case "V2–08":
