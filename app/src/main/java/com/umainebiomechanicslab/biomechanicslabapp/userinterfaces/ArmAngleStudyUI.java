@@ -708,7 +708,7 @@ public class ArmAngleStudyUI extends UserInterfaceWithRecordingIMU {
 
     }
 
-    /*@Override
+    @Override
     public void showPage() {
 
         //Show the page if the gate way IP was found, if not, show the loading page and find the gate way IP
@@ -721,7 +721,7 @@ public class ArmAngleStudyUI extends UserInterfaceWithRecordingIMU {
             imuManager.findGateWayIP();
         }
 
-    }*/
+    }
 
     public void linkIMUManager(ArmAngleStudyManager imuManager) {
         this.imuManager = imuManager;
@@ -733,28 +733,22 @@ public class ArmAngleStudyUI extends UserInterfaceWithRecordingIMU {
         //Update the IMU Status based on the name of the IMU
         switch (nameOfIMU){
             case "Left Arm IMU":
-                TextView LeftArmStatus = activity.findViewById(R.id.arm_angle_feedback_study_trial_page_LeftArmStatusView);
-                LeftArmStatus.setText(status);
+                updateTextViewText(R.id.arm_angle_feedback_study_trial_page_LeftArmStatusView, status);
                 break;
             case "Right Arm IMU":
-                TextView RightArmStatus = activity.findViewById(R.id.arm_angle_feedback_study_trial_page_RightArmStatusView);
-                RightArmStatus.setText(status);
+                updateTextViewText(R.id.arm_angle_feedback_study_trial_page_RightArmStatusView, status);
                 break;
             case "Left Thigh IMU":
-                TextView LeftThighStatus = activity.findViewById(R.id.arm_angle_feedback_study_trial_page_LeftThighStatusView);
-                LeftThighStatus.setText(status);
+                updateTextViewText(R.id.arm_angle_feedback_study_trial_page_LeftThighStatusView, status);
                 break;
             case "Right Thigh IMU":
-                TextView RightThighStatus = activity.findViewById(R.id.arm_angle_feedback_study_trial_page_RightThighStatusView);
-                RightThighStatus.setText(status);
+                updateTextViewText(R.id.arm_angle_feedback_study_trial_page_RightThighStatusView, status);
                 break;
             case "Left Foot IMU":
-                TextView LeftFootStatus = activity.findViewById(R.id.arm_angle_feedback_study_trial_page_LeftFootStatusView);
-                LeftFootStatus.setText(status);
+                updateTextViewText(R.id.arm_angle_feedback_study_trial_page_LeftFootStatusView, status);
                 break;
             case "Right Foot IMU":
-                TextView RightFootStatus = activity.findViewById(R.id.arm_angle_feedback_study_trial_page_RightFootStatusView);
-                RightFootStatus.setText(status);
+                updateTextViewText(R.id.arm_angle_feedback_study_trial_page_RightFootStatusView, status);
                 break;
         }
 
@@ -766,20 +760,16 @@ public class ArmAngleStudyUI extends UserInterfaceWithRecordingIMU {
         //Update the IMU DataOutput based on the name of the IMU
         switch (nameOfIMU){
             case "Left Arm IMU":
-                TextView LeftArmDataOutput = activity.findViewById(R.id.arm_angle_feedback_study_trial_page_LeftArmDataOutputView);
-                LeftArmDataOutput.setText(data);
+                updateTextViewText(R.id.arm_angle_feedback_study_trial_page_LeftArmDataOutputView, data);
                 break;
             case "Right Arm IMU":
-                TextView RightArmDataOutput = activity.findViewById(R.id.arm_angle_feedback_study_trial_page_RightArmDataOutputView);
-                RightArmDataOutput.setText(data);
+                updateTextViewText(R.id.arm_angle_feedback_study_trial_page_RightArmDataOutputView, data);
                 break;
             case "Left Foot IMU":
-                TextView LeftFootDataOutput = activity.findViewById(R.id.arm_angle_feedback_study_trial_page_LeftFootDataOutputView);
-                LeftFootDataOutput.setText(data);
+                updateTextViewText(R.id.arm_angle_feedback_study_trial_page_LeftFootDataOutputView, data);
                 break;
             case "Right Foot IMU":
-                TextView RightFootDataOutput = activity.findViewById(R.id.arm_angle_feedback_study_trial_page_RightFootDataOutputView);
-                RightFootDataOutput.setText(data);
+                updateTextViewText(R.id.arm_angle_feedback_study_trial_page_RightFootDataOutputView, data);
                 break;
         }
 
@@ -793,13 +783,11 @@ public class ArmAngleStudyUI extends UserInterfaceWithRecordingIMU {
             case "PAE":
                 //If nameOfIMU is Left Arm, update the Left Last Stride PAE
                 if(nameOfIMU.equals("Left Arm IMU")) {
-                    TextView LeftThighPTE = activity.findViewById(R.id.arm_angle_feedback_study_trial_page_LeftArmLastPeakExtension);
-                    LeftThighPTE.setText(data);
+                    updateTextViewText(R.id.arm_angle_feedback_study_trial_page_LeftArmLastPeakExtension, data);
                 }
                 //If nameOfIMU is Right Arm, update the Right Last Stride PAE
                 else if(nameOfIMU.equals("Right Arm IMU")){
-                    TextView RightThighPTE = activity.findViewById(R.id.arm_angle_feedback_study_trial_page_RightArmLastPeakExtension);
-                    RightThighPTE.setText(data);
+                    updateTextViewText(R.id.arm_angle_feedback_study_trial_page_RightArmLastPeakExtension, data);
                 }
                 //If nameOFIMU is anything else, log as an error
                 else{
@@ -809,13 +797,11 @@ public class ArmAngleStudyUI extends UserInterfaceWithRecordingIMU {
             case "PAF":
                 //If nameOfIMU is Left Arm, update the Left Last Stride PAF
                 if(nameOfIMU.equals("Left Arm IMU")) {
-                    TextView LeftThighPTE = activity.findViewById(R.id.arm_angle_feedback_study_trial_page_LeftArmLastPeakFlexion);
-                    LeftThighPTE.setText(data);
+                    updateTextViewText(R.id.arm_angle_feedback_study_trial_page_LeftArmLastPeakFlexion, data);
                 }
                 //If nameOfIMU is Right Arm, update the Right Last Stride PAF
                 else if(nameOfIMU.equals("Right Arm IMU")){
-                    TextView RightThighPTE = activity.findViewById(R.id.arm_angle_feedback_study_trial_page_RightArmLastPeakFlexion);
-                    RightThighPTE.setText(data);
+                    updateTextViewText(R.id.arm_angle_feedback_study_trial_page_RightArmLastPeakFlexion, data);
                 }
                 //If nameOFIMU is anything else, log as an error
                 else{
@@ -825,13 +811,11 @@ public class ArmAngleStudyUI extends UserInterfaceWithRecordingIMU {
             case "StrideLength":
                 //If nameOfIMU is Left Foot, update the Left Stride Length
                 if(nameOfIMU.equals("Left Foot IMU")) {
-                    TextView LeftFootStrideLength = activity.findViewById(R.id.arm_angle_feedback_study_trial_page_LeftSideLastStrideLength);
-                    LeftFootStrideLength.setText(data);
+                    updateTextViewText(R.id.arm_angle_feedback_study_trial_page_LeftSideLastStrideLength, data);
                 }
                 //If nameOfIMU is Right Foot, update the Right Stride Length
                 else if(nameOfIMU.equals("Right Foot IMU")){
-                    TextView RightFootStrideLength = activity.findViewById(R.id.arm_angle_feedback_study_trial_page_RightSideLastStrideLength);
-                    RightFootStrideLength.setText(data);
+                    updateTextViewText(R.id.arm_angle_feedback_study_trial_page_RightSideLastStrideLength, data);
                 }
                 //If nameOFIMU is anything else, log as an error
                 else{
@@ -841,13 +825,11 @@ public class ArmAngleStudyUI extends UserInterfaceWithRecordingIMU {
             case "WalkingSpeed":
                 //If nameOfIMU is Left Foot, update the Left Walking Speed
                 if(nameOfIMU.equals("Left Foot IMU")) {
-                    TextView LeftFootWalkingSpeed = activity.findViewById(R.id.arm_angle_feedback_study_trial_page_LeftSideLastSpeed);
-                    LeftFootWalkingSpeed.setText(data);
+                    updateTextViewText(R.id.arm_angle_feedback_study_trial_page_LeftSideLastSpeed, data);
                 }
                 //If nameOfIMU is Right Foot, update the Right Walking Speed
                 else if(nameOfIMU.equals("Right Foot IMU")){
-                    TextView RightFootWalkingSpeed = activity.findViewById(R.id.arm_angle_feedback_study_trial_page_RightSideLastSpeed);
-                    RightFootWalkingSpeed.setText(data);
+                    updateTextViewText(R.id.arm_angle_feedback_study_trial_page_RightSideLastSpeed, data);
                 }
                 //If nameOFIMU is anything else, log as an error
                 else{
@@ -857,13 +839,11 @@ public class ArmAngleStudyUI extends UserInterfaceWithRecordingIMU {
             case "Cadence":
                 //If nameOfIMU is Left Foot, update the Left Cadence
                 if(nameOfIMU.equals("Left Foot IMU")) {
-                    TextView LeftFootCadence = activity.findViewById(R.id.arm_angle_feedback_study_trial_page_LeftSideLastCadence);
-                    LeftFootCadence.setText(data);
+                    updateTextViewText(R.id.arm_angle_feedback_study_trial_page_LeftSideLastCadence, data);
                 }
                 //If nameOfIMU is Right Foot, update the Right Cadence
                 else if(nameOfIMU.equals("Right Foot IMU")){
-                    TextView RightFootCadence = activity.findViewById(R.id.arm_angle_feedback_study_trial_page_RightSideLastCadence);
-                    RightFootCadence.setText(data);
+                    updateTextViewText(R.id.arm_angle_feedback_study_trial_page_RightSideLastCadence, data);
                 }
                 //If nameOFIMU is anything else, log as an error
                 else{
@@ -873,13 +853,11 @@ public class ArmAngleStudyUI extends UserInterfaceWithRecordingIMU {
             case "PAECycleCount":
                 //If nameOfIMU is Left Thigh, update the Left Thigh PTE Cycle Count
                 if(nameOfIMU.equals("Left Arm IMU")) {
-                    TextView LeftThighPTECycleCount = activity.findViewById(R.id.arm_angle_feedback_study_trial_page_LeftArmExtensionCycle);
-                    LeftThighPTECycleCount.setText(data);
+                    updateTextViewText(R.id.arm_angle_feedback_study_trial_page_LeftArmExtensionCycle, data);
                 }
                 //If nameOfIMU is Right Thigh, update the Right Thigh PTE Cycle Count
                 else if(nameOfIMU.equals("Right Arm IMU")) {
-                    TextView RightThighPTECycleCount = activity.findViewById(R.id.arm_angle_feedback_study_trial_page_RightArmExtensionCycle);
-                    RightThighPTECycleCount.setText(data);
+                    updateTextViewText(R.id.arm_angle_feedback_study_trial_page_RightArmExtensionCycle, data);
                 }
                 //If nameOFIMU is anything else, log as an error
                 else{
@@ -889,13 +867,11 @@ public class ArmAngleStudyUI extends UserInterfaceWithRecordingIMU {
             case "PAFCycleCount":
                 //If nameOfIMU is Left Thigh, update the Left Thigh PTE Cycle Count
                 if(nameOfIMU.equals("Left Arm IMU")) {
-                    TextView LeftThighPTECycleCount = activity.findViewById(R.id.arm_angle_feedback_study_trial_page_LeftArmFlexionCycle);
-                    LeftThighPTECycleCount.setText(data);
+                    updateTextViewText(R.id.arm_angle_feedback_study_trial_page_LeftArmFlexionCycle, data);
                 }
                 //If nameOfIMU is Right Thigh, update the Right Thigh PTE Cycle Count
                 else if(nameOfIMU.equals("Right Arm IMU")) {
-                    TextView RightThighPTECycleCount = activity.findViewById(R.id.arm_angle_feedback_study_trial_page_RightArmFlexionCycle);
-                    RightThighPTECycleCount.setText(data);
+                    updateTextViewText(R.id.arm_angle_feedback_study_trial_page_RightArmFlexionCycle, data);
                 }
                 //If nameOFIMU is anything else, log as an error
                 else{
@@ -905,13 +881,11 @@ public class ArmAngleStudyUI extends UserInterfaceWithRecordingIMU {
             case "HeelStrikeCycleCount":
                 //If nameOfIMU is Left Foot, update the Left Heel Strike Cycle Count
                 if(nameOfIMU.equals("Left Foot IMU")) {
-                    TextView LeftFootHeelStrikeCycleCount = activity.findViewById(R.id.arm_angle_feedback_study_trial_page_LeftFootCycle);
-                    LeftFootHeelStrikeCycleCount.setText(data);
+                    updateTextViewText(R.id.arm_angle_feedback_study_trial_page_LeftFootCycle, data);
                 }
                 //If nameOfIMU is Right Foot, update the Right Heel Strike Cycle Count
                 else if(nameOfIMU.equals("Right Foot IMU")){
-                    TextView RightFootHeelStrikeCycleCount = activity.findViewById(R.id.arm_angle_feedback_study_trial_page_RightFootCycle);
-                    RightFootHeelStrikeCycleCount.setText(data);
+                    updateTextViewText(R.id.arm_angle_feedback_study_trial_page_RightFootCycle, data);
                 }
                 //If nameOFIMU is anything else, log as an error
                 else{
@@ -921,13 +895,11 @@ public class ArmAngleStudyUI extends UserInterfaceWithRecordingIMU {
             case "Target50PAELower":
                 //If nameOfIMU is Left Thigh, update the Left Thigh Target Angle
                 if(nameOfIMU.equals("Left Arm IMU")) {
-                    TextView LeftThighTargetAngle = activity.findViewById(R.id.arm_angle_feedback_study_trial_page_LowerExtensionTargetAngle50);
-                    LeftThighTargetAngle.setText(data);
+                    updateTextViewText(R.id.arm_angle_feedback_study_trial_page_LowerExtensionTargetAngle50, data);
                 }
                 //If nameOfIMU is Right Thigh, update the Right Thigh Target Angle
                 else if(nameOfIMU.equals("Right Arm IMU")) {
-                    TextView RightThighTargetAngle = activity.findViewById(R.id.arm_angle_feedback_study_trial_page_LowerExtensionTargetAngle50);
-                    RightThighTargetAngle.setText(data);
+                    updateTextViewText(R.id.arm_angle_feedback_study_trial_page_LowerExtensionTargetAngle50, data);
                 }
                 //If nameOFIMU is anything else, log as an error
                 else{
@@ -937,13 +909,11 @@ public class ArmAngleStudyUI extends UserInterfaceWithRecordingIMU {
             case "Target50PAEUpper":
                 //If nameOfIMU is Left Thigh, update the Left Thigh Target Angle
                 if(nameOfIMU.equals("Left Arm IMU")) {
-                    TextView LeftThighTargetAngle = activity.findViewById(R.id.arm_angle_feedback_study_trial_page_UpperExtensionTargetAngle50);
-                    LeftThighTargetAngle.setText(data);
+                    updateTextViewText(R.id.arm_angle_feedback_study_trial_page_UpperExtensionTargetAngle50, data);
                 }
                 //If nameOfIMU is Right Thigh, update the Right Thigh Target Angle
                 else if(nameOfIMU.equals("Right Arm IMU")) {
-                    TextView RightThighTargetAngle = activity.findViewById(R.id.arm_angle_feedback_study_trial_page_UpperExtensionTargetAngle50);
-                    RightThighTargetAngle.setText(data);
+                    updateTextViewText(R.id.arm_angle_feedback_study_trial_page_UpperExtensionTargetAngle50, data);
                 }
                 //If nameOFIMU is anything else, log as an error
                 else{
@@ -953,13 +923,11 @@ public class ArmAngleStudyUI extends UserInterfaceWithRecordingIMU {
             case "Target50PAFLower":
                 //If nameOfIMU is Left Thigh, update the Left Thigh Target Angle
                 if(nameOfIMU.equals("Left Arm IMU")) {
-                    TextView LeftThighTargetAngle = activity.findViewById(R.id.arm_angle_feedback_study_trial_page_LowerFlexionTargetAngle50);
-                    LeftThighTargetAngle.setText(data);
+                    updateTextViewText(R.id.arm_angle_feedback_study_trial_page_LowerFlexionTargetAngle50, data);
                 }
                 //If nameOfIMU is Right Thigh, update the Right Thigh Target Angle
                 else if(nameOfIMU.equals("Right Arm IMU")) {
-                    TextView RightThighTargetAngle = activity.findViewById(R.id.arm_angle_feedback_study_trial_page_LowerFlexionTargetAngle50);
-                    RightThighTargetAngle.setText(data);
+                    updateTextViewText(R.id.arm_angle_feedback_study_trial_page_LowerFlexionTargetAngle50, data);
                 }
                 //If nameOFIMU is anything else, log as an error
                 else{
@@ -969,13 +937,11 @@ public class ArmAngleStudyUI extends UserInterfaceWithRecordingIMU {
             case "Target50PAFUpper":
                 //If nameOfIMU is Left Thigh, update the Left Thigh Target Angle
                 if(nameOfIMU.equals("Left Arm IMU")) {
-                    TextView LeftThighTargetAngle = activity.findViewById(R.id.arm_angle_feedback_study_trial_page_UpperFlexionTargetAngle50);
-                    LeftThighTargetAngle.setText(data);
+                    updateTextViewText(R.id.arm_angle_feedback_study_trial_page_UpperFlexionTargetAngle50, data);
                 }
                 //If nameOfIMU is Right Thigh, update the Right Thigh Target Angle
                 else if(nameOfIMU.equals("Right Arm IMU")) {
-                    TextView RightThighTargetAngle = activity.findViewById(R.id.arm_angle_feedback_study_trial_page_UpperFlexionTargetAngle50);
-                    RightThighTargetAngle.setText(data);
+                    updateTextViewText(R.id.arm_angle_feedback_study_trial_page_UpperFlexionTargetAngle50, data);
                 }
                 //If nameOFIMU is anything else, log as an error
                 else{
@@ -985,13 +951,11 @@ public class ArmAngleStudyUI extends UserInterfaceWithRecordingIMU {
             case "Target100PAELower":
                 //If nameOfIMU is Left Thigh, update the Left Thigh Target Angle
                 if(nameOfIMU.equals("Left Arm IMU")) {
-                    TextView LeftThighTargetAngle = activity.findViewById(R.id.arm_angle_feedback_study_trial_page_LowerExtensionTargetAngle100);
-                    LeftThighTargetAngle.setText(data);
+                    updateTextViewText(R.id.arm_angle_feedback_study_trial_page_LowerExtensionTargetAngle100, data);
                 }
                 //If nameOfIMU is Right Thigh, update the Right Thigh Target Angle
                 else if(nameOfIMU.equals("Right Arm IMU")) {
-                    TextView RightThighTargetAngle = activity.findViewById(R.id.arm_angle_feedback_study_trial_page_LowerExtensionTargetAngle100);
-                    RightThighTargetAngle.setText(data);
+                    updateTextViewText(R.id.arm_angle_feedback_study_trial_page_LowerExtensionTargetAngle100, data);
                 }
                 //If nameOFIMU is anything else, log as an error
                 else{
@@ -1001,13 +965,11 @@ public class ArmAngleStudyUI extends UserInterfaceWithRecordingIMU {
             case "Target100PAEUpper":
                 //If nameOfIMU is Left Thigh, update the Left Thigh Target Angle
                 if(nameOfIMU.equals("Left Arm IMU")) {
-                    TextView LeftThighTargetAngle = activity.findViewById(R.id.arm_angle_feedback_study_trial_page_UpperExtensionTargetAngle100);
-                    LeftThighTargetAngle.setText(data);
+                    updateTextViewText(R.id.arm_angle_feedback_study_trial_page_UpperExtensionTargetAngle100, data);
                 }
                 //If nameOfIMU is Right Thigh, update the Right Thigh Target Angle
                 else if(nameOfIMU.equals("Right Arm IMU")) {
-                    TextView RightThighTargetAngle = activity.findViewById(R.id.arm_angle_feedback_study_trial_page_UpperExtensionTargetAngle100);
-                    RightThighTargetAngle.setText(data);
+                    updateTextViewText(R.id.arm_angle_feedback_study_trial_page_UpperExtensionTargetAngle100, data);
                 }
                 //If nameOFIMU is anything else, log as an error
                 else{
@@ -1017,13 +979,11 @@ public class ArmAngleStudyUI extends UserInterfaceWithRecordingIMU {
             case "Target100PAFLower":
                 //If nameOfIMU is Left Thigh, update the Left Thigh Target Angle
                 if(nameOfIMU.equals("Left Arm IMU")) {
-                    TextView LeftThighTargetAngle = activity.findViewById(R.id.arm_angle_feedback_study_trial_page_LowerFlexionTargetAngle100);
-                    LeftThighTargetAngle.setText(data);
+                    updateTextViewText(R.id.arm_angle_feedback_study_trial_page_LowerFlexionTargetAngle100, data);
                 }
                 //If nameOfIMU is Right Thigh, update the Right Thigh Target Angle
                 else if(nameOfIMU.equals("Right Arm IMU")) {
-                    TextView RightThighTargetAngle = activity.findViewById(R.id.arm_angle_feedback_study_trial_page_LowerFlexionTargetAngle100);
-                    RightThighTargetAngle.setText(data);
+                    updateTextViewText(R.id.arm_angle_feedback_study_trial_page_LowerFlexionTargetAngle100, data);
                 }
                 //If nameOFIMU is anything else, log as an error
                 else{
@@ -1033,13 +993,11 @@ public class ArmAngleStudyUI extends UserInterfaceWithRecordingIMU {
             case "Target100PAFUpper":
                 //If nameOfIMU is Left Thigh, update the Left Thigh Target Angle
                 if(nameOfIMU.equals("Left Arm IMU")) {
-                    TextView LeftThighTargetAngle = activity.findViewById(R.id.arm_angle_feedback_study_trial_page_UpperFlexionTargetAngle100);
-                    LeftThighTargetAngle.setText(data);
+                    updateTextViewText(R.id.arm_angle_feedback_study_trial_page_UpperFlexionTargetAngle100, data);
                 }
                 //If nameOfIMU is Right Thigh, update the Right Thigh Target Angle
                 else if(nameOfIMU.equals("Right Arm IMU")) {
-                    TextView RightThighTargetAngle = activity.findViewById(R.id.arm_angle_feedback_study_trial_page_UpperFlexionTargetAngle100);
-                    RightThighTargetAngle.setText(data);
+                    updateTextViewText(R.id.arm_angle_feedback_study_trial_page_UpperFlexionTargetAngle100, data);
                 }
                 //If nameOFIMU is anything else, log as an error
                 else{

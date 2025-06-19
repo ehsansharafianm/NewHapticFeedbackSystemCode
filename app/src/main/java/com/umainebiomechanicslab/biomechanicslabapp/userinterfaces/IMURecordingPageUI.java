@@ -483,20 +483,16 @@ public class IMURecordingPageUI extends UserInterfaceWithIMU {
         //Update the IMU Status based on the name of the IMU
         switch (nameOfIMU){
             case "IMU1":
-                TextView IMU1Status = activity.findViewById(R.id.imu_recording_page_IMU1StatusView);
-                IMU1Status.setText(status);
+                updateTextViewText(R.id.imu_recording_page_IMU1StatusView, status);
                 break;
             case "IMU2":
-                TextView IMU2Status = activity.findViewById(R.id.imu_recording_page_IMU2StatusView);
-                IMU2Status.setText(status);
+                updateTextViewText(R.id.imu_recording_page_IMU2StatusView, status);
                 break;
             case "IMU3":
-                TextView IMU3Status = activity.findViewById(R.id.imu_recording_page_IMU3StatusView);
-                IMU3Status.setText(status);
+                updateTextViewText(R.id.imu_recording_page_IMU3StatusView, status);
                 break;
             case "IMU4":
-                TextView IMU4Status = activity.findViewById(R.id.imu_recording_page_IMU4StatusView);
-                IMU4Status.setText(status);
+                updateTextViewText(R.id.imu_recording_page_IMU4StatusView, status);
                 break;
         }
 
@@ -508,20 +504,16 @@ public class IMURecordingPageUI extends UserInterfaceWithIMU {
         //Update the IMU Data Output based on the name of the IMU
         switch (nameOfIMU){
             case "IMU1":
-                TextView IMU1DataOutput = activity.findViewById(R.id.imu_recording_page_IMU1DataOutputView);
-                IMU1DataOutput.setText(data);
+                updateTextViewText(R.id.imu_recording_page_IMU1DataOutputView, data);
                 break;
             case "IMU2":
-                TextView IMU2DataOutput = activity.findViewById(R.id.imu_recording_page_IMU2DataOutputView);
-                IMU2DataOutput.setText(data);
+                updateTextViewText(R.id.imu_recording_page_IMU2DataOutputView, data);
                 break;
             case "IMU3":
-                TextView IMU3DataOutput = activity.findViewById(R.id.imu_recording_page_IMU3DataOutputView);
-                IMU3DataOutput.setText(data);
+                updateTextViewText(R.id.imu_recording_page_IMU3DataOutputView, data);
                 break;
             case "IMU4":
-                TextView IMU4DataOutput = activity.findViewById(R.id.imu_recording_page_IMU4DataOutputView);
-                IMU4DataOutput.setText(data);
+                updateTextViewText(R.id.imu_recording_page_IMU4DataOutputView, data);
                 break;
         }
 

@@ -142,7 +142,7 @@ public class StreamingIMUWithFootDataAlgorithmForStrideCalculation extends Strea
         //    Log.d(TAG, trialName + sampleCounter + nameOfIMU);
         //}
 
-        Log.d(TAG, trialName + sampleCounter + nameOfIMU);
+        //Log.d(TAG, trialName + sampleCounter + nameOfIMU);
 
         /*
          * Different trial modes require different handling of the IMU Data. Initialization doesn't
@@ -156,7 +156,7 @@ public class StreamingIMUWithFootDataAlgorithmForStrideCalculation extends Strea
                 if (sampleCounter < (outputFrequency * offsetInitializationDurationSec)){
                     if ((sampleCounter % outputFrequency) == 0) {
                         userInterface.updateIMUDataOutput(nameOfIMU, "Initializing...");
-                        Log.d(TAG, "Initializing...");
+                        //Log.d(TAG, "Initializing...");
                     }
                     trialAngleSum += eulerAngleX;
                 } else if (sampleCounter == (outputFrequency * offsetInitializationDurationSec)){
