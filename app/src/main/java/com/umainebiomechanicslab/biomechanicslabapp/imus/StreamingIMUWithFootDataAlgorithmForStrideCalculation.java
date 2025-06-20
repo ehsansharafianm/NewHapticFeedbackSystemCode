@@ -239,8 +239,8 @@ public class StreamingIMUWithFootDataAlgorithmForStrideCalculation extends Strea
                                     trial.appendToGaitParameterArrayList(nameOfIMU, "WalkingSpeed", strideSpeed);
 
                                     //Update the User Interface with the most recent stride length and speed
-                                    userInterface.updateGaitParameterOutput("StrideLength", nameOfIMU, String.valueOf(strideLength));
-                                    userInterface.updateGaitParameterOutput("WalkingSpeed", nameOfIMU, String.valueOf(strideSpeed));
+                                    userInterface.updateGaitParameterOutput("StrideLength", nameOfIMU, String.format(Locale.US, "%.3f", strideLength));
+                                    userInterface.updateGaitParameterOutput("WalkingSpeed", nameOfIMU, String.format(Locale.US, "%.3f", strideSpeed));
 
                                     //Update the sum of all stride lengths and speeds for use in the average stride length and speed calculation later
                                     trialStrideLengthSum += strideLength;

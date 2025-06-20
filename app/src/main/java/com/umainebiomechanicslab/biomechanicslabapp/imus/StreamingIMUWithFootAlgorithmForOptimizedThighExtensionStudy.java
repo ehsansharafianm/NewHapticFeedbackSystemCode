@@ -141,8 +141,8 @@ public class StreamingIMUWithFootAlgorithmForOptimizedThighExtensionStudy extend
                                     trial.appendToGaitParameterArrayList(nameOfIMU, "WalkingSpeed", strideSpeed);
 
                                     //Update the User Interface with the most recent stride length and speed
-                                    thighExtensionStudyUI.updateGaitParameterOutput("StrideLength", nameOfIMU, String.valueOf(strideLength));
-                                    thighExtensionStudyUI.updateGaitParameterOutput("WalkingSpeed", nameOfIMU, String.valueOf(strideSpeed));
+                                    thighExtensionStudyUI.updateGaitParameterOutput("StrideLength", nameOfIMU, String.format(Locale.US, "%.3f", strideLength));
+                                    thighExtensionStudyUI.updateGaitParameterOutput("WalkingSpeed", nameOfIMU, String.format(Locale.US, "%.3f", strideSpeed));
 
                                     //Update the sum of all stride lengths and speeds for use in the average stride length and speed calculation later
                                     trialStrideLengthSum += strideLength;
@@ -257,8 +257,8 @@ public class StreamingIMUWithFootAlgorithmForOptimizedThighExtensionStudy extend
                                     trial.appendToGaitParameterArrayList(nameOfIMU, "WalkingSpeed", strideSpeed);
 
                                     //Update the User Interface with the most recent stride length and speed
-                                    thighExtensionStudyUI.updateGaitParameterOutput("StrideLength", nameOfIMU, String.valueOf(strideLength));
-                                    thighExtensionStudyUI.updateGaitParameterOutput("WalkingSpeed", nameOfIMU, String.valueOf(strideSpeed));
+                                    thighExtensionStudyUI.updateGaitParameterOutput("StrideLength", nameOfIMU, String.format(Locale.US, "%.3f", strideLength));
+                                    thighExtensionStudyUI.updateGaitParameterOutput("WalkingSpeed", nameOfIMU, String.format(Locale.US, "%.3f", strideSpeed));
 
                                     //Update the sum of all stride lengths and speeds for use in the average stride length and speed calculation later
                                     trialStrideLengthSum += strideLength;
