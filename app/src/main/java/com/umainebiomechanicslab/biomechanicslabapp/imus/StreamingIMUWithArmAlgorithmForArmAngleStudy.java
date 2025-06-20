@@ -23,8 +23,8 @@ public class StreamingIMUWithArmAlgorithmForArmAngleStudy extends StreamingIMU{
     private final ArmAngleStudyTargetManager targetManager;
 
     private final int MIN_SAMPLES_BETWEEN_PEAKS = 15;
-    private final int MIN_EXTENSION_ANGLE = -3;
-    private final int MIN_FLEXION_ANGLE = 3;
+    private final int MIN_EXTENSION_ANGLE = -2;
+    private final int MIN_FLEXION_ANGLE = 6;
     private final int NUMBER_OF_CYCLES_UNTIL_STEADY_STATE = 10;
     private final int PACKET_COUNTER_STEP_OFFSET = 100000;
     private final int FEEDBACK_GIVEN_OFFSET = 100000000;
