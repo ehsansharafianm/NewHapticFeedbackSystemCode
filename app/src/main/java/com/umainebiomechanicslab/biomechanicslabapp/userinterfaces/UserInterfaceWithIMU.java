@@ -12,6 +12,8 @@ public abstract class UserInterfaceWithIMU extends UserInterface {
 
     protected boolean haveIMUsBeenScanned;
 
+    protected boolean logPopUpWindowVisible, batteryPercentageVisible;
+
     public UserInterfaceWithIMU(Activity activity, int pageID) {
         super(activity, pageID);
 
@@ -20,6 +22,10 @@ public abstract class UserInterfaceWithIMU extends UserInterface {
 
         //Initialize haveIMUsBeenScanned to false when the app starts
         haveIMUsBeenScanned = false;
+
+        //Initialize logPopUpWindowVisible and batteryPercentageVisible
+        logPopUpWindowVisible = false;
+        batteryPercentageVisible = false;
     }
 
     public abstract void updateIMUStatus(String nameOfIMU, String status);

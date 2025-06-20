@@ -77,6 +77,7 @@ public class RecordingIMU extends UniversalIMU implements DotRecordingCallback {
             isScanned = true;
             isConnected = true;
             userInterface.updateIMUStatus(nameOfIMU, "Connected");
+            imuStatus = "Connected";
             fileManager.writeToLogFile(nameOfIMU + " is Connected");
         } else {
             if (!(imuManager.getIsScanning() || imuManager.getIsSyncing())) {
@@ -85,6 +86,7 @@ public class RecordingIMU extends UniversalIMU implements DotRecordingCallback {
                 isReady = false;
                 isErased = false;
                 userInterface.updateIMUStatus(nameOfIMU, "Disconnected");
+                imuStatus = "Disconnected";
                 fileManager.writeToLogFile(nameOfIMU + " is Disconnected");
                 userInterface.errorMessagePopUp(nameOfIMU + " is Disconnected");
                 imuManager.onDotDisconnected(movellaDotDevice);
@@ -136,6 +138,7 @@ public class RecordingIMU extends UniversalIMU implements DotRecordingCallback {
         }
         else{
             userInterface.updateIMUStatus(nameOfIMU, "Ready");
+            imuStatus = "Ready";
             fileManager.writeToLogFile(nameOfIMU + " is Ready");
         }
     }
@@ -265,6 +268,7 @@ public class RecordingIMU extends UniversalIMU implements DotRecordingCallback {
             fileManager.writeToLogFile(nameOfIMU + " Data Erase Successful");
             isErased = true;
             userInterface.updateIMUStatus(nameOfIMU, "Ready");
+            imuStatus = "Ready";
             imuManager.onInitializationComplete();
         }
         else{
@@ -292,6 +296,7 @@ public class RecordingIMU extends UniversalIMU implements DotRecordingCallback {
             if ((percent>0.001) || (Double.isNaN(percent)) || (totalFlashSpace == 0)){
                 fileManager.writeToLogFile(nameOfIMU + " Erasing IMU Recording Memory");
                 userInterface.updateIMUStatus(nameOfIMU, "Erasing");
+                imuStatus = "Erasing";
                 if(!movellaDotRecordingManager.eraseRecordingData()){
                     fileManager.writeToLogFile(nameOfIMU + " !Error Erasing IMU Recording Memory");
                     userInterface.errorMessagePopUp("!Memory Erase Error");
@@ -300,6 +305,7 @@ public class RecordingIMU extends UniversalIMU implements DotRecordingCallback {
             else{
                 fileManager.writeToLogFile(nameOfIMU + " No Need To Erase (%" + (percent*100) + ")");
                 userInterface.updateIMUStatus(nameOfIMU, "Ready");
+                imuStatus = "Ready";
                 isErased = true;
                 imuManager.onInitializationComplete();
             }

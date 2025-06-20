@@ -45,6 +45,9 @@ public abstract class UniversalIMU implements DotDeviceCallback {
     //Declare IMU status booleans
     protected boolean isScanned, isConnected, isReady;
 
+    //Declare IMU Status String
+    protected String imuStatus;
+
     //Declare outputFrequency variable
     protected int outputFrequency;
 
@@ -102,6 +105,10 @@ public abstract class UniversalIMU implements DotDeviceCallback {
         return isReady;
     }
 
+    public String getIMUStatus(){
+        return imuStatus;
+    }
+
     public int getBatteryPercentage() {
         return movellaDotDevice.getBatteryPercentage();
     }
@@ -110,6 +117,7 @@ public abstract class UniversalIMU implements DotDeviceCallback {
         movellaDotDevice = new DotDevice(context.getApplicationContext(), bluetoothDevice, UniversalIMU.this);
         isScanned = true;
         userInterface.updateIMUStatus(nameOfIMU, "Scanned");
+        imuStatus = "Scanned";
         fileManager.writeToLogFile(nameOfIMU + " is Scanned");
         movellaDotDevice.connect();
         return movellaDotDevice;
@@ -136,6 +144,7 @@ public abstract class UniversalIMU implements DotDeviceCallback {
             isScanned = true;
             isConnected = true;
             userInterface.updateIMUStatus(nameOfIMU, "Connected");
+            imuStatus = "Connected";
             fileManager.writeToLogFile(nameOfIMU + " is Connected");
         } else {
             if (!(imuManager.getIsScanning() || imuManager.getIsSyncing())) {
@@ -143,6 +152,7 @@ public abstract class UniversalIMU implements DotDeviceCallback {
                 isConnected = false;
                 isReady = false;
                 userInterface.updateIMUStatus(nameOfIMU, "Disconnected");
+                imuStatus = "Disconnected";
                 fileManager.writeToLogFile(nameOfIMU + " is Disconnected");
                 userInterface.errorMessagePopUp(nameOfIMU + " is Disconnected");
                 imuManager.onDotDisconnected(movellaDotDevice);
@@ -211,6 +221,7 @@ public abstract class UniversalIMU implements DotDeviceCallback {
 
         }
         userInterface.updateIMUStatus(nameOfIMU, "Ready");
+        imuStatus = "Ready";
         fileManager.writeToLogFile(nameOfIMU + " is Ready");
         imuManager.onInitializationComplete();
     }

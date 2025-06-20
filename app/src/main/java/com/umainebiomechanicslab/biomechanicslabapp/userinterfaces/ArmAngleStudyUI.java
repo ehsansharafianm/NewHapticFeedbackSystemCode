@@ -32,7 +32,6 @@ public class ArmAngleStudyUI extends UserInterfaceWithRecordingIMU {
 
     private boolean IMUsAngleOffsetInitialized;
     private boolean startTrialButtonActivated;
-    private boolean logPopUpWindowVisible;
     private boolean validLeftHapticCellIPAddress, validRightHapticCellIPAddress;
 
     private boolean isLeftArmIMUSpinnerDefaultSelection = true;
@@ -53,9 +52,6 @@ public class ArmAngleStudyUI extends UserInterfaceWithRecordingIMU {
 
         //Initialize startTrialButtonActivated
         startTrialButtonActivated = false;
-
-        //Initialize logPopUpWindowVisible
-        logPopUpWindowVisible = false;
 
         //Initialize validLeftHapticCellIPAddress and validRightHapticCellIPAddress
         validLeftHapticCellIPAddress = false;
@@ -527,6 +523,20 @@ public class ArmAngleStudyUI extends UserInterfaceWithRecordingIMU {
 
         //Set the behavior for the show showBatteryPercentageButton
         showBatteryPercentageButton.setOnClickListener(view -> {
+
+            if(batteryPercentageVisible){
+                batteryPercentageVisible = imuManager.showBatteryPercentage(false);
+                updateButtonText(showBatteryPercentageButton, "Show Battery Percentage");
+            }
+            else{
+                batteryPercentageVisible = imuManager.showBatteryPercentage(true);
+
+                //Only change the button text if the battery percentage is successfully shown
+                if(batteryPercentageVisible){
+                    updateButtonText(showBatteryPercentageButton, "Hide Battery Percentage");
+                }
+
+            }
 
         });
 

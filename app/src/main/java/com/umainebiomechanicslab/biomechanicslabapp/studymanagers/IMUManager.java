@@ -299,6 +299,43 @@ public abstract class IMUManager implements DotScannerCallback, DotSyncCallback 
 
     }
 
+    public boolean showBatteryPercentage(boolean showBatteryPercentage){
+
+        if(showBatteryPercentage){
+
+            //If all 6 IMUs are ready, show the battery percentage of each one
+            for(UniversalIMU IMU : IMUArrayList){
+                if(!IMU.getIsReady()){
+                    userInterface.errorMessagePopUp("Error: Not all IMUs are connected");
+
+                    //Return false meaning that battery percentage is not shown
+                    return false;
+                }
+            }
+
+            for(UniversalIMU IMU : IMUArrayList){
+                userInterface.updateIMUStatus(IMU.getNameOfIMU(), IMU.getBatteryPercentage() + "% Battery");
+            }
+
+            //Return true if all 6 IMUs are connected
+            return true;
+
+        }
+
+        else{
+
+            //Go back to showing the IMU status of each IMU
+            for(UniversalIMU IMU : IMUArrayList){
+                userInterface.updateIMUStatus(IMU.getNameOfIMU(), IMU.getIMUStatus());
+            }
+
+            //Return false meaning that battery percentage is not shown
+            return false;
+        }
+
+
+    }
+
     public void disconnectIMUs(){
 
         //Loop through all the IMUs and disconnect each one

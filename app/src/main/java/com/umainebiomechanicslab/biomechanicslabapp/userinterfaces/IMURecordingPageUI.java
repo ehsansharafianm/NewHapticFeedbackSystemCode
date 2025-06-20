@@ -315,6 +315,20 @@ public class IMURecordingPageUI extends UserInterfaceWithIMU {
         //Set the behavior for the show showBatteryPercentageButton
         showBatteryPercentageButton.setOnClickListener(view -> {
 
+            if(batteryPercentageVisible){
+                batteryPercentageVisible = imuManager.showBatteryPercentage(false);
+                updateButtonText(showBatteryPercentageButton, "Show Battery Percentage");
+            }
+            else{
+                batteryPercentageVisible = imuManager.showBatteryPercentage(true);
+
+                //Only change the button text if the battery percentage is successfully shown
+                if(batteryPercentageVisible){
+                    updateButtonText(showBatteryPercentageButton, "Hide Battery Percentage");
+                }
+
+            }
+
         });
 
         //Set the behavior for the disconnectButton
