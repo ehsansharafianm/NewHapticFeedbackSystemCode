@@ -498,10 +498,10 @@ public class StreamingIMUWithArmAlgorithmForArmAngleStudy extends StreamingIMU{
                 }
                 break;
 
-            case "Positive Backward Feedback 50%":
-            case "Error Backward Feedback 50%":
             case "Positive Backward Feedback 100%":
             case "Error Backward Feedback 100%":
+            case "Positive Backward Feedback 200%":
+            case "Error Backward Feedback 200%":
 
                 //Update the EulerX Value To The Offset Value
                 eulerAngleZ = eulerAngleZ - offsetEulerAngle;
@@ -632,10 +632,10 @@ public class StreamingIMUWithArmAlgorithmForArmAngleStudy extends StreamingIMU{
                 }
                 break;
 
-            case "Positive Forward Feedback 50%":
-            case "Error Forward Feedback 50%":
             case "Positive Forward Feedback 100%":
             case "Error Forward Feedback 100%":
+            case "Positive Forward Feedback 200%":
+            case "Error Forward Feedback 200%":
 
                 //Update the EulerX Value To The Offset Value
                 eulerAngleZ = eulerAngleZ - offsetEulerAngle;

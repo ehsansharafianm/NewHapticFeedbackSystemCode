@@ -207,14 +207,14 @@ public class ArmAngleStudyManager extends IMUManagerWithRecordingIMUs{
 
             case "Baseline Normal":
             case "Fast":
-            case "Positive Forward Feedback 50%":
-            case "Positive Backward Feedback 50%":
-            case "Error Forward Feedback 50%":
-            case "Error Backward Feedback 50%":
             case "Positive Forward Feedback 100%":
             case "Positive Backward Feedback 100%":
             case "Error Forward Feedback 100%":
             case "Error Backward Feedback 100%":
+            case "Positive Forward Feedback 200%":
+            case "Positive Backward Feedback 200%":
+            case "Error Forward Feedback 200%":
+            case "Error Backward Feedback 200%":
 
                 //Create a new Trial Object to store data and add it to the trialArrayList
                 trialArrayList.add(new ArmAngleStudyTrial(trialName, currentTimeStamp));
@@ -263,14 +263,14 @@ public class ArmAngleStudyManager extends IMUManagerWithRecordingIMUs{
                 break;
 
             case "Fast":
-            case "Positive Forward Feedback 50%":
-            case "Positive Backward Feedback 50%":
-            case "Error Forward Feedback 50%":
-            case "Error Backward Feedback 50%":
             case "Positive Forward Feedback 100%":
             case "Positive Backward Feedback 100%":
             case "Error Forward Feedback 100%":
             case "Error Backward Feedback 100%":
+            case "Positive Forward Feedback 200%":
+            case "Positive Backward Feedback 200%":
+            case "Error Forward Feedback 200%":
+            case "Error Backward Feedback 200%":
 
                 //Stop all IMUs
                 leftThighIMU.stopTrial(false);

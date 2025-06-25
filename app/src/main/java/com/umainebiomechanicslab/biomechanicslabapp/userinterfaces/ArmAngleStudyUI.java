@@ -930,112 +930,56 @@ public class ArmAngleStudyUI extends UserInterfaceWithRecordingIMU {
                     Log.e(TAG + "updateGaitParameterOutput", "ERROR: Invalid IMU Name for Heel Strike Cycle Count Update");
                 }
                 break;
-            case "Target50PAELower":
+            case "Target100PAE":
                 //If nameOfIMU is Left Thigh, update the Left Thigh Target Angle
                 if(nameOfIMU.equals("Left Arm IMU")) {
-                    updateTextViewText(R.id.arm_angle_feedback_study_trial_page_LowerExtensionTargetAngle50, data);
+                    updateTextViewText(R.id.arm_angle_feedback_study_trial_page_ExtensionTargetAngle100, data);
                 }
                 //If nameOfIMU is Right Thigh, update the Right Thigh Target Angle
                 else if(nameOfIMU.equals("Right Arm IMU")) {
-                    updateTextViewText(R.id.arm_angle_feedback_study_trial_page_LowerExtensionTargetAngle50, data);
+                    updateTextViewText(R.id.arm_angle_feedback_study_trial_page_ExtensionTargetAngle100, data);
                 }
                 //If nameOFIMU is anything else, log as an error
                 else{
                     Log.e(TAG + "updateGaitParameterOutput", "ERROR: Invalid IMU Name for Target Angle Update");
                 }
                 break;
-            case "Target50PAEUpper":
+            case "Target100PAF":
                 //If nameOfIMU is Left Thigh, update the Left Thigh Target Angle
                 if(nameOfIMU.equals("Left Arm IMU")) {
-                    updateTextViewText(R.id.arm_angle_feedback_study_trial_page_UpperExtensionTargetAngle50, data);
+                    updateTextViewText(R.id.arm_angle_feedback_study_trial_page_FlexionTargetAngle100, data);
                 }
                 //If nameOfIMU is Right Thigh, update the Right Thigh Target Angle
                 else if(nameOfIMU.equals("Right Arm IMU")) {
-                    updateTextViewText(R.id.arm_angle_feedback_study_trial_page_UpperExtensionTargetAngle50, data);
+                    updateTextViewText(R.id.arm_angle_feedback_study_trial_page_FlexionTargetAngle100, data);
                 }
                 //If nameOFIMU is anything else, log as an error
                 else{
                     Log.e(TAG + "updateGaitParameterOutput", "ERROR: Invalid IMU Name for Target Angle Update");
                 }
                 break;
-            case "Target50PAFLower":
+            case "Target200PAE":
                 //If nameOfIMU is Left Thigh, update the Left Thigh Target Angle
                 if(nameOfIMU.equals("Left Arm IMU")) {
-                    updateTextViewText(R.id.arm_angle_feedback_study_trial_page_LowerFlexionTargetAngle50, data);
+                    updateTextViewText(R.id.arm_angle_feedback_study_trial_page_ExtensionTargetAngle200, data);
                 }
                 //If nameOfIMU is Right Thigh, update the Right Thigh Target Angle
                 else if(nameOfIMU.equals("Right Arm IMU")) {
-                    updateTextViewText(R.id.arm_angle_feedback_study_trial_page_LowerFlexionTargetAngle50, data);
+                    updateTextViewText(R.id.arm_angle_feedback_study_trial_page_ExtensionTargetAngle200, data);
                 }
                 //If nameOFIMU is anything else, log as an error
                 else{
                     Log.e(TAG + "updateGaitParameterOutput", "ERROR: Invalid IMU Name for Target Angle Update");
                 }
                 break;
-            case "Target50PAFUpper":
+            case "Target200PAF":
                 //If nameOfIMU is Left Thigh, update the Left Thigh Target Angle
                 if(nameOfIMU.equals("Left Arm IMU")) {
-                    updateTextViewText(R.id.arm_angle_feedback_study_trial_page_UpperFlexionTargetAngle50, data);
+                    updateTextViewText(R.id.arm_angle_feedback_study_trial_page_FlexionTargetAngle200, data);
                 }
                 //If nameOfIMU is Right Thigh, update the Right Thigh Target Angle
                 else if(nameOfIMU.equals("Right Arm IMU")) {
-                    updateTextViewText(R.id.arm_angle_feedback_study_trial_page_UpperFlexionTargetAngle50, data);
-                }
-                //If nameOFIMU is anything else, log as an error
-                else{
-                    Log.e(TAG + "updateGaitParameterOutput", "ERROR: Invalid IMU Name for Target Angle Update");
-                }
-                break;
-            case "Target100PAELower":
-                //If nameOfIMU is Left Thigh, update the Left Thigh Target Angle
-                if(nameOfIMU.equals("Left Arm IMU")) {
-                    updateTextViewText(R.id.arm_angle_feedback_study_trial_page_LowerExtensionTargetAngle100, data);
-                }
-                //If nameOfIMU is Right Thigh, update the Right Thigh Target Angle
-                else if(nameOfIMU.equals("Right Arm IMU")) {
-                    updateTextViewText(R.id.arm_angle_feedback_study_trial_page_LowerExtensionTargetAngle100, data);
-                }
-                //If nameOFIMU is anything else, log as an error
-                else{
-                    Log.e(TAG + "updateGaitParameterOutput", "ERROR: Invalid IMU Name for Target Angle Update");
-                }
-                break;
-            case "Target100PAEUpper":
-                //If nameOfIMU is Left Thigh, update the Left Thigh Target Angle
-                if(nameOfIMU.equals("Left Arm IMU")) {
-                    updateTextViewText(R.id.arm_angle_feedback_study_trial_page_UpperExtensionTargetAngle100, data);
-                }
-                //If nameOfIMU is Right Thigh, update the Right Thigh Target Angle
-                else if(nameOfIMU.equals("Right Arm IMU")) {
-                    updateTextViewText(R.id.arm_angle_feedback_study_trial_page_UpperExtensionTargetAngle100, data);
-                }
-                //If nameOFIMU is anything else, log as an error
-                else{
-                    Log.e(TAG + "updateGaitParameterOutput", "ERROR: Invalid IMU Name for Target Angle Update");
-                }
-                break;
-            case "Target100PAFLower":
-                //If nameOfIMU is Left Thigh, update the Left Thigh Target Angle
-                if(nameOfIMU.equals("Left Arm IMU")) {
-                    updateTextViewText(R.id.arm_angle_feedback_study_trial_page_LowerFlexionTargetAngle100, data);
-                }
-                //If nameOfIMU is Right Thigh, update the Right Thigh Target Angle
-                else if(nameOfIMU.equals("Right Arm IMU")) {
-                    updateTextViewText(R.id.arm_angle_feedback_study_trial_page_LowerFlexionTargetAngle100, data);
-                }
-                //If nameOFIMU is anything else, log as an error
-                else{
-                    Log.e(TAG + "updateGaitParameterOutput", "ERROR: Invalid IMU Name for Target Angle Update");
-                }
-                break;
-            case "Target100PAFUpper":
-                //If nameOfIMU is Left Thigh, update the Left Thigh Target Angle
-                if(nameOfIMU.equals("Left Arm IMU")) {
-                    updateTextViewText(R.id.arm_angle_feedback_study_trial_page_UpperFlexionTargetAngle100, data);
-                }
-                //If nameOfIMU is Right Thigh, update the Right Thigh Target Angle
-                else if(nameOfIMU.equals("Right Arm IMU")) {
-                    updateTextViewText(R.id.arm_angle_feedback_study_trial_page_UpperFlexionTargetAngle100, data);
+                    updateTextViewText(R.id.arm_angle_feedback_study_trial_page_FlexionTargetAngle200, data);
                 }
                 //If nameOFIMU is anything else, log as an error
                 else{

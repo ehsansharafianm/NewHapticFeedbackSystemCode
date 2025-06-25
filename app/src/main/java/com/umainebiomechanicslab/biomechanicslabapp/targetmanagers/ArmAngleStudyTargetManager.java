@@ -163,32 +163,20 @@ public class ArmAngleStudyTargetManager {
 
 
         //Update the log with the generated target values
-        fileManager.writeToLogFile("Peak Arm 50% Extension Lower Target Set To: " + armExtensionTarget100);
-        fileManager.writeToLogFile("Peak Arm 50% Extension Upper Target Set To: " + armExtensionTarget50Upper);
-        fileManager.writeToLogFile("Peak Arm 50% Flexion Lower Target Set To: " + armFlexionTarget100);
-        fileManager.writeToLogFile("Peak Arm 50% Flexion Upper Target Set To: " + armFlexionTarget50Upper);
-        fileManager.writeToLogFile("Peak Arm 100% Extension Lower Target Set To: " + armExtensionTarget200);
-        fileManager.writeToLogFile("Peak Arm 100% Extension Upper Target Set To: N/A (" + armExtensionTarget100Upper + ")");
-        fileManager.writeToLogFile("Peak Arm 100% Flexion Lower Target Set To: " + armFlexionTarget200);
-        fileManager.writeToLogFile("Peak Arm 100% Flexion Upper Target Set To: N/A (" + armFlexionTarget100Upper + ")");
+        fileManager.writeToLogFile("Peak Arm 100% Extension Target Set To: " + armExtensionTarget100);
+        fileManager.writeToLogFile("Peak Arm 100% Flexion Target Set To: " + armFlexionTarget100);
+        fileManager.writeToLogFile("Peak Arm 200% Extension Target Set To: " + armExtensionTarget200);
+        fileManager.writeToLogFile("Peak Arm 200% Flexion Target Set To: " + armFlexionTarget200);
 
         //Update the UI with the generated target values
-        armAngleStudyUI.updateGaitParameterOutput("Target50PAELower", "Left Arm IMU", String.format(Locale.US,"%.3f",armExtensionTarget100));
-        armAngleStudyUI.updateGaitParameterOutput("Target50PAELower", "Right Arm IMU", String.format(Locale.US,"%.3f",armExtensionTarget100));
-        armAngleStudyUI.updateGaitParameterOutput("Target50PAEUpper", "Left Arm IMU", String.format(Locale.US,"%.3f",armExtensionTarget50Upper));
-        armAngleStudyUI.updateGaitParameterOutput("Target50PAEUpper", "Right Arm IMU", String.format(Locale.US,"%.3f",armExtensionTarget50Upper));
-        armAngleStudyUI.updateGaitParameterOutput("Target50PAFLower", "Left Arm IMU", String.format(Locale.US,"%.3f",armFlexionTarget100));
-        armAngleStudyUI.updateGaitParameterOutput("Target50PAFLower", "Right Arm IMU", String.format(Locale.US,"%.3f",armFlexionTarget100));
-        armAngleStudyUI.updateGaitParameterOutput("Target50PAFUpper", "Left Arm IMU", String.format(Locale.US,"%.3f",armFlexionTarget50Upper));
-        armAngleStudyUI.updateGaitParameterOutput("Target50PAFUpper", "Right Arm IMU", String.format(Locale.US,"%.3f",armFlexionTarget50Upper));
-        armAngleStudyUI.updateGaitParameterOutput("Target100PAELower", "Left Arm IMU", String.format(Locale.US,"%.3f",armExtensionTarget200));
-        armAngleStudyUI.updateGaitParameterOutput("Target100PAELower", "Right Arm IMU", String.format(Locale.US,"%.3f",armExtensionTarget200));
-        armAngleStudyUI.updateGaitParameterOutput("Target100PAEUpper", "Left Arm IMU", String.format(Locale.US,"%.3f",armExtensionTarget100Upper));
-        armAngleStudyUI.updateGaitParameterOutput("Target100PAEUpper", "Right Arm IMU", String.format(Locale.US,"%.3f",armExtensionTarget100Upper));
-        armAngleStudyUI.updateGaitParameterOutput("Target100PAFLower", "Left Arm IMU", String.format(Locale.US,"%.3f",armFlexionTarget200));
-        armAngleStudyUI.updateGaitParameterOutput("Target100PAFLower", "Right Arm IMU", String.format(Locale.US,"%.3f",armFlexionTarget200));
-        armAngleStudyUI.updateGaitParameterOutput("Target100PAFUpper", "Left Arm IMU", String.format(Locale.US,"%.3f",armFlexionTarget100Upper));
-        armAngleStudyUI.updateGaitParameterOutput("Target100PAFUpper", "Right Arm IMU", String.format(Locale.US,"%.3f",armFlexionTarget100Upper));
+        armAngleStudyUI.updateGaitParameterOutput("Target100PAE", "Left Arm IMU", String.format(Locale.US,"%.3f",armExtensionTarget100));
+        armAngleStudyUI.updateGaitParameterOutput("Target100PAE", "Right Arm IMU", String.format(Locale.US,"%.3f",armExtensionTarget100));
+        armAngleStudyUI.updateGaitParameterOutput("Target100PAF", "Left Arm IMU", String.format(Locale.US,"%.3f",armFlexionTarget100));
+        armAngleStudyUI.updateGaitParameterOutput("Target100PAF", "Right Arm IMU", String.format(Locale.US,"%.3f",armFlexionTarget100));
+        armAngleStudyUI.updateGaitParameterOutput("Target200PAE", "Left Arm IMU", String.format(Locale.US,"%.3f",armExtensionTarget200));
+        armAngleStudyUI.updateGaitParameterOutput("Target200PAE", "Right Arm IMU", String.format(Locale.US,"%.3f",armExtensionTarget200));
+        armAngleStudyUI.updateGaitParameterOutput("Target200PAF", "Left Arm IMU", String.format(Locale.US,"%.3f",armFlexionTarget200));
+        armAngleStudyUI.updateGaitParameterOutput("Target200PAF", "Right Arm IMU", String.format(Locale.US,"%.3f",armFlexionTarget200));
 
     }
 

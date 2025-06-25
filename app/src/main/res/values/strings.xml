@@ -103,12 +103,10 @@
     <string name="PeakArmFlexionAngleLabel">Last PAF Angle</string>
     <string name="NumberOfPeakArmExtensionsLabel"># of PAEs</string>"
     <string name="NumberOfPeakArmFlexionsLabel"># of PAFs</string>
-    <string name="LowerTargetLabelText">Lower Target</string>"
-    <string name="UpperTargetLabelText">Upper Target</string>
-    <string name="ExtensionTargetAngle50Label">50% PAE Target</string>"
-    <string name="FlexionTargetAngle50Label">50% PAF Target</string>
-    <string name="ExtensionTargetAngle100Label">100% PAE Target</string>"
-    <string name="FlexionTargetAngle100Label">100% PAF Target</string>
+    <string name="TargetLabel100Text">100% Target</string>"
+    <string name="TargetLabel200Text">200% Target</string>
+    <string name="ExtensionTargetAngleLabel">PAE Target</string>"
+    <string name="FlexionTargetAngleLabel">PAF Target</string>
 
 
     <string-array name="IMU_MAC_Addresses">

@@ -1028,143 +1028,83 @@
                 android:textAlignment="center"/>
 
             <TextView
-                android:id="@+id/arm_angle_feedback_study_trial_page_LowerTargetTitle"
+                android:id="@+id/arm_angle_feedback_study_trial_page_100TargetTitle"
                 style="@style/ExperimentalPageNormalText"
                 android:layout_width="120dp"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/arm_angle_feedback_study_trial_page_FootCycleTitle"
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="10dp"
-                android:text="@string/LowerTargetLabelText"
+                android:text="@string/TargetLabel100Text"
                 android:textAlignment="center"/>
 
             <TextView
-                android:id="@+id/arm_angle_feedback_study_trial_page_UpperTargetTitle"
+                android:id="@+id/arm_angle_feedback_study_trial_page_200TargetTitle"
                 style="@style/ExperimentalPageNormalText"
                 android:layout_width="120dp"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/arm_angle_feedback_study_trial_page_FootCycleTitle"
-                android:layout_toEndOf="@+id/arm_angle_feedback_study_trial_page_LowerTargetTitle"
+                android:layout_toEndOf="@+id/arm_angle_feedback_study_trial_page_100TargetTitle"
                 android:layout_marginTop="10dp"
-                android:text="@string/UpperTargetLabelText"
+                android:text="@string/TargetLabel200Text"
                 android:textAlignment="center"/>
 
             <TextView
-                android:id="@+id/arm_angle_feedback_study_trial_page_ExtensionTargetAngle50Title"
+                android:id="@+id/arm_angle_feedback_study_trial_page_ExtensionTargetAngleTitle"
                 style="@style/ExperimentalPageNormalText"
                 android:layout_width="120dp"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/arm_angle_feedback_study_trial_page_LowerTargetTitle"
+                android:layout_below="@id/arm_angle_feedback_study_trial_page_100TargetTitle"
                 android:layout_toStartOf="@+id/arm_angle_feedback_study_trial_page_LeftSideTitle"
                 android:layout_marginTop="2dp"
-                android:text="@string/ExtensionTargetAngle50Label"/>
+                android:text="@string/ExtensionTargetAngleLabel"/>
 
             <TextView
-                android:id="@+id/arm_angle_feedback_study_trial_page_LowerExtensionTargetAngle50"
+                android:id="@+id/arm_angle_feedback_study_trial_page_ExtensionTargetAngle100"
                 style="@style/ExperimentalPageNormalText"
                 android:layout_width="120dp"
                 android:layout_height="wrap_content"
-                android:layout_alignBottom="@+id/arm_angle_feedback_study_trial_page_ExtensionTargetAngle50Title"
+                android:layout_alignBottom="@+id/arm_angle_feedback_study_trial_page_ExtensionTargetAngleTitle"
                 android:layout_alignStart="@+id/arm_angle_feedback_study_trial_page_LeftSideTitle"
                 android:text="@string/NoDataPlaceholder"
                 android:textAlignment="center"/>
 
             <TextView
-                android:id="@+id/arm_angle_feedback_study_trial_page_UpperExtensionTargetAngle50"
+                android:id="@+id/arm_angle_feedback_study_trial_page_ExtensionTargetAngle200"
                 style="@style/ExperimentalPageNormalText"
                 android:layout_width="120dp"
                 android:layout_height="wrap_content"
-                android:layout_alignBottom="@+id/arm_angle_feedback_study_trial_page_ExtensionTargetAngle50Title"
+                android:layout_alignBottom="@+id/arm_angle_feedback_study_trial_page_ExtensionTargetAngleTitle"
                 android:layout_alignStart="@+id/arm_angle_feedback_study_trial_page_RightSideTitle"
                 android:text="@string/NoDataPlaceholder"
                 android:textAlignment="center"/>
 
             <TextView
-                android:id="@+id/arm_angle_feedback_study_trial_page_FlexionTargetAngle50Title"
+                android:id="@+id/arm_angle_feedback_study_trial_page_FlexionTargetAngleTitle"
                 style="@style/ExperimentalPageNormalText"
                 android:layout_width="120dp"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/arm_angle_feedback_study_trial_page_ExtensionTargetAngle50Title"
+                android:layout_below="@id/arm_angle_feedback_study_trial_page_ExtensionTargetAngleTitle"
                 android:layout_toStartOf="@+id/arm_angle_feedback_study_trial_page_LeftSideTitle"
                 android:layout_marginTop="2dp"
-                android:text="@string/FlexionTargetAngle50Label"/>
+                android:text="@string/FlexionTargetAngleLabel"/>
 
             <TextView
-                android:id="@+id/arm_angle_feedback_study_trial_page_LowerFlexionTargetAngle50"
+                android:id="@+id/arm_angle_feedback_study_trial_page_FlexionTargetAngle100"
                 style="@style/ExperimentalPageNormalText"
                 android:layout_width="120dp"
                 android:layout_height="wrap_content"
-                android:layout_alignBottom="@+id/arm_angle_feedback_study_trial_page_FlexionTargetAngle50Title"
+                android:layout_alignBottom="@+id/arm_angle_feedback_study_trial_page_FlexionTargetAngleTitle"
                 android:layout_alignStart="@+id/arm_angle_feedback_study_trial_page_LeftSideTitle"
                 android:text="@string/NoDataPlaceholder"
                 android:textAlignment="center"/>
 
             <TextView
-                android:id="@+id/arm_angle_feedback_study_trial_page_UpperFlexionTargetAngle50"
+                android:id="@+id/arm_angle_feedback_study_trial_page_FlexionTargetAngle200"
                 style="@style/ExperimentalPageNormalText"
                 android:layout_width="120dp"
                 android:layout_height="wrap_content"
-                android:layout_alignBottom="@+id/arm_angle_feedback_study_trial_page_FlexionTargetAngle50Title"
-                android:layout_alignStart="@+id/arm_angle_feedback_study_trial_page_RightSideTitle"
-                android:text="@string/NoDataPlaceholder"
-                android:textAlignment="center"/>
-
-            <TextView
-                android:id="@+id/arm_angle_feedback_study_trial_page_ExtensionTargetAngle100Title"
-                style="@style/ExperimentalPageNormalText"
-                android:layout_width="120dp"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/arm_angle_feedback_study_trial_page_FlexionTargetAngle50Title"
-                android:layout_toStartOf="@+id/arm_angle_feedback_study_trial_page_LeftSideTitle"
-                android:layout_marginTop="2dp"
-                android:text="@string/ExtensionTargetAngle100Label"/>
-
-            <TextView
-                android:id="@+id/arm_angle_feedback_study_trial_page_LowerExtensionTargetAngle100"
-                style="@style/ExperimentalPageNormalText"
-                android:layout_width="120dp"
-                android:layout_height="wrap_content"
-                android:layout_alignBottom="@+id/arm_angle_feedback_study_trial_page_ExtensionTargetAngle100Title"
-                android:layout_alignStart="@+id/arm_angle_feedback_study_trial_page_LeftSideTitle"
-                android:text="@string/NoDataPlaceholder"
-                android:textAlignment="center"/>
-
-            <TextView
-                android:id="@+id/arm_angle_feedback_study_trial_page_UpperExtensionTargetAngle100"
-                style="@style/ExperimentalPageNormalText"
-                android:layout_width="120dp"
-                android:layout_height="wrap_content"
-                android:layout_alignBottom="@+id/arm_angle_feedback_study_trial_page_ExtensionTargetAngle100Title"
-                android:layout_alignStart="@+id/arm_angle_feedback_study_trial_page_RightSideTitle"
-                android:text="@string/NoDataPlaceholder"
-                android:textAlignment="center"/>
-
-            <TextView
-                android:id="@+id/arm_angle_feedback_study_trial_page_FlexionTargetAngle100Title"
-                style="@style/ExperimentalPageNormalText"
-                android:layout_width="120dp"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/arm_angle_feedback_study_trial_page_ExtensionTargetAngle100Title"
-                android:layout_toStartOf="@+id/arm_angle_feedback_study_trial_page_LeftSideTitle"
-                android:layout_marginTop="2dp"
-                android:text="@string/FlexionTargetAngle100Label"/>
-
-            <TextView
-                android:id="@+id/arm_angle_feedback_study_trial_page_LowerFlexionTargetAngle100"
-                style="@style/ExperimentalPageNormalText"
-                android:layout_width="120dp"
-                android:layout_height="wrap_content"
-                android:layout_alignBottom="@+id/arm_angle_feedback_study_trial_page_FlexionTargetAngle100Title"
-                android:layout_alignStart="@+id/arm_angle_feedback_study_trial_page_LeftSideTitle"
-                android:text="@string/NoDataPlaceholder"
-                android:textAlignment="center"/>
-
-            <TextView
-                android:id="@+id/arm_angle_feedback_study_trial_page_UpperFlexionTargetAngle100"
-                style="@style/ExperimentalPageNormalText"
-                android:layout_width="120dp"
-                android:layout_height="wrap_content"
-                android:layout_alignBottom="@+id/arm_angle_feedback_study_trial_page_FlexionTargetAngle100Title"
+                android:layout_alignBottom="@+id/arm_angle_feedback_study_trial_page_FlexionTargetAngleTitle"
                 android:layout_alignStart="@+id/arm_angle_feedback_study_trial_page_RightSideTitle"
                 android:text="@string/NoDataPlaceholder"
                 android:textAlignment="center"/>
