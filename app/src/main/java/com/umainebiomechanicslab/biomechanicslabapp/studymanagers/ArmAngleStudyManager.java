@@ -111,14 +111,16 @@ public class ArmAngleStudyManager extends IMUManagerWithRecordingIMUs{
         trialDurations.put("Positive Backward Feedback Familiarization", 1);
         trialDurations.put("Error Forward Feedback Familiarization", 1);
         trialDurations.put("Error Backward Feedback Familiarization", 1);
-        trialDurations.put("Positive Forward Feedback 50%", 5);
-        trialDurations.put("Positive Backward Feedback 50%", 5);
-        trialDurations.put("Error Forward Feedback 50%", 5);
-        trialDurations.put("Error Backward Feedback 50%", 5);
         trialDurations.put("Positive Forward Feedback 100%", 5);
         trialDurations.put("Positive Backward Feedback 100%", 5);
         trialDurations.put("Error Forward Feedback 100%", 5);
         trialDurations.put("Error Backward Feedback 100%", 5);
+        trialDurations.put("Positive Forward Feedback 200%", 5);
+        trialDurations.put("Positive Backward Feedback 200%", 5);
+        trialDurations.put("Error Forward Feedback 200%", 5);
+        trialDurations.put("Error Backward Feedback 200%", 5);
+        trialDurations.put("Positive Combined Feedback 200%", 5);
+        trialDurations.put("Error Combined Feedback 200%", 5);
 
     }
 
@@ -215,6 +217,8 @@ public class ArmAngleStudyManager extends IMUManagerWithRecordingIMUs{
             case "Positive Backward Feedback 200%":
             case "Error Forward Feedback 200%":
             case "Error Backward Feedback 200%":
+            case "Positive Combined Feedback 200%":
+            case "Error Combined Feedback 200%":
 
                 //Create a new Trial Object to store data and add it to the trialArrayList
                 trialArrayList.add(new ArmAngleStudyTrial(trialName, currentTimeStamp));
@@ -271,6 +275,8 @@ public class ArmAngleStudyManager extends IMUManagerWithRecordingIMUs{
             case "Positive Backward Feedback 200%":
             case "Error Forward Feedback 200%":
             case "Error Backward Feedback 200%":
+            case "Positive Combined Feedback 200%":
+            case "Error Combined Feedback 200%":
 
                 //Stop all IMUs
                 leftThighIMU.stopTrial(false);

@@ -768,6 +768,147 @@ public class StreamingIMUWithArmAlgorithmForArmAngleStudy extends StreamingIMU{
 
                 break;
 
+            case "Positive Combined Feedback 200%":
+            case "Error Combined Feedback 200%":
+
+                //Update the EulerX Value To The Offset Value
+                eulerAngleZ = eulerAngleZ - offsetEulerAngle;
+
+                if (eulerAngleZ >= 180) {
+                    eulerAngleZ = eulerAngleZ - 360;
+                } else if (eulerAngleZ <= -180) {
+                    eulerAngleZ = eulerAngleZ + 360;
+                }
+
+                if (nameOfIMU.equals("Left Arm IMU")) {
+                    eulerAngleZ = -eulerAngleZ;
+                }
+
+                //Set the packet counter to be the sample counter (may be changed in subsequent steps)
+                dotData.setPacketCounter(sampleCounter);
+
+                //Check to see that we haven't reached the end of the trial duration
+                if (sampleCounter <= (outputFrequency * 60 * trialDurationMin)) {
+
+                    //Update the last3Angles array to include the most recently measured angle
+                    updateRecentAnglesArray(eulerAngleZ, last5Angles);
+
+                    //Update the User Interface (time counter) if the sample falls on a whole number second
+                    if ((sampleCounter % outputFrequency) == 0) {
+                        armAngleStudyUI.updateIMUDataOutput(nameOfIMU, String.format(Locale.US, "%d:%02d", (sampleCounter / outputFrequency / 60), ((sampleCounter / outputFrequency) % 60)));
+                    }
+
+                    //Check to see if there was Peak Arm Extension in the most recent 3-sample window
+                    if ((sampleCounter > 180) && (sampleCounter >= lastPeakExtensionSample + MIN_SAMPLES_BETWEEN_PEAKS) && isMinPeak(last5Angles, MIN_EXTENSION_ANGLE)) {
+
+                        //The most recent Peak Sample is now the current sample
+                        lastPeakExtensionSample = sampleCounter;
+
+                        //Increase the number of steps taken by 1
+                        peakArmExtensionCounter++;
+
+                        //Update the packet counter to also show the number of steps taken
+                        dotData.setPacketCounter((peakArmExtensionCounter * PACKET_COUNTER_STEP_OFFSET) + sampleCounter);
+
+                        //If we have exceeded the steady-state walking threshold, use that PTE for average PTE calculation
+                        if (peakArmExtensionCounter > NUMBER_OF_CYCLES_UNTIL_STEADY_STATE) {
+
+                            //Update the sum of all PTE Angles for use in the average angle calculation later
+                            trialExtensionAngleSumForAverage += mostRecentPeakArmExtensionAngle;
+                            armAngleStudyTrial.appendToGaitParameterArrayList(nameOfIMU, "PAE", mostRecentPeakArmExtensionAngle);
+
+                            //Send the PAE to the target manager to see if feedback should be given and store whether feedback was provided
+                            boolean feedbackProvided = targetManager.onPAEAngleDetected(mostRecentPeakArmExtensionAngle, nameOfIMU, trialName);
+
+                            //If feedback was given, update the packet counter to show that feedback was given
+                            if (feedbackProvided) {
+                                dotData.setPacketCounter(FEEDBACK_GIVEN_OFFSET + (peakArmExtensionCounter * PACKET_COUNTER_STEP_OFFSET) + sampleCounter);
+                            }
+                        }
+
+                        //Update the User Interface with the most recent PTE Angle
+                        armAngleStudyUI.updateGaitParameterOutput("PAE", nameOfIMU, String.format(Locale.US, "%.3f", mostRecentPeakArmExtensionAngle));
+
+                        //Update the User Interface to show the new number of extensions
+                        armAngleStudyUI.updateGaitParameterOutput("PAECycleCount", nameOfIMU, String.valueOf(peakArmExtensionCounter));
+                    }
+
+                    //Check to see if there was Peak Arm Flexion in the most recent 3-sample window
+                    else if ((sampleCounter > 180) && (sampleCounter >= lastPeakFlexionSample + MIN_SAMPLES_BETWEEN_PEAKS) && isMaxPeak(last5Angles, MIN_FLEXION_ANGLE)) {
+
+                        //The most recent Peak Sample is now the current sample
+                        lastPeakFlexionSample = sampleCounter;
+
+                        //Increase the number of steps taken by 1
+                        peakArmFlexionCounter++;
+
+                        //Update the packet counter to also show the number of steps taken
+                        dotData.setPacketCounter((peakArmFlexionCounter * PACKET_COUNTER_STEP_OFFSET) + sampleCounter);
+
+                        //If we have exceeded the steady-state walking threshold, use that PTE for average PTE calculation
+                        if (peakArmFlexionCounter > NUMBER_OF_CYCLES_UNTIL_STEADY_STATE) {
+
+                            //Update the sum of all PTE Angles for use in the average angle calculation later
+                            trialFlexionAngleSumForAverage += mostRecentPeakArmFlexionAngle;
+                            armAngleStudyTrial.appendToGaitParameterArrayList(nameOfIMU, "PAF", mostRecentPeakArmFlexionAngle);
+
+                            //Send the PAE to the target manager to see if feedback should be given and store whether feedback was provided
+                            boolean feedbackProvided = targetManager.onPAFAngleDetected(mostRecentPeakArmFlexionAngle, nameOfIMU, trialName);
+
+                            //If feedback was given, update the packet counter to show that feedback was given
+                            if (feedbackProvided) {
+                                dotData.setPacketCounter(FEEDBACK_GIVEN_OFFSET + (peakArmFlexionCounter * PACKET_COUNTER_STEP_OFFSET) + sampleCounter);
+                            }
+                        }
+
+                        //Update the User Interface with the most recent PTE Angle
+                        armAngleStudyUI.updateGaitParameterOutput("PAF", nameOfIMU, String.format(Locale.US, "%.3f", mostRecentPeakArmFlexionAngle));
+
+                        //Update the User Interface to show the new number of extensions
+                        armAngleStudyUI.updateGaitParameterOutput("PAFCycleCount", nameOfIMU, String.valueOf(peakArmFlexionCounter));
+                    }
+
+                    //Update the Data Log File with the Latest Data Packet
+                    dotLogFile.getDotLogger().update(dotData);
+                }
+
+                //If we have reached the set trial duration, complete necessary UI and Trial Manager functions to complete trial
+                else if (sampleCounter == (outputFrequency * 60 * trialDurationMin) + 1) {
+
+                    double peakArmFlexionAngleAverage, peakArmExtensionAngleAverage;
+
+                    //Calculate the average PAF Angle for the trial
+                    if (peakArmFlexionCounter > NUMBER_OF_CYCLES_UNTIL_STEADY_STATE) {
+                        peakArmFlexionAngleAverage = (trialFlexionAngleSumForAverage / (peakArmFlexionCounter - NUMBER_OF_CYCLES_UNTIL_STEADY_STATE));
+                    } else {
+                        peakArmFlexionAngleAverage = 0;
+                    }
+
+                    //Calculate the average PAE Angle for the trial
+                    if (peakArmExtensionCounter > NUMBER_OF_CYCLES_UNTIL_STEADY_STATE) {
+                        peakArmExtensionAngleAverage = (trialExtensionAngleSumForAverage / (peakArmExtensionCounter - NUMBER_OF_CYCLES_UNTIL_STEADY_STATE));
+                    } else {
+                        peakArmExtensionAngleAverage = 0;
+                    }
+
+                    //Write the average PTE Angle and number of PTEs to the log file
+                    fileManager.writeToLogFile(String.format(Locale.US, "%s %s Flexion Angle Average: %.3f", nameOfIMU, trialName, peakArmFlexionAngleAverage));
+                    fileManager.writeToLogFile(nameOfIMU + " " + trialName + " Flexion Count: " + peakArmFlexionCounter);
+                    fileManager.writeToLogFile(String.format(Locale.US, "%s %s Extension Angle Average: %.3f", nameOfIMU, trialName, peakArmExtensionAngleAverage));
+                    fileManager.writeToLogFile(nameOfIMU + " " + trialName + " Extension Count: " + peakArmExtensionCounter);
+
+                    //Update the completed trial data in the Trial Manager
+                    armAngleStudyTrial.updateCompletedTrialData(nameOfIMU, "PAE", peakArmExtensionAngleAverage);
+                    armAngleStudyTrial.updateCompletedTrialData(nameOfIMU, "PAECycleCount", peakArmExtensionCounter);
+                    armAngleStudyTrial.updateCompletedTrialData(nameOfIMU, "PAF", peakArmFlexionAngleAverage);
+                    armAngleStudyTrial.updateCompletedTrialData(nameOfIMU, "PAFCycleCount", peakArmFlexionCounter);
+
+                    //Update the User Interface to show that the trial is complete
+                    armAngleStudyUI.updateIMUDataOutput(nameOfIMU, "DONE");
+                }
+
+                break;
+
         }
 
         //Increase the sample counter by 1

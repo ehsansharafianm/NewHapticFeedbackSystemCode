@@ -178,14 +178,16 @@
         <item>Positive Backward Feedback Familiarization</item>
         <item>Error Forward Feedback Familiarization</item>
         <item>Error Backward Feedback Familiarization</item>
-        <item>Positive Forward Feedback 50%</item>
-        <item>Positive Backward Feedback 50%</item>
-        <item>Error Forward Feedback 50%</item>
-        <item>Error Backward Feedback 50%</item>
         <item>Positive Forward Feedback 100%</item>
         <item>Positive Backward Feedback 100%</item>
         <item>Error Forward Feedback 100%</item>
         <item>Error Backward Feedback 100%</item>
+        <item>Positive Forward Feedback 200%</item>
+        <item>Positive Backward Feedback 200%</item>
+        <item>Error Forward Feedback 200%</item>
+        <item>Error Backward Feedback 200%</item>
+        <item>Positive Combined Feedback 200%</item>
+        <item>Error Combined Feedback 200%</item>
     </string-array>
 
 
