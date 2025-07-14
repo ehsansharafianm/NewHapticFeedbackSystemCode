@@ -27,6 +27,8 @@ import java.util.Map;
 
 public class ArmAngleStudyManager extends IMUManagerWithRecordingIMUs{
 
+
+    //test
     private final String TAG = "ArmAngleStudyManager";
 
     //Declare the HapticControlModule objects
