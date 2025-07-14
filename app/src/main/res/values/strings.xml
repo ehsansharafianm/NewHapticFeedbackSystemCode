@@ -108,6 +108,8 @@
     <string name="ExtensionTargetAngleLabel">PAE Target</string>"
     <string name="FlexionTargetAngleLabel">PAF Target</string>
 
+    <!-- Aim 2 Thigh Extension Study Page Strings -->
+    <string name="Aim2ThighExtensionStudyPageTitle">Aim 2 Thigh Extension Study</string>
 
     <string-array name="IMU_MAC_Addresses">
         <item>--</item>
