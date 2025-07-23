@@ -121,6 +121,8 @@ public class ArmAngleStudyManager extends IMUManagerWithRecordingIMUs{
         trialDurations.put("Positive Backward Feedback 200%", 5);
         trialDurations.put("Error Forward Feedback 200%", 5);
         trialDurations.put("Error Backward Feedback 200%", 5);
+        trialDurations.put("Positive Combined Feedback 100%", 5);
+        trialDurations.put("Error Combined Feedback 100%", 5);
         trialDurations.put("Positive Combined Feedback 200%", 5);
         trialDurations.put("Error Combined Feedback 200%", 5);
 
@@ -219,6 +221,8 @@ public class ArmAngleStudyManager extends IMUManagerWithRecordingIMUs{
             case "Positive Backward Feedback 200%":
             case "Error Forward Feedback 200%":
             case "Error Backward Feedback 200%":
+            case "Positive Combined Feedback 100%":
+            case "Error Combined Feedback 100%":
             case "Positive Combined Feedback 200%":
             case "Error Combined Feedback 200%":
 
@@ -277,6 +281,8 @@ public class ArmAngleStudyManager extends IMUManagerWithRecordingIMUs{
             case "Positive Backward Feedback 200%":
             case "Error Forward Feedback 200%":
             case "Error Backward Feedback 200%":
+            case "Positive Combined Feedback 100%":
+            case "Error Combined Feedback 100%":
             case "Positive Combined Feedback 200%":
             case "Error Combined Feedback 200%":
 

@@ -767,7 +767,8 @@ public class StreamingIMUWithArmAlgorithmForArmAngleStudy extends StreamingIMU{
                 }
 
                 break;
-
+            case "Positive Combined Feedback 100%":
+            case "Error Combined Feedback 100%":
             case "Positive Combined Feedback 200%":
             case "Error Combined Feedback 200%":
 
