@@ -6,6 +6,7 @@
 
     <include layout="@layout/test_haptic_cells_page"/>
     <include layout="@layout/arm_angle_feedback_study_trial_page"/>
+    <include layout="@layout/aim2_thigh_extension_study_trial_page"/>
     <include layout="@layout/imu_recording_page"/>
     <include layout="@layout/optimized_thigh_extension_study_trial_page"/>
     <include layout="@layout/original_thigh_extension_study_trial_page"/>

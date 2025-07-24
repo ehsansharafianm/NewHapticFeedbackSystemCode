@@ -10,6 +10,7 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 
+import com.umainebiomechanicslab.biomechanicslabapp.studymanagers.Aim2ThighExtensionStudyManager;
 import com.umainebiomechanicslab.biomechanicslabapp.studymanagers.ArmAngleStudyManager;
 import com.umainebiomechanicslab.biomechanicslabapp.studymanagers.OptimizedThighExtensionStudyManager;
 import com.umainebiomechanicslab.biomechanicslabapp.studymanagers.OriginalThighExtensionStudyManager;
@@ -77,6 +78,7 @@ public class MainActivity extends AppCompatActivity {
 
         //Instantiate Trial Manager Objects
         ArmAngleStudyManager armAngleStudyManager = new ArmAngleStudyManager(armAngleStudyUI, experimenterMenuUI, loadingWindowUI, this, fileManager);
+        Aim2ThighExtensionStudyManager aim2ThighExtensionStudyManager = new Aim2ThighExtensionStudyManager(aim2ThighExtensionStudyUI, experimenterMenuUI, loadingWindowUI, this, fileManager);
         TestHapticCellsManager testHapticCellsManager = new TestHapticCellsManager(testHapticCellsUI, experimenterMenuUI, loadingWindowUI, fileManager);
         RecordIMUDataManager recordIMUDataManager = new RecordIMUDataManager(imuRecordingPageUI, this, fileManager);
         OptimizedThighExtensionStudyManager optimizedThighExtensionStudyManager = new OptimizedThighExtensionStudyManager(optimizedThighExtensionStudyUI, experimenterMenuUI, loadingWindowUI, this, fileManager);
@@ -89,6 +91,7 @@ public class MainActivity extends AppCompatActivity {
         optimizedThighExtensionStudyUI.linkIMUManager(optimizedThighExtensionStudyManager);
         originalThighExtensionStudyUI.linkIMUManager(originalThighExtensionStudyManager);
         armAngleStudyUI.linkIMUManager(armAngleStudyManager);
+        aim2ThighExtensionStudyUI.linkIMUManager(aim2ThighExtensionStudyManager);
 
         //Show Start Page
         startPageUI.showPage();
