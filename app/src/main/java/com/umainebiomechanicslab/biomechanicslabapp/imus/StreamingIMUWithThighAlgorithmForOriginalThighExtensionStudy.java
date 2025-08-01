@@ -127,6 +127,9 @@ public class StreamingIMUWithThighAlgorithmForOriginalThighExtensionStudy extend
          * file without accessing any specific data for in-app use.
          * */
         switch(trialName){
+            case "HeadingReset":
+                // Do nothing here. We are just waiting for the onDotHeadingChanged callback.
+                break;
             case "Initialization":
                 if (sampleCounter < (outputFrequency * offsetInitializationDurationSec)){
                     if ((sampleCounter % outputFrequency) == 0) {
