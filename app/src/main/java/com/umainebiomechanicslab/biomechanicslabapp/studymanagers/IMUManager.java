@@ -6,7 +6,6 @@ import android.content.Context;
 import android.util.Log;
 
 import com.umainebiomechanicslab.biomechanicslabapp.FileManager;
-import com.umainebiomechanicslab.biomechanicslabapp.imus.StreamingIMU;
 import com.umainebiomechanicslab.biomechanicslabapp.imus.UniversalIMU;
 import com.umainebiomechanicslab.biomechanicslabapp.userinterfaces.UserInterfaceWithIMU;
 import com.xsens.dot.android.sdk.interfaces.DotScannerCallback;
@@ -271,35 +270,14 @@ public abstract class IMUManager implements DotScannerCallback, DotSyncCallback 
                 //Set is scanning to false
                 isScanning = false;
 
+                //Call onScanComplete with a true isSuccess value indicating successful scan
+                userInterface.onScanComplete(true);
+
             }
             else{
                 userInterface.errorMessagePopUp("Error Stopping Scan");
             }
-
-            //Call performHeadingReset() for all streaming IMUs
-            for(UniversalIMU IMU : IMUArrayList){
-                if(IMU instanceof StreamingIMU){
-                    ((StreamingIMU) IMU).performHeadingReset();
-                }
-            }
         }
-    }
-
-    public void onHeadingResetComplete(){
-
-        //Exit the method if one of the streaming IMUs heading isn't reset
-        for(UniversalIMU IMU : IMUArrayList){
-            //This only applies to instances of StreamingIMU
-            if(IMU instanceof StreamingIMU){
-                if(!((StreamingIMU) IMU).getIsHeadingReset()){
-                    return;
-                }
-            }
-        }
-
-        fileManager.writeToLogFile("All IMU headings have been reset.");
-        userInterface.onScanComplete(true);
-
     }
 
     public void startSync(){
