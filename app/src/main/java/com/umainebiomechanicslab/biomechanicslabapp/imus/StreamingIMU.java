@@ -28,7 +28,7 @@ public class StreamingIMU extends UniversalIMU implements DotMeasurementCallback
     protected double trialAngleSum;
 
     protected FileManager.DotLogFile dotLogFile;
-    protected boolean offsetAnglesInitialized;
+    protected boolean offsetAnglesInitialized, isAwaitingHeadingResetAfterMeasurementStart;
     protected boolean isHeadingReset;
     protected int offsetInitializationDurationSec;
     protected double offsetEulerAngle;
@@ -39,13 +39,11 @@ public class StreamingIMU extends UniversalIMU implements DotMeasurementCallback
 
         //Offset Angles are not Initialized By Default
         this.offsetAnglesInitialized = false;
+        this.isAwaitingHeadingResetAfterMeasurementStart = false;
 
         //Heading is not reset by default
         this.isHeadingReset = false;
-
-        //Set Duration for Initialization of Offset Angles
-        offsetInitializationDurationSec = 3;
-
+        this.offsetInitializationDurationSec = 3;
     }
 
     @Override
@@ -57,6 +55,7 @@ public class StreamingIMU extends UniversalIMU implements DotMeasurementCallback
         imuStatus = "Scanned";
         fileManager.writeToLogFile(nameOfIMU + " is Scanned");
         movellaDotDevice.connect();
+        movellaDotDevice.setDotMeasurementCallback(this);
         return movellaDotDevice;
     }
 
@@ -74,23 +73,20 @@ public class StreamingIMU extends UniversalIMU implements DotMeasurementCallback
 
     public void performHeadingReset() {
         trialName = "HeadingReset";
-        isHeadingReset = false; // Reset flag for the new procedure
-
-        //Set the measurement callback
-        movellaDotDevice.setDotMeasurementCallback(this);
+        isHeadingReset = false;
 
         try {
             // A revert is required before a new heading reset can be performed.
-            if (movellaDotDevice != null) {
+            if (movellaDotDevice != null && movellaDotDevice.getHeadingStatus() == DotDevice.HEADING_STATUS_XRM_HEADING) {
                 fileManager.writeToLogFile(nameOfIMU + " reverting heading");
                 movellaDotDevice.revertHeading();
             }
 
             if (movellaDotDevice != null && movellaDotDevice.startMeasuring()) {
-                fileManager.writeToLogFile(nameOfIMU + " Measurement Started for Heading Reset.");
-                movellaDotDevice.resetHeading();
+                fileManager.writeToLogFile(nameOfIMU + " Measurement Started for Heading Reset. Waiting for first data packet...");
                 userInterface.updateIMUStatus(nameOfIMU, "Resetting Heading...");
-                fileManager.writeToLogFile(nameOfIMU + " resetting heading");
+                // Set the flag to true. The reset command will be sent in onDotDataChanged.
+                isAwaitingHeadingResetAfterMeasurementStart = true;
             } else {
                 fileManager.writeToLogFile("Error: " + nameOfIMU + " Not Connected or failed to start measurement for reset.");
                 userInterface.errorMessagePopUp("Error: " + nameOfIMU + " Not Connected");
@@ -118,6 +114,7 @@ public class StreamingIMU extends UniversalIMU implements DotMeasurementCallback
         try{
             if(movellaDotDevice != null && movellaDotDevice.startMeasuring()) {
                 fileManager.writeToLogFile(nameOfIMU + " Measurement Started");
+                userInterface.updateIMUDataOutput(nameOfIMU, "Initializing...");
             }
             else{
                 fileManager.writeToLogFile("Error: " + nameOfIMU + " Not Connected");
@@ -129,7 +126,6 @@ public class StreamingIMU extends UniversalIMU implements DotMeasurementCallback
             userInterface.errorMessagePopUp("Error: " + nameOfIMU + " Not Connected");
             Log.e(TAG, "startOffsetInitialization", e);
         }
-
     }
 
     public void stopOffsetInitialization(){
@@ -236,7 +232,6 @@ public class StreamingIMU extends UniversalIMU implements DotMeasurementCallback
         try{
             File sessionFolderPath = fileManager.getSessionFolderPath();
             String dotLogFileFolder = sessionFolderPath.getPath() + "/Dot Log Files";
-            //Ensure dotLogFileFolder exists
             if(!new File(dotLogFileFolder).exists()){
                 if(!new File(dotLogFileFolder).mkdirs()){
                     Log.e(TAG, "createDataLog: Failed to create dotLogFileFolder");
@@ -247,9 +242,7 @@ public class StreamingIMU extends UniversalIMU implements DotMeasurementCallback
             File dotLogFile = new File(dotLogFilePath);
 
             fileManager.writeToLogFile(dotLogFileName + " created");
-
             DotLogger logger = new DotLogger(context.getApplicationContext(), 1, DotPayload.PAYLOAD_TYPE_CUSTOM_MODE_1, dotLogFilePath, movellaDotDevice.getTag(), movellaDotDevice.getFirmwareVersion(),true,60,null,"25",0);
-
             return new FileManager.DotLogFile(dotLogFileName, dotLogFile, logger);
         }
         catch(NullPointerException e){
@@ -260,46 +253,32 @@ public class StreamingIMU extends UniversalIMU implements DotMeasurementCallback
         }
     }
 
-    /*@Override
+    /**
+     * Overriding the parent method to add streaming-specific functionality.
+     * This will automatically trigger the heading reset procedure after the base initialization is complete.
+     * @param address The address of the initialized device.
+     */
+    @Override
     public void onDotInitDone(String address) {
         // First, execute all the logic from the parent UniversalIMU class.
         super.onDotInitDone(address);
 
-        //Set the measurement callback
-        movellaDotDevice.setDotMeasurementCallback(this);
-
         // This check is important because the parent class calls onInitializationComplete(),
         // which might trigger other logic. We only want to start the reset if scanning.
-        if (imuManager.getIsScanning()) {
-            trialName = "HeadingReset";
-            isHeadingReset = false; // Reset flag for the new procedure
-
-            try {
-                // A revert is required before a new heading reset can be performed.
-                if (movellaDotDevice != null) {
-                    fileManager.writeToLogFile(nameOfIMU + " reverting heading");
-                    movellaDotDevice.revertHeading();
-                }
-
-                if (movellaDotDevice != null && movellaDotDevice.startMeasuring()) {
-                    fileManager.writeToLogFile(nameOfIMU + " Measurement Started for Heading Reset.");
-                    movellaDotDevice.resetHeading();
-                    userInterface.updateIMUStatus(nameOfIMU, "Resetting Heading...");
-                    fileManager.writeToLogFile(nameOfIMU + " resetting heading");
-                } else {
-                    fileManager.writeToLogFile("Error: " + nameOfIMU + " Not Connected or failed to start measurement for reset.");
-                    userInterface.errorMessagePopUp("Error: " + nameOfIMU + " Not Connected");
-                }
-            } catch (NullPointerException e) {
-                fileManager.writeToLogFile("Error: " + nameOfIMU + " Not Connected");
-                userInterface.errorMessagePopUp("Error: " + nameOfIMU + " Not Connected");
-                Log.e(TAG, "HeadingReset", e);
-            }
-        }
-    }*/
+        //if (imuManager.getIsScanning()) {
+        //    performHeadingReset();
+        //}
+    }
 
     @Override
     public void onDotDataChanged(String address, DotData dotData) {
+
+        if (isAwaitingHeadingResetAfterMeasurementStart) {
+            isAwaitingHeadingResetAfterMeasurementStart = false; // Consume the flag so this only runs once.
+            fileManager.writeToLogFile(nameOfIMU + " is now measuring. Sending resetHeading command.");
+            movellaDotDevice.resetHeading();
+            return; // Exit here. We don't want to process this first data packet.
+        }
 
         if(trialName == null){
             return;
@@ -309,9 +288,6 @@ public class StreamingIMU extends UniversalIMU implements DotMeasurementCallback
 
         switch(trialName){
             case "HeadingReset":
-                //Log that heading is being reset
-                Log.d(TAG, nameOfIMU + " Heading Reset");
-
                 // Do nothing here. We are just waiting for the onDotHeadingChanged callback.
                 break;
             case "Initialization":
@@ -327,8 +303,9 @@ public class StreamingIMU extends UniversalIMU implements DotMeasurementCallback
                     offsetAnglesInitialized = true;
                     stopOffsetInitialization();
                 }
+                sampleCounter++;
                 break;
-            default: // Handles all other trials
+            default:
                 if (trialDurationMin == 0) {
                     dotData.setPacketCounter(sampleCounter);
                     if ((sampleCounter % (outputFrequency / 3)) == 0) {
@@ -350,47 +327,35 @@ public class StreamingIMU extends UniversalIMU implements DotMeasurementCallback
                         userInterface.updateIMUDataOutput(nameOfIMU, "DONE");
                     }
                 }
+                sampleCounter++;
                 break;
         }
-
-        //Increase the sample counter by 1
-        sampleCounter++;
-
     }
-
 
     @Override
     public void onDotHeadingChanged(String address, int status, int result) {
-        fileManager.writeToLogFile(nameOfIMU + " Heading Reset Successful.");
-        if (movellaDotDevice != null && address.equals(movellaDotDevice.getAddress())) {
+        Log.d(TAG, "onDotHeadingChanged: " + status + ", " + result);
+
+
+        //if (movellaDotDevice != null && address.equals(movellaDotDevice.getAddress())) {
+        if (movellaDotDevice != null){
+            if (trialName.equals("HeadingReset")) {
+                if(movellaDotDevice.stopMeasuring()){
+                    fileManager.writeToLogFile(nameOfIMU + " Measurement stopped after heading reset procedure.");
+                }
+            }
+
             if (status == DotDevice.HEADING_STATUS_XRM_HEADING && result == DotDevice.HEADING_SUCCESS) {
                 isHeadingReset = true;
                 fileManager.writeToLogFile(nameOfIMU + " Heading Reset Successful.");
                 userInterface.updateIMUStatus(nameOfIMU, "Ready");
                 imuManager.onHeadingResetComplete();
-
-                // If this callback was for our automatic reset trial, stop the measurement.
-                if ("HeadingReset".equals(trialName)) {
-                    if(movellaDotDevice.stopMeasuring()){
-                        fileManager.writeToLogFile(nameOfIMU + " Measurement stopped after heading reset.");
-                    }
-                }
-
             } else {
                 isHeadingReset = false;
                 fileManager.writeToLogFile(nameOfIMU + " Heading Reset Failed. Status: " + status + ", Result: " + result);
                 userInterface.errorMessagePopUp(nameOfIMU + " Heading Reset Failed.");
-
-                // If this callback was for our automatic reset trial, stop the measurement.
-                if ("HeadingReset".equals(trialName)) {
-                    if(movellaDotDevice.stopMeasuring()){
-                        fileManager.writeToLogFile(nameOfIMU + " Measurement stopped after failed heading reset.");
-                    }
-                }
             }
         }
-
-
     }
 
     @Override

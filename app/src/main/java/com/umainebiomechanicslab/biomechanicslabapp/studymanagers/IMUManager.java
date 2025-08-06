@@ -49,6 +49,9 @@ public abstract class IMUManager implements DotScannerCallback, DotSyncCallback 
     //Declare the Scan Status and Sync Status booleans
     protected boolean isScanning, isSyncing;
 
+    // Counter to track how many IMUs have completed their heading reset
+    private int mHeadingResetCounter;
+
     public IMUManager(Context context, UserInterfaceWithIMU userInterface, FileManager fileManager){
 
         //Initialize the context
@@ -77,6 +80,8 @@ public abstract class IMUManager implements DotScannerCallback, DotSyncCallback 
         //Initialize the Processing or Connected Addresses Set
         processingOrConnectedAddresses = new HashSet<>();
 
+        // Initialize the heading reset counter
+        mHeadingResetCounter = 0;
     }
 
     public abstract void updateIMUCode(String imuName, String imuCode);
@@ -223,7 +228,7 @@ public abstract class IMUManager implements DotScannerCallback, DotSyncCallback 
     }
 
     public void startScan(){
-
+        mHeadingResetCounter = 0; // Reset counter for a new scan session
         //Start the scan (if there is a problem with the start scan, the method will return false
         if(movellaDotScanner.startScan()){
             fileManager.writeToLogFile("Scan started.");
@@ -239,6 +244,10 @@ public abstract class IMUManager implements DotScannerCallback, DotSyncCallback 
 
     }
 
+    /**
+     * Called by each IMU when it is ready. Once all are ready, it stops the BLE scan
+     * and waits for the heading reset process to complete.
+     */
     public void onInitializationComplete(){
 
         //Only run this code if the IMUManager was scanning (not syncing)
@@ -248,7 +257,7 @@ public abstract class IMUManager implements DotScannerCallback, DotSyncCallback 
             //(Initialization is only complete if they are all "Ready"
             for(UniversalIMU IMU : IMUArrayList){
                 if(!IMU.getIsReady()){
-                    fileManager.writeToLogFile("Initialization not complete.");
+                    fileManager.writeToLogFile("Initialization not complete. Waiting for all IMUs to be ready.");
                     return;
                 }
             }
@@ -271,36 +280,33 @@ public abstract class IMUManager implements DotScannerCallback, DotSyncCallback 
                 //Set is scanning to false
                 isScanning = false;
 
+                userInterface.onScanComplete(true);
+
             }
             else{
                 userInterface.errorMessagePopUp("Error Stopping Scan");
-            }
+                isScanning = false;
 
-            //Call performHeadingReset() for all streaming IMUs
-            for(UniversalIMU IMU : IMUArrayList){
-                if(IMU instanceof StreamingIMU){
-                    ((StreamingIMU) IMU).performHeadingReset();
-                }
+                userInterface.onScanComplete(false);
             }
         }
     }
 
-    public void onHeadingResetComplete(){
+    /**
+     * Called by each StreamingIMU after it has completed its heading reset.
+     * When all IMUs have reported in, it signals the final scan completion to the UI.
+     */
+    public void onHeadingResetComplete() {
+        mHeadingResetCounter++;
+        fileManager.writeToLogFile("Heading reset complete for one IMU. Total: " + mHeadingResetCounter);
 
-        //Exit the method if one of the streaming IMUs heading isn't reset
-        for(UniversalIMU IMU : IMUArrayList){
-            //This only applies to instances of StreamingIMU
-            if(IMU instanceof StreamingIMU){
-                if(!((StreamingIMU) IMU).getIsHeadingReset()){
-                    return;
-                }
-            }
+        // Check if all IMUs have completed their heading reset
+        if (mHeadingResetCounter >= IMUArrayList.size()) {
+            fileManager.writeToLogFile("All IMU headings have been reset.");
+            isScanning = false;
         }
-
-        fileManager.writeToLogFile("All IMU headings have been reset.");
-        userInterface.onScanComplete(true);
-
     }
+
 
     public void startSync(){
 

@@ -129,6 +129,11 @@ public abstract class UniversalIMU implements DotDeviceCallback {
 
     public void setMeasurementMode() {
         movellaDotDevice.setMeasurementMode(measurementMode);
+
+        //If it is an instance of StreamingIMU, reset the heading
+        if (this instanceof StreamingIMU) {
+            ((StreamingIMU) this).performHeadingReset();
+        }
     }
 
     public abstract void startTrial(String trialName, String timeStamp, Trial trial, int trialDurationMin, boolean logData);
