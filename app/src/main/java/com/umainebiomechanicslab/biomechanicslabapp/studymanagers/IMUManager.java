@@ -6,6 +6,7 @@ import android.content.Context;
 import android.util.Log;
 
 import com.umainebiomechanicslab.biomechanicslabapp.FileManager;
+import com.umainebiomechanicslab.biomechanicslabapp.imus.StreamingIMU;
 import com.umainebiomechanicslab.biomechanicslabapp.imus.UniversalIMU;
 import com.umainebiomechanicslab.biomechanicslabapp.userinterfaces.UserInterfaceWithIMU;
 import com.xsens.dot.android.sdk.interfaces.DotScannerCallback;
@@ -46,7 +47,7 @@ public abstract class IMUManager implements DotScannerCallback, DotSyncCallback 
     private final Set<String> processingOrConnectedAddresses;
 
     //Declare the Scan Status and Sync Status booleans
-    protected boolean isScanning, isSyncing;
+    protected boolean isScanning, isSyncing, isSynced;
 
     public IMUManager(Context context, UserInterfaceWithIMU userInterface, FileManager fileManager){
 
@@ -70,8 +71,9 @@ public abstract class IMUManager implements DotScannerCallback, DotSyncCallback 
         movellaDeviceList = new ArrayList<>();
 
         //Initialize the Scan Status and Sync Status booleans
-        isScanning = false;
-        isSyncing = false;
+        this.isScanning = false;
+        this.isSyncing = false;
+        this.isSynced = false;
 
         //Initialize the Processing or Connected Addresses Set
         processingOrConnectedAddresses = new HashSet<>();
@@ -280,7 +282,28 @@ public abstract class IMUManager implements DotScannerCallback, DotSyncCallback 
         }
     }
 
+    public void onHeadingResetComplete() {
+
+        for(UniversalIMU IMU : IMUArrayList) {
+            //This only applies to instances of StreamingIMU
+            if (IMU instanceof StreamingIMU) {
+
+                //Exit the method if one of the IMUs isn't reset
+                if (!((StreamingIMU) IMU).getIsHeadingReset()) {
+                    return;
+                }
+            }
+        }
+
+        fileManager.writeToLogFile("Heading Reset Complete");
+        userInterface.onSyncComplete(isSynced);
+
+    }
+
     public void startSync(){
+
+        //Set is synced to false
+        isSynced = false;
 
         //Update IMU status of all IMUs to "Syncing"
         for(UniversalIMU IMU : IMUArrayList){
@@ -445,6 +468,9 @@ public abstract class IMUManager implements DotScannerCallback, DotSyncCallback 
     @Override
     public void onSyncingResult(String address, boolean isSuccess, int i) {
 
+        //Set isSynced to result of isSuccess
+        isSynced = isSuccess;
+
         //Find the name of the IMU with the given address
         for(UniversalIMU IMU : IMUArrayList) {
             if (IMU.getMacAddress().equals(address)) {
@@ -470,7 +496,6 @@ public abstract class IMUManager implements DotScannerCallback, DotSyncCallback 
 
         isSyncing = false;
 
-        userInterface.onSyncComplete(isSuccess);
         if(isSuccess){
             fileManager.writeToLogFile("Sync Successful");
             userInterface.textPopUp("Sync Successful");

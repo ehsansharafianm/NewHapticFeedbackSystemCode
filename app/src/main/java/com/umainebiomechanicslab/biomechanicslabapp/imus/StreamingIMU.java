@@ -1,5 +1,6 @@
 package com.umainebiomechanicslab.biomechanicslabapp.imus;
 
+import android.bluetooth.BluetoothDevice;
 import android.content.Context;
 import android.util.Log;
 
@@ -8,6 +9,8 @@ import com.umainebiomechanicslab.biomechanicslabapp.studymanagers.IMUManager;
 import com.umainebiomechanicslab.biomechanicslabapp.trials.Trial;
 import com.umainebiomechanicslab.biomechanicslabapp.userinterfaces.UserInterfaceWithIMU;
 import com.xsens.dot.android.sdk.events.DotData;
+import com.xsens.dot.android.sdk.interfaces.DotMeasurementCallback;
+import com.xsens.dot.android.sdk.models.DotDevice;
 import com.xsens.dot.android.sdk.models.DotPayload;
 import com.xsens.dot.android.sdk.utils.DotLogger;
 
@@ -15,7 +18,7 @@ import java.io.File;
 import java.util.Locale;
 import java.util.concurrent.TimeUnit;
 
-public class StreamingIMU extends UniversalIMU{
+public class StreamingIMU extends UniversalIMU implements DotMeasurementCallback {
 
     private final String TAG = "StreamingIMU";
 
@@ -26,6 +29,7 @@ public class StreamingIMU extends UniversalIMU{
 
     protected FileManager.DotLogFile dotLogFile;
     protected boolean offsetAnglesInitialized;
+    protected boolean isHeadingReset, isAwaitingHeadingResetAfterMeasurementStart, isHeadingReverting;
     protected int offsetInitializationDurationSec;
     protected double offsetEulerAngle;
 
@@ -36,9 +40,31 @@ public class StreamingIMU extends UniversalIMU{
         //Offset Angles are not Initialized By Default
         this.offsetAnglesInitialized = false;
 
+        //Heading is not reset by default
+        this.isHeadingReset = false;
+        this.isAwaitingHeadingResetAfterMeasurementStart = false;
+        this.isHeadingReverting = false;
+
         //Set Duration for Initialization of Offset Angles
         offsetInitializationDurationSec = 3;
 
+    }
+
+    @Override
+    public DotDevice connectMovellaDotDevice(BluetoothDevice bluetoothDevice) {
+        // Create the DotDevice with THIS class as the callback listener.
+        movellaDotDevice = new DotDevice(context.getApplicationContext(), bluetoothDevice, this);
+        isScanned = true;
+        userInterface.updateIMUStatus(nameOfIMU, "Scanned");
+        imuStatus = "Scanned";
+        fileManager.writeToLogFile(nameOfIMU + " is Scanned");
+        movellaDotDevice.connect();
+        movellaDotDevice.setDotMeasurementCallback(this);
+        return movellaDotDevice;
+    }
+
+    public boolean getIsHeadingReset() {
+        return isHeadingReset;
     }
 
     public double getOffsetEulerAngle() {
@@ -49,15 +75,60 @@ public class StreamingIMU extends UniversalIMU{
         return offsetAnglesInitialized;
     }
 
+    public void performHeadingReset() {
+        trialName = "HeadingReset";
+
+        // Set the flag to false.
+        isHeadingReset = false;
+
+        try {
+
+            //If a revert is required, perform it.
+            if (movellaDotDevice != null && movellaDotDevice.getHeadingStatus() == DotDevice.HEADING_STATUS_XRM_HEADING) {
+                fileManager.writeToLogFile(nameOfIMU + " reverting heading");
+                isHeadingReverting = true;
+                movellaDotDevice.revertHeading();
+            }
+            //If no revert is required, reset the heading.
+            else if (movellaDotDevice != null && movellaDotDevice.startMeasuring()) {
+                fileManager.writeToLogFile(nameOfIMU + " Measurement Started for Heading Reset.");
+                movellaDotDevice.resetHeading();
+                fileManager.writeToLogFile(nameOfIMU + " Measurement Started for Heading Reset. Waiting for first data packet...");
+                userInterface.updateIMUStatus(nameOfIMU, "Resetting Heading...");
+                fileManager.writeToLogFile(nameOfIMU + " resetting heading");
+
+                // Set the flag to true. The reset command will be sent in onDotDataChanged.
+                isAwaitingHeadingResetAfterMeasurementStart = true;
+            } else {
+                fileManager.writeToLogFile("Error: " + nameOfIMU + " Not Connected or failed to start measurement for reset.");
+                userInterface.errorMessagePopUp("Error: " + nameOfIMU + " Not Connected");
+            }
+
+        } catch (NullPointerException e) {
+            fileManager.writeToLogFile("Error: " + nameOfIMU + " Not Connected");
+            userInterface.errorMessagePopUp("Error: " + nameOfIMU + " Not Connected");
+            Log.e(TAG, "HeadingReset", e);
+        }
+    }
+
+
     public void startOffsetInitialization(){
+
+        if (!isHeadingReset) {
+            userInterface.errorMessagePopUp("Error: " + nameOfIMU + " heading not reset. Please reconnect the sensor.");
+            fileManager.writeToLogFile("Error: " + nameOfIMU + " startOffsetInitialization failed. Heading not reset.");
+            return;
+        }
+
         trialName = "Initialization";
         sampleCounter = 0;
         trialAngleSum = 0;
+        offsetAnglesInitialized = false;
 
         try{
             if(movellaDotDevice.startMeasuring()) {
                 fileManager.writeToLogFile(nameOfIMU + " Measurement Started");
-                offsetAnglesInitialized = false;
+                userInterface.updateIMUDataOutput(nameOfIMU, "Initializing...");
             }
             else{
                 fileManager.writeToLogFile("Error: " + nameOfIMU + " Not Connected");
@@ -96,6 +167,13 @@ public class StreamingIMU extends UniversalIMU{
 
     @Override
     public void startTrial(String trialName, String timeStamp, Trial trial, int trialDurationMin, boolean logData) {
+
+        // Prevent trials from starting if the IMU has not been initialized (heading reset).
+        if (!isHeadingReset || !offsetAnglesInitialized) {
+            userInterface.errorMessagePopUp("Error: " + nameOfIMU + " not initialized. Please run Initialization first.");
+            fileManager.writeToLogFile("Error: " + nameOfIMU + " startTrial failed. Heading not reset or offset not calculated.");
+            return;
+        }
 
         this.trialName = trialName;
         this.trialDurationMin = trialDurationMin;
@@ -169,6 +247,7 @@ public class StreamingIMU extends UniversalIMU{
         try{
             File sessionFolderPath = fileManager.getSessionFolderPath();
             String dotLogFileFolder = sessionFolderPath.getPath() + "/Dot Log Files";
+
             //Ensure dotLogFileFolder exists
             if(!new File(dotLogFileFolder).exists()){
                 if(!new File(dotLogFileFolder).mkdirs()){
@@ -196,57 +275,60 @@ public class StreamingIMU extends UniversalIMU{
     @Override
     public void onDotDataChanged(String address, DotData dotData) {
 
+        if (isAwaitingHeadingResetAfterMeasurementStart) {
+            isAwaitingHeadingResetAfterMeasurementStart = false; // Consume the flag so this only runs once.
+            fileManager.writeToLogFile(nameOfIMU + " is now measuring. Sending resetHeading command.");
+            movellaDotDevice.resetHeading();
+            return; // Exit here. We don't want to process this first data packet.
+        }
+
+        if(trialName == null){
+            return;
+        }
+
         double eulerAngleX = dotData.getEuler()[0];
 
-        //Initialization is a special-case trialName that is used to calculate the offset angle
-        if(trialName.equals("Initialization")){
-            if (sampleCounter < (outputFrequency * offsetInitializationDurationSec)){
-                if ((sampleCounter % outputFrequency) == 0) {
-                    userInterface.updateIMUDataOutput(nameOfIMU, "Initializing...");
+        switch(trialName){
+            case "HeadingReset":
+                // Do nothing here. We are just waiting for the onDotHeadingChanged callback.
+                break;
+            case "Initialization":
+                if (sampleCounter < (outputFrequency * offsetInitializationDurationSec)){
+                    if ((sampleCounter % outputFrequency) == 0) {
+                        userInterface.updateIMUDataOutput(nameOfIMU, "Initializing...");
+                    }
+                    trialAngleSum += eulerAngleX;
+                } else if (sampleCounter == (outputFrequency * offsetInitializationDurationSec)){
+                    offsetEulerAngle = trialAngleSum / (outputFrequency * offsetInitializationDurationSec);
+                    userInterface.updateIMUDataOutput(nameOfIMU, String.format(Locale.US,"Initialized %.3f",offsetEulerAngle));
+                    fileManager.writeToLogFile(nameOfIMU + " Initialized Angle Offset: " + offsetEulerAngle);
+                    offsetAnglesInitialized = true;
+                    stopOffsetInitialization();
                 }
-                trialAngleSum += eulerAngleX;
-            } else if (sampleCounter == (outputFrequency * offsetInitializationDurationSec)){
-                offsetEulerAngle = trialAngleSum / (outputFrequency * offsetInitializationDurationSec);
-                userInterface.updateIMUDataOutput(nameOfIMU, String.format(Locale.US,"Initialized %.3f",offsetEulerAngle));
-                fileManager.writeToLogFile(nameOfIMU + " Initialized Angle Offset: " + offsetEulerAngle);
-                offsetAnglesInitialized = true;
-                stopOffsetInitialization();
-            }
-        }
-
-        //If trialDurationMin is set to 0, this means that the trial should run indefinitely, and output angle values instead of counting up time
-        else if (trialDurationMin == 0) {
-            dotData.setPacketCounter(sampleCounter);
-
-            //Update the angle in real time 3 times/sec
-            if ((sampleCounter % (outputFrequency/3)) == 0){
-                userInterface.updateIMUDataOutput(nameOfIMU, String.format(Locale.US,"%.3f",(eulerAngleX - offsetEulerAngle)));
-            }
-
-            //If the dotLogFile is not null, update it
-            if(dotLogFile != null){
-                dotLogFile.getDotLogger().update(dotData);
-            }
-
-        }
-
-        else{
-            dotData.setPacketCounter(sampleCounter);
-
-            if (sampleCounter <= (outputFrequency * 60 * trialDurationMin)) {
-                if ((sampleCounter % outputFrequency) == 0) {
-                    userInterface.updateIMUDataOutput(nameOfIMU, ((sampleCounter / outputFrequency / 60) + ":" + String.format(Locale.US, "%02d", ((sampleCounter / outputFrequency) % 60))));
+                break;
+            default:
+                if (trialDurationMin == 0) {
+                    dotData.setPacketCounter(sampleCounter);
+                    if ((sampleCounter % (outputFrequency / 3)) == 0) {
+                        userInterface.updateIMUDataOutput(nameOfIMU, String.format(Locale.US, "%.3f", (eulerAngleX - offsetEulerAngle)));
+                    }
+                    if (dotLogFile != null && dotLogFile.getDotLogger() != null) {
+                        dotLogFile.getDotLogger().update(dotData);
+                    }
+                } else {
+                    dotData.setPacketCounter(sampleCounter);
+                    if (sampleCounter <= (outputFrequency * 60 * trialDurationMin)) {
+                        if ((sampleCounter % outputFrequency) == 0) {
+                            userInterface.updateIMUDataOutput(nameOfIMU, ((sampleCounter / outputFrequency / 60) + ":" + String.format(Locale.US, "%02d", ((sampleCounter / outputFrequency) % 60))));
+                        }
+                        if (dotLogFile != null && dotLogFile.getDotLogger() != null) {
+                            dotLogFile.getDotLogger().update(dotData);
+                        }
+                    } else if (sampleCounter == (outputFrequency * 60 * trialDurationMin) + 1) {
+                        userInterface.updateIMUDataOutput(nameOfIMU, "DONE");
+                    }
                 }
-
-                //If the dotLogFile is not null, update it
-                if(dotLogFile != null){
-                    dotLogFile.getDotLogger().update(dotData);
-                }
-
-            } else if (sampleCounter == (outputFrequency * 60 * trialDurationMin) + 1) {
-                userInterface.updateIMUDataOutput(nameOfIMU, "DONE");
-            }
-
+                break;
         }
 
         //Increase the sample counter by 1
@@ -255,4 +337,40 @@ public class StreamingIMU extends UniversalIMU{
     }
 
 
+    @Override
+    public void onDotHeadingChanged(String address, int status, int result) {
+
+        //Check to see if heading is reverting (indicating the heading just reverted)
+        if(isHeadingReverting){
+
+            //Now that the heading is reverted, we can reset the heading
+            performHeadingReset();
+
+        } else {
+            if (movellaDotDevice != null) {
+                if (trialName.equals("HeadingReset")) {
+                    if (movellaDotDevice.stopMeasuring()) {
+                        fileManager.writeToLogFile(nameOfIMU + " Measurement stopped after heading reset procedure.");
+                    }
+                }
+
+                if (status == DotDevice.HEADING_STATUS_XRM_HEADING && result == DotDevice.HEADING_SUCCESS) {
+                    isHeadingReset = true;
+                    fileManager.writeToLogFile(nameOfIMU + " Heading Reset Successful.");
+                    userInterface.updateIMUStatus(nameOfIMU, "Ready");
+                    imuManager.onHeadingResetComplete();
+                } else {
+                    isHeadingReset = false;
+                    fileManager.writeToLogFile(nameOfIMU + " Heading Reset Failed. Status: " + status + ", Result: " + result);
+                    userInterface.errorMessagePopUp(nameOfIMU + " Heading Reset Failed.");
+                }
+
+            }
+        }
+    }
+
+    @Override
+    public void onDotRotLocalRead(String s, float[] floats) {
+
+    }
 }
