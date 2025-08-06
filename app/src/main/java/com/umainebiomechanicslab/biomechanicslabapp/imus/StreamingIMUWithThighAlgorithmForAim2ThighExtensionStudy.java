@@ -115,21 +115,23 @@ public class StreamingIMUWithThighAlgorithmForAim2ThighExtensionStudy extends St
     @Override
     public void onDotDataChanged(String address, DotData dotData) {
 
-        /*
-         * Declare the double variable for cases where the app needs to store the
-         * angle value from the IMU Data Packet for display or use
-         * */
-        //double eulerAngleX = DotParser.quaternion2Euler(dotData.getQuat())[0];
+        if (isAwaitingHeadingResetAfterMeasurementStart) {
+            isAwaitingHeadingResetAfterMeasurementStart = false; // Consume the flag so this only runs once.
+            fileManager.writeToLogFile(nameOfIMU + " is now measuring. Sending resetHeading command.");
+            movellaDotDevice.resetHeading();
+            return; // Exit here. We don't want to process this first data packet.
+        }
+
+        if(trialName == null){
+            return;
+        }
+
         double eulerAngleX = dotData.getEuler()[0];
 
-        /*
-         * Different trial modes require different handling of the IMU Data. Initialization doesn't
-         * log the data to a file, but needs to access the angle to calculate the offset. Testing needs
-         * access to the angle in real time, but doesn't store it or any of the other data from the packet.
-         * Familiarization just needs to keep track of trial time. All other trials store data to a log
-         * file without accessing any specific data for in-app use.
-         * */
         switch(trialName){
+            case "HeadingReset":
+                // Do nothing here. We are just waiting for the onDotHeadingChanged callback.
+                break;
             case "Initialization":
                 if (sampleCounter < (outputFrequency * offsetInitializationDurationSec)){
                     if ((sampleCounter % outputFrequency) == 0) {

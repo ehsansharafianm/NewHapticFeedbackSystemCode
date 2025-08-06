@@ -151,6 +151,17 @@ public class StreamingIMUWithArmAlgorithmForArmAngleStudy extends StreamingIMU{
     @Override
     public void onDotDataChanged(String address, DotData dotData) {
 
+        if (isAwaitingHeadingResetAfterMeasurementStart) {
+            isAwaitingHeadingResetAfterMeasurementStart = false; // Consume the flag so this only runs once.
+            fileManager.writeToLogFile(nameOfIMU + " is now measuring. Sending resetHeading command.");
+            movellaDotDevice.resetHeading();
+            return; // Exit here. We don't want to process this first data packet.
+        }
+
+        if(trialName == null){
+            return;
+        }
+
         Log.d(TAG, trialName + sampleCounter + nameOfIMU);
 
         float[] quat = dotData.getQuat();
@@ -166,15 +177,6 @@ public class StreamingIMUWithArmAlgorithmForArmAngleStudy extends StreamingIMU{
         double r12 = 2*(quat[1]*quat[2] - quat[0]*quat[3]);
 
         double eulerAngleZ = Math.toDegrees(Math.atan2(r21*Math.cos(phi) - r11*Math.sin(phi), r22*Math.cos(phi) - r12*Math.sin(phi)));
-        //Log.d(TAG, "EulerZ: " + eulerAngleZ);
-
-        //Log the first sample
-        //if(sampleCounter == 1){
-        //    Log.d(TAG, trialName + sampleCounter + nameOfIMU);
-        //}
-
-
-
 
         /*
          * Different trial modes require different handling of the IMU Data. Initialization doesn't
@@ -184,6 +186,9 @@ public class StreamingIMUWithArmAlgorithmForArmAngleStudy extends StreamingIMU{
          * file without accessing any specific data for in-app use.
          * */
         switch(trialName) {
+            case "HeadingReset":
+                // Do nothing here. We are just waiting for the onDotHeadingChanged callback.
+                break;
             case "Initialization":
                 //Log.d(TAG, trialName + sampleCounter + nameOfIMU);
                 if (sampleCounter < (outputFrequency * offsetInitializationDurationSec)) {
