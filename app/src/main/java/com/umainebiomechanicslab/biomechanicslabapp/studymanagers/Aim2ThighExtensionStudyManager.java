@@ -11,12 +11,13 @@ import com.umainebiomechanicslab.biomechanicslabapp.HttpRequestResponses;
 import com.umainebiomechanicslab.biomechanicslabapp.UDPListenerThread;
 import com.umainebiomechanicslab.biomechanicslabapp.imus.RecordingIMU;
 import com.umainebiomechanicslab.biomechanicslabapp.imus.StreamingIMU;
+import com.umainebiomechanicslab.biomechanicslabapp.imus.StreamingIMUWithFootDataAlgorithmForStrideCalculation;
 import com.umainebiomechanicslab.biomechanicslabapp.imus.StreamingIMUWithThighAlgorithmForAim2ThighExtensionStudy;
 import com.umainebiomechanicslab.biomechanicslabapp.imus.StreamingIMUWithThighAlgorithmForOriginalThighExtensionStudy;
 import com.umainebiomechanicslab.biomechanicslabapp.imus.UniversalIMU;
 import com.umainebiomechanicslab.biomechanicslabapp.targetmanagers.ThighExtensionStudyAim2TargetManager;
 import com.umainebiomechanicslab.biomechanicslabapp.targetmanagers.ThighExtensionStudyOriginalTargetManager;
-import com.umainebiomechanicslab.biomechanicslabapp.trials.OriginalThighExtensionStudyTrial;
+import com.umainebiomechanicslab.biomechanicslabapp.trials.Aim2ThighExtensionStudyTrial;
 import com.umainebiomechanicslab.biomechanicslabapp.userinterfaces.Aim2ThighExtensionStudyUI;
 import com.umainebiomechanicslab.biomechanicslabapp.userinterfaces.ExperimenterMenuUI;
 import com.umainebiomechanicslab.biomechanicslabapp.userinterfaces.LoadingWindowUI;
@@ -56,7 +57,7 @@ public class Aim2ThighExtensionStudyManager extends IMUManagerWithRecordingIMUs{
     private final ThighExtensionStudyAim2TargetManager targetManager;
 
     //Create ArrayList to store Trial Objects
-    private final ArrayList<OriginalThighExtensionStudyTrial> trialArrayList = new ArrayList<>();
+    private final ArrayList<Aim2ThighExtensionStudyTrial> trialArrayList = new ArrayList<>();
 
     // Map to store trial names and their durations
     private final Map<String, Integer> trialDurations;
@@ -89,8 +90,8 @@ public class Aim2ThighExtensionStudyManager extends IMUManagerWithRecordingIMUs{
         rightArmIMU = new RecordingIMU("Right Arm IMU", context, this, thighExtensionStudyUI, fileManager, PAYLOAD_TYPE_CUSTOM_MODE_1);
         leftThighIMU = new StreamingIMUWithThighAlgorithmForAim2ThighExtensionStudy("Left Thigh IMU", context, this, thighExtensionStudyUI, fileManager, PAYLOAD_TYPE_CUSTOM_MODE_1, targetManager);
         rightThighIMU = new StreamingIMUWithThighAlgorithmForAim2ThighExtensionStudy("Right Thigh IMU", context, this, thighExtensionStudyUI, fileManager, PAYLOAD_TYPE_CUSTOM_MODE_1, targetManager);
-        leftFootIMU = new StreamingIMU("Left Foot IMU", context, this, thighExtensionStudyUI, fileManager, PAYLOAD_TYPE_CUSTOM_MODE_1);
-        rightFootIMU = new StreamingIMU("Right Foot IMU", context, this, thighExtensionStudyUI, fileManager, PAYLOAD_TYPE_CUSTOM_MODE_1);
+        leftFootIMU = new StreamingIMUWithFootDataAlgorithmForStrideCalculation("Left Foot IMU", context, this, thighExtensionStudyUI, fileManager, PAYLOAD_TYPE_CUSTOM_MODE_1);
+        rightFootIMU = new StreamingIMUWithFootDataAlgorithmForStrideCalculation("Right Foot IMU", context, this, thighExtensionStudyUI, fileManager, PAYLOAD_TYPE_CUSTOM_MODE_1);
 
         //Add the IMU Objects to the IMU ArrayList
         IMUArrayList.add(leftArmIMU);
@@ -109,18 +110,11 @@ public class Aim2ThighExtensionStudyManager extends IMUManagerWithRecordingIMUs{
         trialDurations = new HashMap<>();
         trialDurations.put("Testing", 0);
         trialDurations.put("Baseline Normal", 2);
-        trialDurations.put("Baseline with Cognitive Task", 2);
         trialDurations.put("Fast", 2);
-        trialDurations.put("Positive Feedback Familiarization", 1);
-        trialDurations.put("Error Feedback Familiarization", 1);
-        trialDurations.put("Verbal Feedback", 1);
-        trialDurations.put("Positive Feedback", 6);
+        trialDurations.put("Error Feedback Familiarization", 2);
         trialDurations.put("Error Feedback", 6);
-        trialDurations.put("Verbal Feedback with Cognitive Task", 2);
-        trialDurations.put("Positive Feedback with Cognitive Task", 2);
-        trialDurations.put("Error Feedback with Cognitive Task", 2);
+        trialDurations.put("Cooldown", 2);
         trialDurations.put("Retention", 2);
-        trialDurations.put("Retention with Cognitive Task", 2);
 
     }
 
@@ -195,7 +189,6 @@ public class Aim2ThighExtensionStudyManager extends IMUManagerWithRecordingIMUs{
          * */
         switch(trialName) {
             case "Testing":
-            case "Positive Feedback Familiarization":
             case "Error Feedback Familiarization":
 
                 leftThighIMU.startTrial(trialName, currentTimeStamp, null, trialDurationMin, false);
@@ -205,17 +198,12 @@ public class Aim2ThighExtensionStudyManager extends IMUManagerWithRecordingIMUs{
                 break;
 
             case "Baseline Normal":
-            case "Baseline with Cognitive Task":
             case "Fast":
-            case "Verbal Feedback":
-            case "Verbal Feedback with Cognitive Task":
-            case "Positive Feedback with Cognitive Task":
-            case "Error Feedback with Cognitive Task":
+            case "Cooldown":
             case "Retention":
-            case "Retention with Cognitive Task":
 
                 //Create a new Trial Object to store data and add it to the trialArrayList
-                trialArrayList.add(new OriginalThighExtensionStudyTrial(trialName, currentTimeStamp));
+                trialArrayList.add(new Aim2ThighExtensionStudyTrial(trialName, currentTimeStamp));
 
                 //Call each IMUs startTrial function to start streaming/recording for each IMU
                 leftThighIMU.startTrial(trialName, currentTimeStamp, trialArrayList.get(trialArrayList.size()-1), trialDurationMin, true);
@@ -226,7 +214,6 @@ public class Aim2ThighExtensionStudyManager extends IMUManagerWithRecordingIMUs{
                 rightArmIMU.startTrial(trialName, currentTimeStamp, trialArrayList.get(trialArrayList.size()-1), trialDurationMin, true);
                 break;
 
-            case "Positive Feedback":
             case "Error Feedback":
 
                 //Ensure the arrays that store the last 20 steps of data are reset before starting the trial
@@ -234,7 +221,7 @@ public class Aim2ThighExtensionStudyManager extends IMUManagerWithRecordingIMUs{
                 targetManager.resetTarget();
 
                 //Create a new Trial Object to store data and add it to the trialArrayList
-                trialArrayList.add(new OriginalThighExtensionStudyTrial(trialName, currentTimeStamp));
+                trialArrayList.add(new Aim2ThighExtensionStudyTrial(trialName, currentTimeStamp));
 
                 //Call each IMUs startTrial function to start streaming/recording for each IMU
                 leftThighIMU.startTrial(trialName, currentTimeStamp, trialArrayList.get(trialArrayList.size()-1), trialDurationMin, true);
@@ -253,7 +240,6 @@ public class Aim2ThighExtensionStudyManager extends IMUManagerWithRecordingIMUs{
 
         switch(trialName) {
             case "Testing":
-            case "Positive Feedback Familiarization":
             case "Error Feedback Familiarization":
 
                 //Stop all IMUs
@@ -263,16 +249,10 @@ public class Aim2ThighExtensionStudyManager extends IMUManagerWithRecordingIMUs{
                 rightFootIMU.stopTrial(false);
                 break;
 
-            case "Baseline Normal":
-            case "Baseline with Cognitive Task":
-            case "Verbal Feedback":
-            case "Positive Feedback":
-            case "Error Feedback":
-            case "Verbal Feedback with Cognitive Task":
-            case "Positive Feedback with Cognitive Task":
-            case "Error Feedback with Cognitive Task":
+            case "Fast":
+            case "Cooldown":
             case "Retention":
-            case "Retention with Cognitive Task":
+            case "Error Feedback":
 
                 //Stop all IMUs
                 leftThighIMU.stopTrial(false);
@@ -283,7 +263,7 @@ public class Aim2ThighExtensionStudyManager extends IMUManagerWithRecordingIMUs{
                 rightArmIMU.stopTrial(false);
                 break;
 
-            case "Fast":
+            case "Baseline Normal":
 
                 //Stop all IMUs
                 leftThighIMU.stopTrial(false);
@@ -294,7 +274,7 @@ public class Aim2ThighExtensionStudyManager extends IMUManagerWithRecordingIMUs{
                 rightArmIMU.stopTrial(false);
 
                 //Generate the peak thigh target
-                targetManager.generatePeakThighTarget(trialArrayList);
+                targetManager.generatePeakThighTarget(trialArrayList.get(trialArrayList.size() - 1));
                 break;
 
         }

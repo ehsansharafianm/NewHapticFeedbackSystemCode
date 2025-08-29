@@ -1,20 +1,14 @@
 package com.umainebiomechanicslab.biomechanicslabapp.targetmanagers;
 
-import android.util.Log;
-
 import com.umainebiomechanicslab.biomechanicslabapp.FileManager;
 import com.umainebiomechanicslab.biomechanicslabapp.studymanagers.Aim2ThighExtensionStudyManager;
 import com.umainebiomechanicslab.biomechanicslabapp.trials.Aim2ThighExtensionStudyTrial;
-import com.umainebiomechanicslab.biomechanicslabapp.trials.OriginalThighExtensionStudyTrial;
 import com.umainebiomechanicslab.biomechanicslabapp.userinterfaces.Aim2ThighExtensionStudyUI;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Locale;
 
 public class ThighExtensionStudyAim2TargetManager {
-
-    private final String TAG = "ThighExtensionStudyOriginalTargetManager";
 
     //Declare Study Manager and UI objects
     private final Aim2ThighExtensionStudyManager aim2ThighExtensionStudyManager;
@@ -27,8 +21,7 @@ public class ThighExtensionStudyAim2TargetManager {
     public final int FEEDBACK_DURATION_MS = 500;
 
     //Variables for Target Creation/Change
-    private double leftPeakThighAngleTarget, rightPeakThighAngleTarget, initialLeftPeakThighAngleTarget, initialRightPeakThighAngleTarget;
-    private double leftPeakThighAngleTargetIncreaseIncrement, rightPeakThighAngleTargetIncreaseIncrement;
+    private double peakThighAngleTarget, lowPeakThighAngleTarget, highPeakThighAngleTarget;
 
     //Boolean value to store if the target should has been increased during this trial
     private boolean hasTargetIncreased;
@@ -53,88 +46,43 @@ public class ThighExtensionStudyAim2TargetManager {
         boolean feedbackGiven = false;
         boolean targetMet = false;
 
-        if(nameOfIMU.equals("Left Thigh IMU")){
-
-            //If trial is not null, Log the current target angle to the Thigh Extension Study Trial
-            if(trial != null){
-                trial.appendToGaitParameterArrayList(nameOfIMU, "TargetAngle", leftPeakThighAngleTarget);
-            }
-
-            //Check to see if the angle doesn't meet the target angle (not negative enough)
-            if(angle > leftPeakThighAngleTarget){
-
-                //If feedbackType is Error, send back feedback
-                if(feedbackType.contains("Error")){
-
-                    //Send back feedback to the user
-                    aim2ThighExtensionStudyManager.sendHapticFeedback(nameOfIMU, "B?delay=" + FEEDBACK_DURATION_MS);
-
-                    //Set feedbackGiven to true
-                    feedbackGiven = true;
-
-                }
-            }
-            else{
-
-                //Change targetMet to true
-                targetMet = true;
-
-                //If feedbackType is Positive, send back feedback
-                if(feedbackType.contains("Positive")){
-
-                    //Send back feedback to the user
-                    aim2ThighExtensionStudyManager.sendHapticFeedback(nameOfIMU, "B?delay=" + FEEDBACK_DURATION_MS);
-
-                    //Set feedbackGiven to true
-                    feedbackGiven = true;
-
-                }
-            }
+        //If trial is not null, Log the current target angle to the Thigh Extension Study Trial
+        if(trial != null){
+            trial.appendToGaitParameterArrayList(nameOfIMU, "TargetAngle", peakThighAngleTarget);
         }
-        else if(nameOfIMU.equals("Right Thigh IMU")){
 
-            //If trial is not null, Log the current target angle to the Thigh Extension Study Trial
-            if(trial != null){
-                trial.appendToGaitParameterArrayList(nameOfIMU, "TargetAngle", rightPeakThighAngleTarget);
+        //Check to see if the angle doesn't meet the target angle (not negative enough)
+        if(angle > peakThighAngleTarget){
+
+            //If feedbackType is Error, send back feedback
+            if(feedbackType.contains("Error")){
+
+                //Send back feedback to the user (to the leg associated with the IMU)
+                aim2ThighExtensionStudyManager.sendHapticFeedback(nameOfIMU, "B?delay=" + FEEDBACK_DURATION_MS);
+
+                //Set feedbackGiven to true
+                feedbackGiven = true;
+
             }
-
-            //Check to see if the angle doesn't meet the target angle (not negative enough)
-            if(angle > rightPeakThighAngleTarget){
-
-                //If feedbackType is Error, send back feedback
-                if(feedbackType.contains("Error")){
-
-                    //Send back feedback to the user
-                    aim2ThighExtensionStudyManager.sendHapticFeedback(nameOfIMU, "B?delay=" + FEEDBACK_DURATION_MS);
-
-                    //Set feedbackGiven to true
-                    feedbackGiven = true;
-
-                }
-            }
-            else{
-
-                //Change targetMet to true
-                targetMet = true;
-
-                //If feedbackType is Positive, send back feedback
-                if(feedbackType.contains("Positive")){
-
-                    //Send back feedback to the user
-                    aim2ThighExtensionStudyManager.sendHapticFeedback(nameOfIMU, "B?delay=" + FEEDBACK_DURATION_MS);
-
-                    //Set feedbackGiven to true
-                    feedbackGiven = true;
-
-                }
-            }
-
         }
         else{
-            Log.e(TAG, "onPTEAngleDetected: Invalid IMU Name");
+
+            //Change targetMet to true
+            targetMet = true;
+
+            //If feedbackType is Positive, send back feedback
+            if(feedbackType.contains("Positive")){
+
+                //Send back feedback to the user (to the leg associated with the IMU)
+                aim2ThighExtensionStudyManager.sendHapticFeedback(nameOfIMU, "B?delay=" + FEEDBACK_DURATION_MS);
+
+                //Set feedbackGiven to true
+                feedbackGiven = true;
+
+            }
         }
 
-        //Advance all values of the leftLast20PeakThighAngles array one space (dropping the last one)
+        //Advance all values of the last40Steps array one space (dropping the last one)
         for(int i = (last40Steps.length-1); i > 0; i--){
             last40Steps[i] = last40Steps[i-1];
         }
@@ -174,17 +122,15 @@ public class ThighExtensionStudyAim2TargetManager {
 
         if((double)numberOfGoodSteps/last40Steps.length >= 0.8){
 
-            //Increase the target by the increase increment
-            leftPeakThighAngleTarget += leftPeakThighAngleTargetIncreaseIncrement;
-            rightPeakThighAngleTarget += rightPeakThighAngleTargetIncreaseIncrement;
+            //Change the target to the high target
+            peakThighAngleTarget = highPeakThighAngleTarget;
 
             //Update the log with the change in target
-            fileManager.writeToLogFile("Left Peak Thigh Angle Target Set To: " + leftPeakThighAngleTarget + " At sample number: " + sampleNumber);
-            fileManager.writeToLogFile("Right Peak Thigh Angle Target Set To: " + rightPeakThighAngleTarget + " At sample number: " + sampleNumber);
+            fileManager.writeToLogFile("Peak Thigh Angle Target Set To: " + peakThighAngleTarget + " At sample number: " + sampleNumber);
 
             //Update the UI with the change in target
-            aim2ThighExtensionStudyUI.updateGaitParameterOutput("TargetAngle", "Left Thigh IMU", String.format(Locale.US,"%.3f",leftPeakThighAngleTarget));
-            aim2ThighExtensionStudyUI.updateGaitParameterOutput("TargetAngle", "Right Thigh IMU", String.format(Locale.US,"%.3f",rightPeakThighAngleTarget));
+            aim2ThighExtensionStudyUI.updateGaitParameterOutput("TargetAngle", "Left Thigh IMU", String.format(Locale.US,"%.3f",peakThighAngleTarget));
+            aim2ThighExtensionStudyUI.updateGaitParameterOutput("TargetAngle", "Right Thigh IMU", String.format(Locale.US,"%.3f",peakThighAngleTarget));
 
             //Set hasTargetIncreased to true
             hasTargetIncreased = true;
@@ -201,74 +147,36 @@ public class ThighExtensionStudyAim2TargetManager {
     public void resetTarget(){
 
         //Set the targets to the original values
-        leftPeakThighAngleTarget = initialLeftPeakThighAngleTarget;
-        rightPeakThighAngleTarget = initialRightPeakThighAngleTarget;
+        peakThighAngleTarget = lowPeakThighAngleTarget;
 
         //Update the log with the generated target values
-        fileManager.writeToLogFile("Left Peak Thigh Angle Target Set To: " + leftPeakThighAngleTarget + " At sample number: 0");
-        fileManager.writeToLogFile("Right Peak Thigh Angle Target Set To: " + rightPeakThighAngleTarget + " At sample number: 0");
-        fileManager.writeToLogFile("Left Peak Thigh Angle Target Increment Set To: " + leftPeakThighAngleTargetIncreaseIncrement);
-        fileManager.writeToLogFile("Right Peak Thigh Angle Target Increment Set To: " + rightPeakThighAngleTargetIncreaseIncrement);
+        fileManager.writeToLogFile("Peak Thigh Angle Target Set To: " + peakThighAngleTarget + " At sample number: 0");
 
         //Update the UI with the change in target
-        aim2ThighExtensionStudyUI.updateGaitParameterOutput("TargetAngle", "Left Thigh IMU", String.format(Locale.US,"%.3f",leftPeakThighAngleTarget));
-        aim2ThighExtensionStudyUI.updateGaitParameterOutput("TargetAngle", "Right Thigh IMU", String.format(Locale.US,"%.3f",rightPeakThighAngleTarget));
+        aim2ThighExtensionStudyUI.updateGaitParameterOutput("TargetAngle", "Left Thigh IMU", String.format(Locale.US,"%.3f",peakThighAngleTarget));
+        aim2ThighExtensionStudyUI.updateGaitParameterOutput("TargetAngle", "Right Thigh IMU", String.format(Locale.US,"%.3f",peakThighAngleTarget));
     }
 
-    public void generatePeakThighTarget(ArrayList<OriginalThighExtensionStudyTrial> trialArrayList){
+    public void generatePeakThighTarget(Aim2ThighExtensionStudyTrial baselineTrial){
 
-        double leftBaselineAverage = 0, rightBaselineAverage = 0, leftFastAverage = 0, rightFastAverage = 0;
+        double leftBaselineAverage, rightBaselineAverage;
 
-        //Loop through all trials to find the last baseline and fast trials
-        for(OriginalThighExtensionStudyTrial trial : trialArrayList){
+        leftBaselineAverage = baselineTrial.getLeftPeakThighAngleAverage();
+        rightBaselineAverage = baselineTrial.getRightPeakThighAngleAverage();
 
-            //Get the last baseline trial angle average (overriding old baseline trials if there are any)
-            if(trial.getTrialName().equals("Baseline Normal")){
-                leftBaselineAverage = trial.getLeftPeakThighAngleAverage();
-                rightBaselineAverage = trial.getRightPeakThighAngleAverage();
-            }
-            //Get the last fast trial angle average (overriding old fast trials if there are any)
-            else if(trial.getTrialName().equals("Fast")){
-                leftFastAverage = trial.getLeftPeakThighAngleAverage();
-                rightFastAverage = trial.getRightPeakThighAngleAverage();
-            }
+        //Calculate the target values
+        lowPeakThighAngleTarget = 1.17 * (leftBaselineAverage + rightBaselineAverage)/2;
+        highPeakThighAngleTarget = 1.34 * (leftBaselineAverage + rightBaselineAverage)/2;
 
-        }
+        //Set the targets to the original values
+        peakThighAngleTarget = lowPeakThighAngleTarget;
 
-        if((leftBaselineAverage != 0) && (rightBaselineAverage != 0) && (leftFastAverage != 0) && (rightFastAverage != 0)){
+        //Update the log with the generated target values
+        fileManager.writeToLogFile("Peak Thigh Angle Target Set To: " + peakThighAngleTarget + " At sample number: 0");
 
-            leftPeakThighAngleTargetIncreaseIncrement = 0.5 * (leftFastAverage - leftBaselineAverage);
-            if (leftPeakThighAngleTargetIncreaseIncrement > -2.0){
-                leftPeakThighAngleTargetIncreaseIncrement = -2.0;
-            }
-            leftPeakThighAngleTarget = leftBaselineAverage + leftPeakThighAngleTargetIncreaseIncrement;
-            initialLeftPeakThighAngleTarget = leftPeakThighAngleTarget;
-
-            rightPeakThighAngleTargetIncreaseIncrement = 0.5 * (rightFastAverage - rightBaselineAverage);
-            if (rightPeakThighAngleTargetIncreaseIncrement > -2.0){
-                rightPeakThighAngleTargetIncreaseIncrement = -2.0;
-            }
-            rightPeakThighAngleTarget = rightBaselineAverage + rightPeakThighAngleTargetIncreaseIncrement;
-            initialRightPeakThighAngleTarget = rightPeakThighAngleTarget;
-
-            //Update the log with the generated target values
-            fileManager.writeToLogFile("Left Peak Thigh Angle Target Set To: " + leftPeakThighAngleTarget + " At sample number: 0");
-            fileManager.writeToLogFile("Right Peak Thigh Angle Target Set To: " + rightPeakThighAngleTarget + " At sample number: 0");
-            fileManager.writeToLogFile("Left Peak Thigh Angle Target Increment Set To: " + leftPeakThighAngleTargetIncreaseIncrement);
-            fileManager.writeToLogFile("Right Peak Thigh Angle Target Increment Set To: " + rightPeakThighAngleTargetIncreaseIncrement);
-
-            //Update the UI with the change in target
-            aim2ThighExtensionStudyUI.updateGaitParameterOutput("TargetAngle", "Left Thigh IMU", String.format(Locale.US,"%.3f",leftPeakThighAngleTarget));
-            aim2ThighExtensionStudyUI.updateGaitParameterOutput("TargetAngle", "Right Thigh IMU", String.format(Locale.US,"%.3f",rightPeakThighAngleTarget));
-
-            hasTargetIncreased = false;
-
-        }
-
-        else{
-            fileManager.writeToLogFile("Not enough trial data to generate Old Target");
-            aim2ThighExtensionStudyUI.errorMessagePopUp("Old Target Error");
-        }
+        //Update the UI with the change in target
+        aim2ThighExtensionStudyUI.updateGaitParameterOutput("TargetAngle", "Left Thigh IMU", String.format(Locale.US,"%.3f",peakThighAngleTarget));
+        aim2ThighExtensionStudyUI.updateGaitParameterOutput("TargetAngle", "Right Thigh IMU", String.format(Locale.US,"%.3f",peakThighAngleTarget));
 
     }
 

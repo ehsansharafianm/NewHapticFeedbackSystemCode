@@ -50,12 +50,36 @@
         android:textAlignment="center"
         android:inputType="number"/>
 
+    <TextView
+        android:id="@+id/aim2_thigh_extension_study_trial_page_SessionNumberEntryBoxLabel"
+        style="@style/ExperimentalPageLabelText"
+        android:layout_width="80dp"
+        android:layout_height="50dp"
+        android:layout_below="@+id/aim2_thigh_extension_study_trial_page_PageTitle"
+        android:layout_marginBottom="10dp"
+        android:layout_alignStart="@+id/aim2_thigh_extension_study_trial_page_PageTitle"
+        android:gravity="center"
+        android:text="@string/SessionNumber"/>
+
+    <EditText
+        android:id="@+id/aim2_thigh_extension_study_trial_page_SessionNumberEntryBox"
+        style="?attr/textEntryBoxStyle"
+        android:layout_width="90dp"
+        android:layout_height="50dp"
+        android:layout_alignEnd="@+id/aim2_thigh_extension_study_trial_page_PageTitle"
+        android:layout_below="@+id/aim2_thigh_extension_study_trial_page_PageTitle"
+        android:layout_marginBottom="10dp"
+        android:autofillHints="@string/EnterSessionAutofill"
+        android:hint="@string/EnterSessionNumberHint"
+        android:textAlignment="center"
+        android:inputType="number"/>
+
     <View
         android:id="@+id/aim2_thigh_extension_study_trial_page_HorizontalLine1"
         android:background="?attr/experimentalPageHeaderTextColor"
         android:layout_width="match_parent"
         android:layout_height="2dp"
-        android:layout_below="@id/aim2_thigh_extension_study_trial_page_PageTitle"
+        android:layout_below="@id/aim2_thigh_extension_study_trial_page_SessionNumberEntryBox"
         android:layout_centerHorizontal="true"/>
 
     <Button
@@ -294,7 +318,7 @@
                 android:layout_toEndOf="@id/aim2_thigh_extension_study_trial_page_CenterSpace"
                 android:layout_below="@+id/aim2_thigh_extension_study_trial_page_HapticCellsSelectionTitle"
                 android:layout_marginStart="20dp"
-                android:text="@string/LeftDeviceNumberLabel"
+                android:text="@string/RightDeviceNumberLabel"
                 android:gravity="center"/>
 
             <EditText
@@ -575,7 +599,7 @@
                 android:layout_width="130dp"
                 android:layout_height="50dp"
                 android:layout_below="@+id/aim2_thigh_extension_study_trial_page_FeedbackTestingTitle"
-                android:layout_toStartOf="@+id/aim2_thigh_extension_study_trial_page_CenterSpace"
+                android:layout_toEndOf="@+id/aim2_thigh_extension_study_trial_page_CenterSpace"
                 android:layout_marginTop="10dp"
                 android:layout_marginBottom="10dp"
                 android:layout_marginStart="10dp"

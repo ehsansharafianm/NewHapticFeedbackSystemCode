@@ -29,7 +29,8 @@ public class StreamingIMU extends UniversalIMU implements DotMeasurementCallback
 
     protected FileManager.DotLogFile dotLogFile;
     protected boolean offsetAnglesInitialized;
-    protected boolean isHeadingReset, isAwaitingHeadingResetAfterMeasurementStart, isHeadingReverting;
+    protected boolean isHeadingReset, isAwaitingHeadingResetAfterMeasurementStart;
+    protected boolean isAwaitingHeadingRevertAfterMeasurementStart, isHeadingReverting;
     protected int offsetInitializationDurationSec;
     protected double offsetEulerAngle;
 
@@ -44,6 +45,7 @@ public class StreamingIMU extends UniversalIMU implements DotMeasurementCallback
         this.isHeadingReset = false;
         this.isAwaitingHeadingResetAfterMeasurementStart = false;
         this.isHeadingReverting = false;
+        this.isAwaitingHeadingRevertAfterMeasurementStart = false;
 
         //Set Duration for Initialization of Offset Angles
         offsetInitializationDurationSec = 3;
@@ -76,7 +78,7 @@ public class StreamingIMU extends UniversalIMU implements DotMeasurementCallback
     }
 
     public void performHeadingReset() {
-        trialName = "HeadingReset";
+
 
         // Set the flag to false.
         isHeadingReset = false;
@@ -84,15 +86,19 @@ public class StreamingIMU extends UniversalIMU implements DotMeasurementCallback
         try {
 
             //If a revert is required, perform it.
-            if (movellaDotDevice != null && movellaDotDevice.getHeadingStatus() == DotDevice.HEADING_STATUS_XRM_HEADING) {
+            if (movellaDotDevice != null && movellaDotDevice.getHeadingStatus() == DotDevice.HEADING_STATUS_XRM_HEADING && movellaDotDevice.startMeasuring()) {
+                trialName = "HeadingRevert";
+                fileManager.writeToLogFile(nameOfIMU + " Measurement Started for Heading Revert. Waiting for first data packet...");
+                userInterface.updateIMUStatus(nameOfIMU, "Reverting Heading...");
                 fileManager.writeToLogFile(nameOfIMU + " reverting heading");
+
+                // Set the flag to true. The reset command will be sent in onDotDataChanged.
                 isHeadingReverting = true;
-                movellaDotDevice.revertHeading();
+                isAwaitingHeadingRevertAfterMeasurementStart = true;
             }
             //If no revert is required, reset the heading.
             else if (movellaDotDevice != null && movellaDotDevice.startMeasuring()) {
-                fileManager.writeToLogFile(nameOfIMU + " Measurement Started for Heading Reset.");
-                movellaDotDevice.resetHeading();
+                trialName = "HeadingReset";
                 fileManager.writeToLogFile(nameOfIMU + " Measurement Started for Heading Reset. Waiting for first data packet...");
                 userInterface.updateIMUStatus(nameOfIMU, "Resetting Heading...");
                 fileManager.writeToLogFile(nameOfIMU + " resetting heading");
@@ -281,6 +287,12 @@ public class StreamingIMU extends UniversalIMU implements DotMeasurementCallback
             movellaDotDevice.resetHeading();
             return; // Exit here. We don't want to process this first data packet.
         }
+        else if (isAwaitingHeadingRevertAfterMeasurementStart) {
+            isAwaitingHeadingRevertAfterMeasurementStart = false; // Consume the flag so this only runs once.
+            fileManager.writeToLogFile(nameOfIMU + " is now measuring. Sending revertHeading command.");
+            movellaDotDevice.revertHeading();
+            return; // Exit here. We don't want to process this first data packet.
+        }
 
         if(trialName == null){
             return;
@@ -290,6 +302,7 @@ public class StreamingIMU extends UniversalIMU implements DotMeasurementCallback
 
         switch(trialName){
             case "HeadingReset":
+            case "HeadingRevert":
                 // Do nothing here. We are just waiting for the onDotHeadingChanged callback.
                 break;
             case "Initialization":
@@ -340,8 +353,14 @@ public class StreamingIMU extends UniversalIMU implements DotMeasurementCallback
     @Override
     public void onDotHeadingChanged(String address, int status, int result) {
 
+        Log.d(TAG, "onDotHeadingChanged: " + status + ", " + result);
+
         //Check to see if heading is reverting (indicating the heading just reverted)
         if(isHeadingReverting){
+
+            //Indicate that heading is not reverting
+            isHeadingReverting = false;
+            Log.d(TAG, "onDotHeadingChanged: heading reverted");
 
             //Now that the heading is reverted, we can reset the heading
             performHeadingReset();

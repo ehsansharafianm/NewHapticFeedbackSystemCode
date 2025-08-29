@@ -157,6 +157,12 @@ public class StreamingIMUWithArmAlgorithmForArmAngleStudy extends StreamingIMU{
             movellaDotDevice.resetHeading();
             return; // Exit here. We don't want to process this first data packet.
         }
+        else if (isAwaitingHeadingRevertAfterMeasurementStart) {
+            isAwaitingHeadingRevertAfterMeasurementStart = false; // Consume the flag so this only runs once.
+            fileManager.writeToLogFile(nameOfIMU + " is now measuring. Sending revertHeading command.");
+            movellaDotDevice.revertHeading();
+            return; // Exit here. We don't want to process this first data packet.
+        }
 
         if(trialName == null){
             return;
@@ -185,8 +191,9 @@ public class StreamingIMUWithArmAlgorithmForArmAngleStudy extends StreamingIMU{
          * Familiarization just needs to keep track of trial time. All other trials store data to a log
          * file without accessing any specific data for in-app use.
          * */
-        switch(trialName) {
+        switch(trialName){
             case "HeadingReset":
+            case "HeadingRevert":
                 // Do nothing here. We are just waiting for the onDotHeadingChanged callback.
                 break;
             case "Initialization":

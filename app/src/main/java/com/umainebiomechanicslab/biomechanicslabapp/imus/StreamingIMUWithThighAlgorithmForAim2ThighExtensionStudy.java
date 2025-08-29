@@ -121,6 +121,12 @@ public class StreamingIMUWithThighAlgorithmForAim2ThighExtensionStudy extends St
             movellaDotDevice.resetHeading();
             return; // Exit here. We don't want to process this first data packet.
         }
+        else if (isAwaitingHeadingRevertAfterMeasurementStart) {
+            isAwaitingHeadingRevertAfterMeasurementStart = false; // Consume the flag so this only runs once.
+            fileManager.writeToLogFile(nameOfIMU + " is now measuring. Sending revertHeading command.");
+            movellaDotDevice.revertHeading();
+            return; // Exit here. We don't want to process this first data packet.
+        }
 
         if(trialName == null){
             return;
@@ -130,6 +136,7 @@ public class StreamingIMUWithThighAlgorithmForAim2ThighExtensionStudy extends St
 
         switch(trialName){
             case "HeadingReset":
+            case "HeadingRevert":
                 // Do nothing here. We are just waiting for the onDotHeadingChanged callback.
                 break;
             case "Initialization":
@@ -157,12 +164,9 @@ public class StreamingIMUWithThighAlgorithmForAim2ThighExtensionStudy extends St
                 break;
 
             case "Baseline Normal":
-            case "Baseline with Cognitive Task":
             case "Fast":
-            case "Verbal Feedback":
-            case "Verbal Feedback with Cognitive Task":
+            case "Cooldown":
             case "Retention":
-            case "Retention with Cognitive Task":
 
                 //Update the EulerX Value To The Offset Value
                 eulerAngleX = eulerAngleX - offsetEulerAngle;
@@ -232,7 +236,6 @@ public class StreamingIMUWithThighAlgorithmForAim2ThighExtensionStudy extends St
                 }
                 break;
 
-            case "Positive Feedback Familiarization":
             case "Error Feedback Familiarization":
 
                 //Update the EulerX Value To The Offset Value
@@ -278,7 +281,6 @@ public class StreamingIMUWithThighAlgorithmForAim2ThighExtensionStudy extends St
                 }
                 break;
 
-            case "Positive Feedback":
             case "Error Feedback":
 
                 //Update the EulerX Value To The Offset Value
@@ -325,86 +327,6 @@ public class StreamingIMUWithThighAlgorithmForAim2ThighExtensionStudy extends St
                             if(feedbackProvided){
                                 dotData.setPacketCounter(FEEDBACK_GIVEN_OFFSET + (stepCounter * PACKET_COUNTER_STEP_OFFSET) + sampleCounter);
                             }
-                        }
-
-                        //Update the User Interface with the most recent PTE Angle
-                        thighExtensionStudyUI.updateGaitParameterOutput("PTE", nameOfIMU, String.format(Locale.US,"%.3f",mostRecentPeakThighAngle));
-
-                        //Update the User Interface to show the new number of steps taken
-                        thighExtensionStudyUI.updateGaitParameterOutput("PTECycleCount", nameOfIMU, String.valueOf(stepCounter));
-                    }
-
-                    //Update the Data Log File with the Latest Data Packet
-                    dotLogFile.getDotLogger().update(dotData);
-                }
-
-                //If we have reached the set trial duration, complete necessary UI and Trial Manager functions to complete trial
-                else if (sampleCounter == (outputFrequency * 60 * trialDurationMin) + 1) {
-
-                    //Calculate the average PTE Angle for the trial
-                    double peakThighAngleAverage = (trialAngleSumForAverage / (stepCounter - NUMBER_OF_CYCLES_UNTIL_STEADY_STATE));
-
-                    //Write the average PTE Angle and number of PTEs to the log file
-                    fileManager.writeToLogFile(String.format(Locale.US,"%s %s Angle Average: %.3f", nameOfIMU, trialName, peakThighAngleAverage));
-                    fileManager.writeToLogFile(nameOfIMU + " " + trialName + " Steps Taken: " + stepCounter);
-
-                    //Update the completed trial data in the Trial Manager
-                    thighExtensionStudyTrial.updateCompletedTrialData(nameOfIMU, "PTE", peakThighAngleAverage);
-                    thighExtensionStudyTrial.updateCompletedTrialData(nameOfIMU, "PTECycleCount", stepCounter);
-
-                    //Update the User Interface to show that the trial is complete
-                    thighExtensionStudyUI.updateIMUDataOutput(nameOfIMU, "DONE");
-                }
-                break;
-
-            case "Positive Feedback with Cognitive Task":
-            case "Error Feedback with Cognitive Task":
-
-                //Update the EulerX Value To The Offset Value
-                eulerAngleX = eulerAngleX - offsetEulerAngle;
-
-                //Set the packet counter to be the sample counter (may be changed in subsequent steps)
-                dotData.setPacketCounter(sampleCounter);
-
-                //Check to see that we haven't reached the end of the trial duration
-                if (sampleCounter <= (outputFrequency * 60 * trialDurationMin)) {
-
-                    //Update the last3Angles array to include the most recently measured angle
-                    updateRecentAnglesArray(eulerAngleX, last5Angles);
-
-                    //Update the User Interface (time counter) if the sample falls on a whole number second
-                    if ((sampleCounter % outputFrequency) == 0) {
-                        thighExtensionStudyUI.updateIMUDataOutput(nameOfIMU, String.format(Locale.US, "%d:%02d", (sampleCounter / outputFrequency / 60), ((sampleCounter / outputFrequency) % 60)));
-                    }
-
-                    //Check to see if there was PTE in the most recent 3-sample window
-                    if ((sampleCounter > 180) && (sampleCounter >= lastPeakSample + MIN_SAMPLES_BETWEEN_PEAKS) && isMinPeak(last5Angles, MIN_EXTENSION_ANGLE)){
-
-                        //The most recent Peak Sample is now the current sample
-                        lastPeakSample = sampleCounter;
-
-                        //Increase the number of steps taken by 1
-                        stepCounter++;
-
-                        //Update the packet counter to also show the number of steps taken
-                        dotData.setPacketCounter((stepCounter * PACKET_COUNTER_STEP_OFFSET) + sampleCounter);
-
-                        //If we have exceeded the steady-state walking threshold, use that PTE for average PTE calculation
-                        if(stepCounter > NUMBER_OF_CYCLES_UNTIL_STEADY_STATE){
-
-                            //Update the sum of all PTE Angles for use in the average angle calculation later
-                            trialAngleSumForAverage += mostRecentPeakThighAngle;
-                            thighExtensionStudyTrial.appendToGaitParameterArrayList(nameOfIMU, "PTE", mostRecentPeakThighAngle);
-
-                            //Send PTE to target manager to see if feedback should be given
-                            boolean feedbackProvided = targetManager.onPTEAngleDetected(mostRecentPeakThighAngle, nameOfIMU,
-                                    sampleCounter, trialName, thighExtensionStudyTrial);
-
-                            //If feedback was given, update the packet counter to show that feedback was given
-                            if(feedbackProvided){
-                                dotData.setPacketCounter(FEEDBACK_GIVEN_OFFSET + (stepCounter * PACKET_COUNTER_STEP_OFFSET) + sampleCounter);
-                            }
-                            
                         }
 
                         //Update the User Interface with the most recent PTE Angle

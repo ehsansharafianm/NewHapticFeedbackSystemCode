@@ -284,12 +284,16 @@ public abstract class IMUManager implements DotScannerCallback, DotSyncCallback 
 
     public void onHeadingResetComplete() {
 
+
+
         for(UniversalIMU IMU : IMUArrayList) {
             //This only applies to instances of StreamingIMU
             if (IMU instanceof StreamingIMU) {
+                Log.d(TAG, "onHeadingResetComplete");
 
                 //Exit the method if one of the IMUs isn't reset
                 if (!((StreamingIMU) IMU).getIsHeadingReset()) {
+                    Log.d(TAG, "onHeadingResetComplete exit");
                     return;
                 }
             }

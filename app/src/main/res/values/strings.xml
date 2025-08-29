@@ -110,6 +110,9 @@
 
     <!-- Aim 2 Thigh Extension Study Page Strings -->
     <string name="Aim2ThighExtensionStudyPageTitle">Aim 2 Thigh Extension Study</string>
+    <string name="SessionNumber">Session #:</string>"
+    <string name="EnterSessionAutofill">Enter Session Number</string>
+    <string name="EnterSessionNumberHint">Session #</string>
 
     <string-array name="IMU_MAC_Addresses">
         <item>--</item>
@@ -184,6 +187,27 @@
         <item>Error Backward Feedback 200%</item>
         <item>Error Combined Feedback 100%</item>
         <item>Error Combined Feedback 200%</item>
+    </string-array>
+
+    <string-array name="Aim2ThighExtensionStudyFirstSessionTrialTypes">
+        <item>Testing</item>
+        <item>Baseline Normal</item>
+        <item>Fast</item>
+        <item>Error Feedback Familiarization</item>
+        <item>Error Feedback</item>
+    </string-array>
+
+    <string-array name="Aim2ThighExtensionStudyTrainingSessionsTrialTypes">
+        <item>Testing</item>
+        <item>Baseline Normal</item>
+        <item>Error Feedback</item>
+    </string-array>
+
+    <string-array name="Aim2ThighExtensionStudyRetentionSessionTrialTypes">
+        <item>Testing</item>
+        <item>Baseline Normal</item>
+        <item>Fast</item>
+        <item>Retention</item>
     </string-array>
 
 

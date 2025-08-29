@@ -94,6 +94,7 @@ public class Aim2ThighExtensionStudyUI extends UserInterfaceWithRecordingIMU {
 
         //Declare UI EditText
         EditText subjectNumberEditText = activity.findViewById(R.id.aim2_thigh_extension_study_trial_page_SubjectNumberEntryBox);
+        EditText sessionNumberEditText = activity.findViewById(R.id.aim2_thigh_extension_study_trial_page_SessionNumberEntryBox);
         EditText leftHapticFeedbackModuleIPEditText = activity.findViewById(R.id.aim2_thigh_extension_study_trial_page_LeftDeviceNumberEntryBox);
         EditText rightHapticFeedbackModuleIPEditText = activity.findViewById(R.id.aim2_thigh_extension_study_trial_page_RightDeviceNumberEntryBox);
 
@@ -110,8 +111,14 @@ public class Aim2ThighExtensionStudyUI extends UserInterfaceWithRecordingIMU {
         ArrayAdapter<CharSequence> IMUMacAddresses = new ArrayAdapter<>(activity, R.layout.popup_window_for_dropdown_spinner, activity.getResources().getStringArray(R.array.IMU_MAC_Addresses)); // Use your layout for the trigger
         IMUMacAddresses.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
-        ArrayAdapter<CharSequence> TrialModes = new ArrayAdapter<>(activity, R.layout.popup_window_for_dropdown_spinner, activity.getResources().getStringArray(R.array.OriginalThighExtensionStudyTrialTypes)); // Use your layout for the trigger
-        TrialModes.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        ArrayAdapter<CharSequence> Session1TrialModes = new ArrayAdapter<>(activity, R.layout.popup_window_for_dropdown_spinner, activity.getResources().getStringArray(R.array.Aim2ThighExtensionStudyFirstSessionTrialTypes)); // Use your layout for the trigger
+        Session1TrialModes.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+        ArrayAdapter<CharSequence> TrainingSessionTrialModes = new ArrayAdapter<>(activity, R.layout.popup_window_for_dropdown_spinner, activity.getResources().getStringArray(R.array.Aim2ThighExtensionStudyTrainingSessionsTrialTypes)); // Use your layout for the trigger
+        TrainingSessionTrialModes.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+        ArrayAdapter<CharSequence> RetentionSessionTrialModes = new ArrayAdapter<>(activity, R.layout.popup_window_for_dropdown_spinner, activity.getResources().getStringArray(R.array.Aim2ThighExtensionStudyRetentionSessionTrialTypes)); // Use your layout for the trigger
+        RetentionSessionTrialModes.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
         //Set the Dropdown Spinners
         leftArmIMUSpinner.setAdapter(IMUMacAddresses);
@@ -120,7 +127,7 @@ public class Aim2ThighExtensionStudyUI extends UserInterfaceWithRecordingIMU {
         rightThighIMUSpinner.setAdapter(IMUMacAddresses);
         leftFootIMUSpinner.setAdapter(IMUMacAddresses);
         rightFootIMUSpinner.setAdapter(IMUMacAddresses);
-        trialModeSpinner.setAdapter(TrialModes);
+        trialModeSpinner.setAdapter(Session1TrialModes);
 
         //Set the behavior for the subject number text box
         subjectNumberEditText.addTextChangedListener(new TextWatcher() {
@@ -142,7 +149,61 @@ public class Aim2ThighExtensionStudyUI extends UserInterfaceWithRecordingIMU {
                     int subjectNumber = Integer.parseInt(subjectNumberEditText.getText().toString());
 
                     //Rename the session folder (if there is an error, set validSubjectEntered to false)
-                    validSubjectEntered = fileManager.renameSessionFolder("Subject " + subjectNumber);
+                    //We're using a temp variable here because we don't want to change validSubjectEntered to true unless both subject and session numbers are valid
+                    boolean tempValidSubjectEntered = fileManager.renameSessionFolder("Subject " + subjectNumber);
+
+                    //If there is an error, show an error message
+                    if(!tempValidSubjectEntered){
+                        validSubjectEntered = false;
+                        errorMessagePopUp("ERROR: Unable to rename session folder");
+                        fileManager.writeToLogFile("ERROR: Unable to rename session folder! Please try again.");
+                    }
+                }
+                catch (NumberFormatException e){
+                    textPopUp("WARNING! Invalid Input");
+                    validSubjectEntered = false;
+                }
+            }
+        });
+
+        //Set the behavior for the subject number text box
+        sessionNumberEditText.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+                //Extract the session number from the text box
+                try{
+                    int subjectNumber = Integer.parseInt(subjectNumberEditText.getText().toString());
+                    int sessionNumber = Integer.parseInt(sessionNumberEditText.getText().toString());
+
+                    if ((sessionNumber < 1) || (sessionNumber > 12)) {
+                        validSubjectEntered = false;
+                    }
+                    else{
+                        //Rename the session folder (if there is an error, set validSubjectEntered to false)
+                        validSubjectEntered = fileManager.renameSessionFolder("Subject " + subjectNumber + " Session " + sessionNumber);
+
+                        //Set the trial spinner dropdown for the given session
+                        if(sessionNumber == 1){
+                            trialModeSpinner.setAdapter(Session1TrialModes);
+                        }
+                        else if(sessionNumber == 12){
+                            trialModeSpinner.setAdapter(RetentionSessionTrialModes);
+                        }
+                        else{
+                            trialModeSpinner.setAdapter(TrainingSessionTrialModes);
+                        }
+                    }
 
                     //If there is an error, show an error message
                     if(!validSubjectEntered){

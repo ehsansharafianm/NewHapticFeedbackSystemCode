@@ -118,6 +118,12 @@ public class StreamingIMUWithThighAlgorithmForOptimizedThighExtensionStudy exten
             movellaDotDevice.resetHeading();
             return; // Exit here. We don't want to process this first data packet.
         }
+        else if (isAwaitingHeadingRevertAfterMeasurementStart) {
+            isAwaitingHeadingRevertAfterMeasurementStart = false; // Consume the flag so this only runs once.
+            fileManager.writeToLogFile(nameOfIMU + " is now measuring. Sending revertHeading command.");
+            movellaDotDevice.revertHeading();
+            return; // Exit here. We don't want to process this first data packet.
+        }
 
         if(trialName == null){
             return;
@@ -127,6 +133,7 @@ public class StreamingIMUWithThighAlgorithmForOptimizedThighExtensionStudy exten
 
         switch(trialName){
             case "HeadingReset":
+            case "HeadingRevert":
                 // Do nothing here. We are just waiting for the onDotHeadingChanged callback.
                 break;
             case "Initialization":
