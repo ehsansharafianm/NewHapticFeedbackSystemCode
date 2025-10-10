@@ -224,6 +224,7 @@ public class RecordingIMU extends UniversalIMU implements DotRecordingCallback {
         exportedFilesCounter = 0;
         exportedPacketsCounter = 0;
         dotLogFiles.clear();
+        fileManager.writeToLogFile("We are here");
 
         //Pause for 2 seconds
         try {
