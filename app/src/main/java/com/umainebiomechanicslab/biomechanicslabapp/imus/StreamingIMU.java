@@ -80,7 +80,16 @@ public class StreamingIMU extends UniversalIMU implements DotMeasurementCallback
     public void performHeadingReset() {
 
 
-        // Set the flag to false.
+        // ⭐ Skipping the Heading reset for now
+        isHeadingReset = true;  // Pretend it's already reset
+        fileManager.writeToLogFile(nameOfIMU + " Heading reset skipped (disabled)");
+        userInterface.updateIMUStatus(nameOfIMU, "Ready");
+        imuManager.onHeadingResetComplete();  // Tell manager we're "done"
+        return;  // Exit early - don't do the reset
+
+
+        // Skipping the Heading reset for now
+ /*       // Set the flag to false.
         isHeadingReset = false;
 
         try {
@@ -114,7 +123,8 @@ public class StreamingIMU extends UniversalIMU implements DotMeasurementCallback
             fileManager.writeToLogFile("Error: " + nameOfIMU + " Not Connected");
             userInterface.errorMessagePopUp("Error: " + nameOfIMU + " Not Connected");
             Log.e(TAG, "HeadingReset", e);
-        }
+        }*/
+
     }
 
 
