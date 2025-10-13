@@ -757,6 +757,7 @@ public class Aim2ThighExtensionStudyUI extends UserInterfaceWithRecordingIMU {
 
         });
 
+        // TODO
         //Set the behavior for the uploadDataToCloudButton
         uploadDataToCloudButton.setOnClickListener(view -> fileManager.uploadFilesToFirebaseCloudStorage(this));
 
@@ -764,7 +765,7 @@ public class Aim2ThighExtensionStudyUI extends UserInterfaceWithRecordingIMU {
         exportRecordedDataButton.setOnClickListener(view -> {
 
             //Start with export of the Left Arm Data
-            imuManager.startRecordingExport("Left Arm");
+            imuManager.startRecordingExport("Left Arm IMU");
 
         });
 
@@ -783,7 +784,7 @@ public class Aim2ThighExtensionStudyUI extends UserInterfaceWithRecordingIMU {
 
     }
 
-    @Override
+    /*@Override
     public void showPage() {
 
         //Show the page if the gate way IP was found, if not, show the loading page and find the gate way IP
@@ -796,7 +797,19 @@ public class Aim2ThighExtensionStudyUI extends UserInterfaceWithRecordingIMU {
             imuManager.findGateWayIP();
         }
 
+    }*/
+
+    // Bypassing the connection to haptic feedback modules #Bypass
+
+    @Override
+    public void showPage() {
+
+        // Bypassing the gateway IP check to allow proceeding without haptic module connection.
+        Log.d("HapticBypass", "Skipping gateway IP check and showing page directly.");
+        super.showPage();
+
     }
+
 
     public void linkIMUManager(Aim2ThighExtensionStudyManager imuManager) {
         this.imuManager = imuManager;

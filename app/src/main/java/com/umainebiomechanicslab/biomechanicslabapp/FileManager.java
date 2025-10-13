@@ -305,7 +305,8 @@ public class FileManager{
         }
     }
 
-    public void uploadFilesToFirebaseCloudStorage(UserInterface userInterfaceCalledFrom){
+    /*public void uploadFilesToFirebaseCloudStorage(UserInterface userInterfaceCalledFrom){
+
 
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         String uid = user.getUid();
@@ -402,6 +403,103 @@ public class FileManager{
 
         loadingWindowUI.onLoadingComplete();
 
+    }*/
+    public void uploadFilesToFirebaseCloudStorage(UserInterface userInterfaceCalledFrom) {
+
+        // --- FIX 1: PREVENT CRASH BY CHECKING FOR A VALID USER ---
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        if (user == null) {
+            writeToLogFile("Upload Error: No user is signed in.");
+            // Use the activity context to show a toast message
+            UserInterface.errorMessagePopUp("Upload Failed: You are not logged in.", activity);
+            return; // Stop the function immediately to prevent the crash
+        }
+        String uid = user.getUid();
+        // --- END OF FIX 1 ---
+
+        FirebaseStorage storage = FirebaseStorage.getInstance();
+        StorageReference storageReference = storage.getReference();
+
+        // Combine both lists to make management easier
+        ArrayList<File> allFilesToUpload = new ArrayList<>();
+        for (DotLogFile dotLogFile : dotLogFileList) {
+            allFilesToUpload.add(dotLogFile.getLoggerFileAddress());
+        }
+        allFilesToUpload.addAll(fileArrayList);
+
+        int totalFilesToUpload = allFilesToUpload.size();
+        if (totalFilesToUpload == 0) {
+            writeToLogFile("No files found to upload.");
+            UserInterface.textPopUp("There are no files to upload.", activity);
+            return;
+        }
+
+        // --- FIX 2: TRACK UPLOAD COMPLETION CORRECTLY ---
+        // Use a counter to track how many uploads have finished (succeeded or failed)
+        final int[] finishedUploadsCounter = {0};
+        // --- END OF FIX 2 ---
+
+        Log.d(TAG, "Total files to upload: " + totalFilesToUpload);
+
+        //Show the loading page
+        loadingWindowUI.showPage();
+        loadingWindowUI.startLoadingPage("Uploading " + totalFilesToUpload + " Files to Cloud...", new LoadingWindowUI.LoadingPageListener() {
+            @Override
+            public void onLoadingPageFinished() {
+                userInterfaceCalledFrom.showPage();
+            }
+
+            @Override
+            public void onLoadingPageCancelled() {
+                userInterfaceCalledFrom.showPage();
+            }
+        });
+
+        // --- FIX 3: REMOVE ALL `sleep()` CALLS FROM THE MAIN THREAD ---
+        // The upload loop should run without blocking. Firebase handles uploads in the background.
+
+        for (File fileToUpload : allFilesToUpload) {
+            Uri fileUri = Uri.fromFile(fileToUpload);
+            String fileName = fileToUpload.getName();
+
+            // Determine the correct subfolder for the file
+            String cloudSubFolder = fileName.endsWith(".csv") ? "/Movella Dot Data Logs/" : "/Log Text Files/";
+
+            StorageReference fileReference = storageReference.child("userFiles/" + uid + "/Colby Walking Study Trial Files/" + folderName + cloudSubFolder + fileName);
+            UploadTask uploadTask = fileReference.putFile(fileUri);
+
+            uploadTask.addOnSuccessListener(taskSnapshot -> {
+                writeToLogFile("Successfully Uploaded: " + fileName);
+
+                // Correctly handle completion
+                handleUploadFinished(finishedUploadsCounter, totalFilesToUpload, loadingWindowUI);
+
+            }).addOnFailureListener(e -> {
+                writeToLogFile("Error Uploading File: " + fileName + " | Reason: " + e.getMessage());
+
+                // Still handle completion even on failure
+                handleUploadFinished(finishedUploadsCounter, totalFilesToUpload, loadingWindowUI);
+            });
+        }
     }
+
+    // --- HELPER METHOD TO AVOID CODE DUPLICATION AND HANDLE COMPLETION ---
+    private void handleUploadFinished(int[] finishedUploadsCounter, int totalFilesToUpload, LoadingWindowUI loadingWindowUI) {
+        // Increment the counter of finished uploads
+        finishedUploadsCounter[0]++;
+
+        // Update the UI with the new progress
+        double progress = (double) finishedUploadsCounter[0] / totalFilesToUpload * 100;
+        loadingWindowUI.updateInnerSpinnerText(String.format("%.0f%%", progress));
+        writeToLogFile("Upload progress: " + finishedUploadsCounter[0] + "/" + totalFilesToUpload);
+
+        // If all uploads are finished, close the loading window
+        if (finishedUploadsCounter[0] >= totalFilesToUpload) {
+            writeToLogFile("All file uploads are complete.");
+            loadingWindowUI.onLoadingComplete();
+        }
+    }
+
+
 
 }

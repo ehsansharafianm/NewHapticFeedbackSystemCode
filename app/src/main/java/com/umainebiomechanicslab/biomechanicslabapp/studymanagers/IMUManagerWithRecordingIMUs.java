@@ -48,13 +48,28 @@ public abstract class IMUManagerWithRecordingIMUs extends IMUManager{
             }
         });
 
+
         //Find the IMU with the given name in the recording IMUs ArrayList and start exporting its data
+        fileManager.writeToLogFile("Searching for IMU with target name: '"+ nameOfIMU + "'");
+
         for (RecordingIMU IMU : recordingIMUArrayList) {
-            if (IMU.getNameOfIMU().equals(nameOfIMU)) {
+            String imuNameInList = IMU.getNameOfIMU();
+
+            // Log the exact strings being compared
+            fileManager.writeToLogFile("Comparing target '"+ nameOfIMU + "' with list item '" + imuNameInList + "'");
+
+            // Use the robust comparison
+            if (imuNameInList.trim().equalsIgnoreCase(nameOfIMU.trim())) {
+                fileManager.writeToLogFile("SUCCESS: Match found! Starting export for " + imuNameInList);
                 IMU.startRecordingExport();
-                return;
+                return; // Exit the function since we found our IMU
             }
         }
+
+        // This log will only be written if the loop finishes without finding a match
+        fileManager.writeToLogFile("ERROR: Loop finished. No matching IMU found for name '" + nameOfIMU + "'");
+
+
     }
 
     public void updateExportLoadingPage(int percentage, String progressComment){
@@ -72,11 +87,11 @@ public abstract class IMUManagerWithRecordingIMUs extends IMUManager{
         }
 
         loadingWindowUI.onLoadingComplete();
-
-        if(nameOfIMU.equals("Left Arm")){
+        // I changed here I added IMU
+        if(nameOfIMU.equals("Left Arm IMU")){
 
             //Start the export of Right Arm Data after Left Arm Export Is Complete
-            startRecordingExport("Right Arm");
+            startRecordingExport("Right Arm IMU");
 
         }
         else{

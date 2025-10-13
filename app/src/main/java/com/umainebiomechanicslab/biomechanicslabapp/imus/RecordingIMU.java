@@ -224,8 +224,8 @@ public class RecordingIMU extends UniversalIMU implements DotRecordingCallback {
         exportedFilesCounter = 0;
         exportedPacketsCounter = 0;
         dotLogFiles.clear();
-        fileManager.writeToLogFile("We are here");
 
+        
         //Pause for 2 seconds
         try {
             TimeUnit.MILLISECONDS.sleep(2000);
@@ -280,6 +280,8 @@ public class RecordingIMU extends UniversalIMU implements DotRecordingCallback {
 
     @Override
     public void onDotRequestFlashInfoDone(String address, int usedFlashSpace, int totalFlashSpace) {
+
+
         fileManager.writeToLogFile(nameOfIMU + " Flash Information Received");
         fileManager.writeToLogFile(nameOfIMU + " Used Flash: " + usedFlashSpace);
         fileManager.writeToLogFile(nameOfIMU + " Total Flash: " + totalFlashSpace);
@@ -387,14 +389,49 @@ public class RecordingIMU extends UniversalIMU implements DotRecordingCallback {
                     Log.e(TAG, "uploadFilesToFirebaseCloudStorage", e);
                 }
 
-                if(movellaDotRecordingManager.startExporting(recordingList)){
+                // Previous Version
+                /*if(movellaDotRecordingManager.startExporting(recordingList)){
                     fileManager.writeToLogFile(nameOfIMU + " Files Selected For Export");
                     imuManagerWithRecordingIMUs.updateExportLoadingPage(0, "Files Selected For Export");
                 }
                 else{
                     fileManager.writeToLogFile(nameOfIMU + " !Error Selecting Files For Export");
                     userInterface.errorMessagePopUp("!File Selection Error");
+                }*/
+
+                // New Version
+
+                // ----- START OF FIX -----
+
+                // STEP 1: Create all the log files and loggers BEFORE starting the export.
+                // Use the 'recordingList' from the sensor to ensure you match each remote file with a local one.
+                // The order of files in 'recordingList' should match the order you added 'trialNames'.
+                for (int i = 0; i < recordingList.size(); i++) {
+                    // Create a DotLogFile (which contains a DotLogger) for each trial.
+                    dotLogFiles.add(createDataLog(trialNames.get(i), trialTimeStamps.get(i)));
                 }
+
+                // Give a moment for files to be created on the system.
+                try {
+                    TimeUnit.MILLISECONDS.sleep(1000);
+                } catch (InterruptedException e) {
+                    Log.e(TAG, "onDotRequestFileInfoDone sleep", e);
+                }
+
+                // STEP 2: NOW, start exporting the data.
+                // The loggers are ready and waiting to receive data.
+                if(movellaDotRecordingManager.startExporting(recordingList)){
+                    fileManager.writeToLogFile(nameOfIMU + " Files Selected For Export. " + recordingList.size() + " files will be exported.");
+                    imuManagerWithRecordingIMUs.updateExportLoadingPage(0, "Exporting files...");
+                }
+                else{
+                    fileManager.writeToLogFile(nameOfIMU + " !Error Starting Export");
+                    userInterface.errorMessagePopUp("!Export Start Error");
+                }
+
+                // ----- END OF FIX -----
+
+
             }
             else{
                 fileManager.writeToLogFile(nameOfIMU + " !Error Selecting Data Values For Export");

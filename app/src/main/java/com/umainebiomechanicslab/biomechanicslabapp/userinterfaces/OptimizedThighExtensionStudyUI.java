@@ -718,7 +718,7 @@ public class OptimizedThighExtensionStudyUI extends UserInterfaceWithRecordingIM
         exportRecordedDataButton.setOnClickListener(view -> {
 
             //Start with export of the Left Arm Data
-            imuManager.startRecordingExport("Left Arm");
+            imuManager.startRecordingExport("Left Arm IMU");
 
         });
 
