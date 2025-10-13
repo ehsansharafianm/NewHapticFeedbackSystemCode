@@ -213,6 +213,22 @@
       },
       "oauth_client": [
         {
+          "client_id": "1049018490282-9j460lraal9msve6lb7k77eitiejhul0.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.umainebiomechanicslab.biomechanicslabapp",
+            "certificate_hash": "7db70d9dcb19027a0ae098cecfd865c8b265292f"
+          }
+        },
+        {
+          "client_id": "1049018490282-p7i19qcl2gpa3dnnuub1cncsgs4ril3f.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.umainebiomechanicslab.biomechanicslabapp",
+            "certificate_hash": "0b06833919306f0eec284e047ef4f40e060efada"
+          }
+        },
+        {
           "client_id": "1049018490282-j4srg995d4i61jlvvv7q3as8s73qlraj.apps.googleusercontent.com",
           "client_type": 3
         }
