@@ -795,6 +795,8 @@ public class Aim2ThighExtensionStudyUI extends UserInterfaceWithRecordingIMU {
 
     }
     // ================= For Bypassing the connection to haptic feedback modules this code should be commented out =================
+
+    // check if the commit works
     @Override
     public void showPage() {
 
