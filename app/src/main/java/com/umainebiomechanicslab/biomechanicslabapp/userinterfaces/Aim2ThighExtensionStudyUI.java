@@ -794,7 +794,7 @@ public class Aim2ThighExtensionStudyUI extends UserInterfaceWithRecordingIMU {
         });
 
     }
-
+    // ================= For Bypassing the connection to haptic feedback modules this code should be commented out =================
     /*@Override
     public void showPage() {
 
@@ -819,7 +819,7 @@ public class Aim2ThighExtensionStudyUI extends UserInterfaceWithRecordingIMU {
         super.showPage();
 
     }
-
+    // ================= ================= =================
 
     public void linkIMUManager(Aim2ThighExtensionStudyManager imuManager) {
         this.imuManager = imuManager;
