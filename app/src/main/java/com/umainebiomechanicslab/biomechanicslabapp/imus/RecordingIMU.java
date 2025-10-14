@@ -401,8 +401,6 @@ public class RecordingIMU extends UniversalIMU implements DotRecordingCallback {
 
                 // New Version
 
-                // ----- START OF FIX -----
-
                 // STEP 1: Create all the log files and loggers BEFORE starting the export.
                 // Use the 'recordingList' from the sensor to ensure you match each remote file with a local one.
                 // The order of files in 'recordingList' should match the order you added 'trialNames'.
@@ -429,7 +427,7 @@ public class RecordingIMU extends UniversalIMU implements DotRecordingCallback {
                     userInterface.errorMessagePopUp("!Export Start Error");
                 }
 
-                // ----- END OF FIX -----
+
 
 
             }

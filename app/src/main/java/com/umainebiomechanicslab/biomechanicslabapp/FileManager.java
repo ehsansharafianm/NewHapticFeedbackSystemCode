@@ -133,6 +133,7 @@ public class FileManager{
         return sessionFolderPath;
     }
 
+
     public boolean renameSessionFolder(String newFolderName) {
         if (newFolderName == null || newFolderName.isEmpty() || newFolderName.contains(File.separator)) {
             Log.e(TAG, "New folder name is invalid: " + newFolderName);
@@ -499,7 +500,6 @@ public class FileManager{
             loadingWindowUI.onLoadingComplete();
         }
     }
-
 
 
 }

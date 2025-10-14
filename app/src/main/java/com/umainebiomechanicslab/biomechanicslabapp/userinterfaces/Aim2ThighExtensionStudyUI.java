@@ -129,6 +129,7 @@ public class Aim2ThighExtensionStudyUI extends UserInterfaceWithRecordingIMU {
         rightFootIMUSpinner.setAdapter(IMUMacAddresses);
         trialModeSpinner.setAdapter(Session1TrialModes);
 
+        //============  Previous Listener ===================
         //Set the behavior for the subject number text box
         subjectNumberEditText.addTextChangedListener(new TextWatcher() {
             @Override
@@ -190,8 +191,16 @@ public class Aim2ThighExtensionStudyUI extends UserInterfaceWithRecordingIMU {
                         validSubjectEntered = false;
                     }
                     else{
+
                         //Rename the session folder (if there is an error, set validSubjectEntered to false)
-                        validSubjectEntered = fileManager.renameSessionFolder("Subject " + subjectNumber + " Session " + sessionNumber);
+                        // validSubjectEntered = fileManager.renameSessionFolder("Subject " + subjectNumber + " Session " + sessionNumber);
+
+                        // ================= New Way to Rename Session Folder ===================
+                        //Create a unique timestamp
+                        String timeStamp = new java.text.SimpleDateFormat("yyyy-MM-dd HH-mm-ss").format(new java.util.Date());
+                        //Rename the session folder using the subject, session, AND timestamp
+                        validSubjectEntered = fileManager.renameSessionFolder("Subject " + subjectNumber + " Session " + sessionNumber + " (" + timeStamp + ")");
+                        // =================                                    ===================
 
                         //Set the trial spinner dropdown for the given session
                         if(sessionNumber == 1){
@@ -217,6 +226,8 @@ public class Aim2ThighExtensionStudyUI extends UserInterfaceWithRecordingIMU {
                 }
             }
         });
+
+
 
         //Set the Left Arm Dropdown Spinner Behavior
         leftArmIMUSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -800,7 +811,6 @@ public class Aim2ThighExtensionStudyUI extends UserInterfaceWithRecordingIMU {
     }*/
 
     // Bypassing the connection to haptic feedback modules #Bypass
-
     @Override
     public void showPage() {
 
