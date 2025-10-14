@@ -795,7 +795,7 @@ public class Aim2ThighExtensionStudyUI extends UserInterfaceWithRecordingIMU {
 
     }
     // ================= For Bypassing the connection to haptic feedback modules this code should be commented out =================
-    /*@Override
+    @Override
     public void showPage() {
 
         //Show the page if the gate way IP was found, if not, show the loading page and find the gate way IP
@@ -808,17 +808,17 @@ public class Aim2ThighExtensionStudyUI extends UserInterfaceWithRecordingIMU {
             imuManager.findGateWayIP();
         }
 
-    }*/
+    }
 
     // Bypassing the connection to haptic feedback modules #Bypass
-    @Override
+    /*@Override
     public void showPage() {
 
         // Bypassing the gateway IP check to allow proceeding without haptic module connection.
         Log.d("HapticBypass", "Skipping gateway IP check and showing page directly.");
         super.showPage();
 
-    }
+    }*/
     // ================= ================= =================
 
     public void linkIMUManager(Aim2ThighExtensionStudyManager imuManager) {
