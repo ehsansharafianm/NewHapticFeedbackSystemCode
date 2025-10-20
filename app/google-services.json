@@ -213,6 +213,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "1049018490282-4a885nummu5g4lr53ut0vun2jd49nf9m.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.umainebiomechanicslab.biomechanicslabapp",
+            "certificate_hash": "d639d78c0bc823fe51c51653e0505f29c22d61c2"
+          }
+        },
+        {
           "client_id": "1049018490282-9j460lraal9msve6lb7k77eitiejhul0.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
@@ -226,6 +234,14 @@
           "android_info": {
             "package_name": "com.umainebiomechanicslab.biomechanicslabapp",
             "certificate_hash": "0b06833919306f0eec284e047ef4f40e060efada"
+          }
+        },
+        {
+          "client_id": "1049018490282-spd7c1r2crb4gc80d8e4u92ko2te45a6.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.umainebiomechanicslab.biomechanicslabapp",
+            "certificate_hash": "5dc1b2b31ded34b8b23d94be4682c67d495eaa92"
           }
         },
         {
