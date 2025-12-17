@@ -8,8 +8,8 @@
             <InsightsFilterSettings>
               <option name="connection">
                 <ConnectionSetting>
-                  <option name="appId" value="com.umainebiomechanicslab.biomechanicslabapp" />
-                  <option name="mobileSdkAppId" value="1:1049018490282:android:579aaefd142bca0b719fd3" />
+                  <option name="appId" value="com.umainebiomechanicslab.gait_training_app" />
+                  <option name="mobileSdkAppId" value="1:1049018490282:android:be37f8fd837481a7719fd3" />
                   <option name="projectId" value="hapticfeedback-5e2f0" />
                   <option name="projectNumber" value="1049018490282" />
                 </ConnectionSetting>

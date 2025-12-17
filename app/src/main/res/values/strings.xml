@@ -1,7 +1,7 @@
 <resources>
 
     <!-- General App Strings -->
-    <string name="app_name">BiomechanicsLabApp</string>
+    <string name="app_name">Gait Training</string>
     <string name="GoBackButton">Go Back</string>
     <string name="CancelButtonText">Cancel</string>
     <string name="UniversityOfMaineLogoImageDescription">University of Maine Logo</string>
@@ -116,6 +116,16 @@
 
     <string-array name="IMU_MAC_Addresses">
         <item>--</item>
+        <item>M–01</item>
+        <item>M–02</item>
+        <item>M–03</item>
+        <item>M–04</item>
+        <item>M–05</item>
+        <item>M–06</item>
+        <item>M–07</item>
+        <item>M–08</item>
+        <item>M–09</item>
+        <item>M–10</item>
         <item>V2–01</item>
         <item>V2–02</item>
         <item>V2–03</item>
