@@ -176,7 +176,7 @@ public class StreamingIMU extends UniversalIMU implements DotMeasurementCallback
                 Log.e(TAG, "startOffsetInitialization", e);
             }
         }
-
+        // This can make probelm with M series IMUs
         imuManager.onAngleOffsetInitializationComplete();
 
     }
@@ -315,7 +315,7 @@ public class StreamingIMU extends UniversalIMU implements DotMeasurementCallback
             case "HeadingRevert":
                 // Do nothing here. We are just waiting for the onDotHeadingChanged callback.
                 break;
-            case "Initialization":
+            /*case "Initialization":
                 if (sampleCounter < (outputFrequency * offsetInitializationDurationSec)){
                     if ((sampleCounter % outputFrequency) == 0) {
                         userInterface.updateIMUDataOutput(nameOfIMU, "Initializing...");
@@ -327,6 +327,33 @@ public class StreamingIMU extends UniversalIMU implements DotMeasurementCallback
                     fileManager.writeToLogFile(nameOfIMU + " Initialized Angle Offset: " + offsetEulerAngle);
                     offsetAnglesInitialized = true;
                     stopOffsetInitialization();
+                }
+                break;*/
+            case "Initialization":
+                if (sampleCounter < (outputFrequency * offsetInitializationDurationSec)){
+                    if ((sampleCounter % outputFrequency) == 0) {
+                        userInterface.updateIMUDataOutput(nameOfIMU, "Initializing...");
+                    }
+                    trialAngleSum += eulerAngleX;
+                }
+                else if (sampleCounter == (outputFrequency * offsetInitializationDurationSec)){
+                    // Calculate offset
+                    offsetEulerAngle = trialAngleSum / (outputFrequency * offsetInitializationDurationSec);
+
+                    // ✅ SET FLAG FIRST - CRITICAL!
+                    offsetAnglesInitialized = true;
+
+                    // Update UI and log
+                    userInterface.updateIMUDataOutput(nameOfIMU, String.format(Locale.US,"Initialized %.3f",offsetEulerAngle));
+                    fileManager.writeToLogFile(nameOfIMU + " Initialized Angle Offset: " + offsetEulerAngle);
+
+                    // Stop measuring
+                    stopOffsetInitialization();
+                }
+                // ✅ ADD THIS: Continue processing one more sample after stopping
+                else if (sampleCounter == (outputFrequency * offsetInitializationDurationSec) + 1){
+                    // This ensures we process data even after stopping
+                    // Don't do anything, just let the sample counter increment
                 }
                 break;
             default:

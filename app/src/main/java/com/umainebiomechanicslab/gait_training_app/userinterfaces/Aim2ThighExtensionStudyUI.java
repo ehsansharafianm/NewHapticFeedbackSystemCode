@@ -771,9 +771,7 @@ public class Aim2ThighExtensionStudyUI extends UserInterfaceWithRecordingIMU {
 
         });
 
-        // TODO
-        /*//Set the behavior for the uploadDataToCloudButton
-        uploadDataToCloudButton.setOnClickListener(view -> fileManager.uploadFilesToFirebaseCloudStorage(this));
+
 
         //Set the behavior for the exportRecordedIMUDataButton
         exportRecordedDataButton.setOnClickListener(view -> {
@@ -781,31 +779,8 @@ public class Aim2ThighExtensionStudyUI extends UserInterfaceWithRecordingIMU {
             //Start with export of the Left Arm Data
             imuManager.startRecordingExport("Left Arm IMU");
 
-        });*/
+        });
 
-        /*uploadDataToCloudButton.setOnClickListener(view -> {
-            // Check if user is signed in BEFORE attempting upload
-            fileManager.checkGoogleDriveSignIn();
-
-            // Only upload if user is already signed in
-            if(fileManager.isUserSignedIn()) {
-                fileManager.uploadFilesToFirebaseCloudStorage(this);
-            } else {
-                // User needs to sign in first
-                textPopUp("Please sign in with Google to upload files");
-            }
-        });*/
-        /*uploadDataToCloudButton.setOnClickListener(view -> {
-            if(fileManager.isUserSignedIn()) {
-                // User is signed in, proceed with upload
-                fileManager.uploadFilesToFirebaseCloudStorage(this);
-            } else {
-                // User not signed in, initiate sign-in
-                textPopUp("Please sign in with Google first");
-                fileManager.signIn();
-                // User will need to click upload again after signing in
-            }
-        });*/
 
         uploadDataToCloudButton.setOnClickListener(view -> {
             Log.d(TAG, "Upload button clicked");

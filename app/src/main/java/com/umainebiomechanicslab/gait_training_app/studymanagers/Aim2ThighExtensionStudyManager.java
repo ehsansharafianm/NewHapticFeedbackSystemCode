@@ -137,6 +137,9 @@ public class Aim2ThighExtensionStudyManager extends IMUManagerWithRecordingIMUs{
             }
         }
 
+        // ✅ Start checking for completion
+        // checkInitializationCompletion();
+
     }
 
     @Override
@@ -412,6 +415,35 @@ public class Aim2ThighExtensionStudyManager extends IMUManagerWithRecordingIMUs{
         //Start the UDP Listener Thread
         udpListenerThread.start();
     }
+
+    /*private void checkInitializationCompletion() {
+        // Use a handler to check periodically
+        new android.os.Handler(android.os.Looper.getMainLooper()).postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                boolean allComplete = true;
+
+                // Check if all streaming IMUs are initialized
+                for(UniversalIMU IMU : IMUArrayList) {
+                    if (IMU instanceof StreamingIMU) {
+                        if (!((StreamingIMU) IMU).getOffsetAnglesInitialized()) {
+                            allComplete = false;
+                            break;
+                        }
+                    }
+                }
+
+                if(allComplete) {
+                    // All initialized!
+                    fileManager.writeToLogFile("All IMUs initialization complete");
+                    thighExtensionStudyUI.onOffsetInitializationComplete(true);
+                } else {
+                    // Check again in 100ms
+                    checkInitializationCompletion();
+                }
+            }
+        }, 100);  // Check every 100ms
+    }*/
 
 
 }
