@@ -84,7 +84,11 @@ public abstract class IMUManager implements DotScannerCallback, DotSyncCallback 
 
     public abstract void startAngleOffsetInitialization();
 
-    public abstract void onAngleOffsetInitializationComplete();
+    //public abstract void onAngleOffsetInitializationComplete();
+    public void onAngleOffsetInitializationComplete() {
+        // Empty default implementation
+        // Subclasses can override if needed, but not required
+    }
 
     public abstract void startTrial(String trialName);
 

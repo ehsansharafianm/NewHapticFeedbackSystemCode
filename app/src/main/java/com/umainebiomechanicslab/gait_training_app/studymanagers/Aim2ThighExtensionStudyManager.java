@@ -138,11 +138,11 @@ public class Aim2ThighExtensionStudyManager extends IMUManagerWithRecordingIMUs{
         }
 
         // ✅ Start checking for completion
-        // checkInitializationCompletion();
+        checkInitializationCompletion();
 
     }
 
-    @Override
+    /*@Override
     public void onAngleOffsetInitializationComplete() {
 
         //For all the streaming IMUs in the IMU ArrayList, check if their angle offset initialization is complete
@@ -157,7 +157,7 @@ public class Aim2ThighExtensionStudyManager extends IMUManagerWithRecordingIMUs{
         //If all streaming IMUs have their angle offset initialization complete, call onOffsetInitializationComplete
         thighExtensionStudyUI.onOffsetInitializationComplete(true);
 
-    }
+    }*/
 
     @Override
     public void startTrial(String trialName) {
@@ -444,6 +444,38 @@ public class Aim2ThighExtensionStudyManager extends IMUManagerWithRecordingIMUs{
             }
         }, 100);  // Check every 100ms
     }*/
+    private void checkInitializationCompletion() {
+        new android.os.Handler(android.os.Looper.getMainLooper()).postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                boolean allComplete = true;
+                int completedCount = 0;
+                int totalStreamingIMUs = 0;
 
+                // Check if all streaming IMUs have completed initialization
+                for(UniversalIMU IMU : IMUArrayList) {
+                    if (IMU instanceof StreamingIMU) {
+                        totalStreamingIMUs++;
+                        if (((StreamingIMU) IMU).getOffsetAnglesInitialized()) {
+                            completedCount++;
+                        } else {
+                            allComplete = false;
+                        }
+                    }
+                }
+
+                //fileManager.writeToLogFile("Initialization check: " + completedCount + "/" + totalStreamingIMUs + " complete");
+
+                if(allComplete && totalStreamingIMUs > 0) {
+                    // All initialized!
+                    fileManager.writeToLogFile("All Streaming IMUs initialization complete");
+                    thighExtensionStudyUI.onOffsetInitializationComplete(true);
+                } else {
+                    // Not all complete yet - check again in 100ms
+                    checkInitializationCompletion();
+                }
+            }
+        }, 100);  // Check every 100ms
+    }
 
 }
