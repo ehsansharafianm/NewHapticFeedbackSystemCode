@@ -205,12 +205,20 @@
         <item>Fast</item>
         <item>Error Feedback Familiarization</item>
         <item>Error Feedback</item>
+        <item>Error Feedback 1</item>
+        <item>Error Feedback 2</item>
+        <item>Error Feedback 3</item>
+        <item>Cooldown</item>
     </string-array>
 
     <string-array name="Aim2ThighExtensionStudyTrainingSessionsTrialTypes">
         <item>Testing</item>
         <item>Baseline Normal</item>
         <item>Error Feedback</item>
+        <item>Error Feedback 1</item>
+        <item>Error Feedback 2</item>
+        <item>Error Feedback 3</item>
+        <item>Cooldown</item>
     </string-array>
 
     <string-array name="Aim2ThighExtensionStudyRetentionSessionTrialTypes">
@@ -218,6 +226,7 @@
         <item>Baseline Normal</item>
         <item>Fast</item>
         <item>Retention</item>
+        <item>Cooldown</item>
     </string-array>
 
 
