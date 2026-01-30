@@ -91,7 +91,10 @@ public class ThighExtensionStudyAim2TargetManager {
         last40Steps[0] = targetMet;
 
         //If the trial name is exactly Error Feedback or Positive Feedback
-        if(trial != null && (trial.getTrialName().equals("Error Feedback") || trial.getTrialName().equals("Positive Feedback"))){
+        if(trial != null && (trial.getTrialName().equals("Error Feedback 1") ||
+                trial.getTrialName().equals("Error Feedback 2") ||
+                trial.getTrialName().equals("Error Feedback 3") ||
+                trial.getTrialName().equals("Positive Feedback"))){
 
             //Check if the target should be changed based on this new PTE
             checkIfTargetShouldChange(sampleNumber);

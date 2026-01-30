@@ -304,6 +304,9 @@ public class StreamingIMUWithThighAlgorithmForAim2ThighExtensionStudy extends St
                     break;
 
                 case "Error Feedback":
+                case "Error Feedback 1":
+                case "Error Feedback 2":
+                case "Error Feedback 3":
 
                     //Update the EulerX Value To The Offset Value
                     eulerAngleX = eulerAngleX - offsetEulerAngle;

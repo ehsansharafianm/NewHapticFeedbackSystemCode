@@ -110,6 +110,9 @@ public class Aim2ThighExtensionStudyManager extends IMUManagerWithRecordingIMUs{
         trialDurations.put("Fast", 2);
         trialDurations.put("Error Feedback Familiarization", 2);
         trialDurations.put("Error Feedback", 6);
+        trialDurations.put("Error Feedback 1", 6);
+        trialDurations.put("Error Feedback 2", 6);
+        trialDurations.put("Error Feedback 3", 6);
         trialDurations.put("Cooldown", 2);
         trialDurations.put("Retention", 2);
 
@@ -215,6 +218,9 @@ public class Aim2ThighExtensionStudyManager extends IMUManagerWithRecordingIMUs{
                 break;
 
             case "Error Feedback":
+            case "Error Feedback 1":
+            case "Error Feedback 2":
+            case "Error Feedback 3":
 
                 //Ensure the arrays that store the last 20 steps of data are reset before starting the trial
                 targetManager.resetLast40StepsArray();
@@ -253,6 +259,9 @@ public class Aim2ThighExtensionStudyManager extends IMUManagerWithRecordingIMUs{
             case "Cooldown":
             case "Retention":
             case "Error Feedback":
+            case "Error Feedback 1":
+            case "Error Feedback 2":
+            case "Error Feedback 3":
 
                 //Stop all IMUs
                 leftThighIMU.stopTrial(false);

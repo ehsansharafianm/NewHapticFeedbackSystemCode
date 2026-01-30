@@ -244,6 +244,36 @@ public abstract class IMUManager implements DotScannerCallback, DotSyncCallback 
             case "M–10":
                 macAddress = "D4:22:CD:07:A8:3A";
                 break;
+            case "M–11":
+                macAddress = "D4:22:CD:07:B2:6A";
+                break;
+            case "M–12":
+                macAddress = "D4:22:CD:07:B0:7C";
+                break;
+            case "M–13":
+                macAddress = "D4:22:CD:07:B0:DB";
+                break;
+            case "M–14":
+                macAddress = "D4:22:CD:07:B0:E7";
+                break;
+            case "M–15":
+                macAddress = "D4:22:CD:07:AF:F5";
+                break;
+            case "M–16":
+                macAddress = "D4:22:CD:07:B3:84";
+                break;
+            case "M–17":
+                macAddress = "D4:22:CD:07:B7:D3";
+                break;
+            case "M–18":
+                macAddress = "D4:22:CD:07:B7:C3";
+                break;
+            case "M–19":
+                macAddress = "D4:22:CD:07:B2:0E";
+                break;
+            case "M–20":
+                macAddress = "D4:22:CD:07:B8:01";
+                break;
             default:
                 userInterface.textPopUp("Non-Existent IMU Code");
                 return;

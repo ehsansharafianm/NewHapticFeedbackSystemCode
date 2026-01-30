@@ -126,6 +126,16 @@
         <item>M–08</item>
         <item>M–09</item>
         <item>M–10</item>
+        <item>M–11</item>
+        <item>M–12</item>
+        <item>M–13</item>
+        <item>M–14</item>
+        <item>M–15</item>
+        <item>M–16</item>
+        <item>M–17</item>
+        <item>M–18</item>
+        <item>M–19</item>
+        <item>M–20</item>
         <item>V2–01</item>
         <item>V2–02</item>
         <item>V2–03</item>
@@ -205,12 +215,20 @@
         <item>Fast</item>
         <item>Error Feedback Familiarization</item>
         <item>Error Feedback</item>
+        <item>Error Feedback 1</item>
+        <item>Error Feedback 2</item>
+        <item>Error Feedback 3</item>
+        <item>Cooldown</item>
     </string-array>
 
     <string-array name="Aim2ThighExtensionStudyTrainingSessionsTrialTypes">
         <item>Testing</item>
         <item>Baseline Normal</item>
         <item>Error Feedback</item>
+        <item>Error Feedback 1</item>
+        <item>Error Feedback 2</item>
+        <item>Error Feedback 3</item>
+        <item>Cooldown</item>
     </string-array>
 
     <string-array name="Aim2ThighExtensionStudyRetentionSessionTrialTypes">
@@ -218,6 +236,7 @@
         <item>Baseline Normal</item>
         <item>Fast</item>
         <item>Retention</item>
+        <item>Cooldown</item>
     </string-array>
 
 

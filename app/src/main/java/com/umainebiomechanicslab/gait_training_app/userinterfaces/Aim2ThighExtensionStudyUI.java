@@ -190,7 +190,7 @@ public class Aim2ThighExtensionStudyUI extends UserInterfaceWithRecordingIMU {
                     int subjectNumber = Integer.parseInt(subjectNumberEditText.getText().toString());
                     int sessionNumber = Integer.parseInt(sessionNumberEditText.getText().toString());
 
-                    if ((sessionNumber < 1) || (sessionNumber > 12)) {
+                    if ((sessionNumber < 1) || (sessionNumber > 13)) {
                         validSubjectEntered = false;
                     }
                     else{
@@ -209,7 +209,7 @@ public class Aim2ThighExtensionStudyUI extends UserInterfaceWithRecordingIMU {
                         if(sessionNumber == 1){
                             trialModeSpinner.setAdapter(Session1TrialModes);
                         }
-                        else if(sessionNumber == 12){
+                        else if(sessionNumber == 13){
                             trialModeSpinner.setAdapter(RetentionSessionTrialModes);
                         }
                         else{
