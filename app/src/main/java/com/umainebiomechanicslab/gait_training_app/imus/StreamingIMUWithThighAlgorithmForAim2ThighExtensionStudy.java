@@ -385,6 +385,9 @@ public class StreamingIMUWithThighAlgorithmForAim2ThighExtensionStudy extends St
                     break;
             }
 
+            //Diagnostic-only: record clock comparison for Samsung desync investigation
+            logSyncDiagnostics(dotData);
+
             //Increase the sample counter by 1
             sampleCounter++;
         }

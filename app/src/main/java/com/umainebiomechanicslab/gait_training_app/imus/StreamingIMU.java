@@ -2,9 +2,11 @@ package com.umainebiomechanicslab.gait_training_app.imus;
 
 import android.bluetooth.BluetoothDevice;
 import android.content.Context;
+import android.os.SystemClock;
 import android.util.Log;
 
 import com.umainebiomechanicslab.gait_training_app.FileManager;
+import com.umainebiomechanicslab.gait_training_app.SyncDiagnosticsLogger;
 import com.umainebiomechanicslab.gait_training_app.studymanagers.IMUManager;
 import com.umainebiomechanicslab.gait_training_app.trials.Trial;
 import com.umainebiomechanicslab.gait_training_app.userinterfaces.UserInterfaceWithIMU;
@@ -35,6 +37,9 @@ public class StreamingIMU extends UniversalIMU implements DotMeasurementCallback
     protected int offsetInitializationDurationSec;
     protected double offsetEulerAngle;
     private final Object sampleCounterLock = new Object();
+
+    //Diagnostic-only logger for investigating cross-IMU timer desync on Samsung (logging only)
+    protected SyncDiagnosticsLogger syncDiagnosticsLogger;
 
     public StreamingIMU(String nameOfIMU, Context context, IMUManager imuManager, UserInterfaceWithIMU userInterface, FileManager fileManager, int measurementMode){
 
@@ -300,6 +305,48 @@ public class StreamingIMU extends UniversalIMU implements DotMeasurementCallback
         }
     }
 
+    public void setSyncDiagnosticsLogger(SyncDiagnosticsLogger syncDiagnosticsLogger) {
+        this.syncDiagnosticsLogger = syncDiagnosticsLogger;
+    }
+
+    /*
+     * Diagnostic-only. Writes one row (roughly once per second) comparing three independent
+     * clocks for this IMU: real elapsed time, the app's received-packet counter, and the
+     * sensor's own packet counter/timestamp. Used to locate the origin of the cross-IMU timer
+     * desync observed on Samsung. Does NOT affect trial timing or signal processing.
+     */
+    protected void logSyncDiagnostics(DotData dotData) {
+
+        SyncDiagnosticsLogger logger = syncDiagnosticsLogger;
+        if (logger == null) {
+            return;
+        }
+
+        //Throttle to roughly one row per second per IMU
+        if ((sampleCounter % outputFrequency) != 0) {
+            return;
+        }
+
+        //Real wall-clock time since the single shared trial start
+        long elapsedMs = SystemClock.elapsedRealtime() - logger.getStartElapsedMs();
+
+        //Ground-truth values carried inside the sensor packet
+        int sensorPacketCounter = dotData.getPacketCounter();
+        long sensorTimeFineUs = dotData.getSampleTimeFine();
+
+        //Currently configured output rate for this sensor (Hz)
+        int outputRate = -1;
+        try {
+            if (movellaDotDevice != null) {
+                outputRate = movellaDotDevice.getCurrentOutputRate();
+            }
+        } catch (Exception e) {
+            //Leave outputRate as -1 if it cannot be read
+        }
+
+        logger.logRow(nameOfIMU, elapsedMs, sampleCounter, sensorPacketCounter, sensorTimeFineUs, outputRate);
+    }
+
     @Override
     public void onDotDataChanged(String address, DotData dotData) {
 
@@ -426,6 +473,9 @@ public class StreamingIMU extends UniversalIMU implements DotMeasurementCallback
                     }
                     break;
             }
+
+            //Diagnostic-only: record clock comparison for Samsung desync investigation
+            logSyncDiagnostics(dotData);
 
             //Increase the sample counter by 1
             sampleCounter++;
