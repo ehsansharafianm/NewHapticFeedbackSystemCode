@@ -147,6 +147,10 @@ public class StreamingIMUWithFootDataAlgorithmForStrideCalculation extends Strea
 
         double eulerAngleX = dotData.getEuler()[0];
 
+        //Diagnostic-only: capture the sensor's ground-truth clocks BEFORE the app
+        //overwrites the packet counter below (Samsung desync investigation)
+        logSyncDiagnostics(dotData);
+
         switch(trialName){
             case "HeadingReset":
             case "HeadingRevert":
@@ -291,9 +295,6 @@ public class StreamingIMUWithFootDataAlgorithmForStrideCalculation extends Strea
                 break;
 
         }
-
-        //Diagnostic-only: record clock comparison for Samsung desync investigation
-        logSyncDiagnostics(dotData);
 
         //Increase the sample counter by 1
         sampleCounter++;

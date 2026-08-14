@@ -138,6 +138,11 @@ public class StreamingIMUWithThighAlgorithmForAim2ThighExtensionStudy extends St
         double eulerAngleX = dotData.getEuler()[0];
 
         synchronized(sampleCounterLock) {
+
+            //Diagnostic-only: capture the sensor's ground-truth clocks BEFORE the app
+            //overwrites the packet counter below (Samsung desync investigation)
+            logSyncDiagnostics(dotData);
+
             switch (trialName) {
                 case "HeadingReset":
                 case "HeadingRevert":
@@ -384,9 +389,6 @@ public class StreamingIMUWithThighAlgorithmForAim2ThighExtensionStudy extends St
                     }
                     break;
             }
-
-            //Diagnostic-only: record clock comparison for Samsung desync investigation
-            logSyncDiagnostics(dotData);
 
             //Increase the sample counter by 1
             sampleCounter++;
