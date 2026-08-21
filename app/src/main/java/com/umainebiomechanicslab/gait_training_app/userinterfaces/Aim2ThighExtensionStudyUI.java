@@ -1048,36 +1048,39 @@ public class Aim2ThighExtensionStudyUI extends UserInterfaceWithRecordingIMU {
         updateButtonEnabledStatus(startSyncButton, true);
         updateButtonEnabledStatus(goBackButton, true);
 
-        if(success) {
-            // First enable the post-sync buttons
-            onIMUsFullySynced(true);
+        // Enable the post-sync buttons. On this Google Pixel build this enables the
+        // Initialization/Trial buttons even when the sync failed (a warning is shown
+        // when they are pressed while unsynced).
+        onIMUsFullySynced(success);
 
-            // Then check if we need to find the gateway IP for haptic modules
-            if(!imuManager.getGateWayIPFound()) {
-                Log.d("Aim2ThighExtensionStudyUI", "Sync complete, now finding gateway IP");
+        /*
+         * Find the haptic-module gateway IP regardless of whether the sync succeeded.
+         * Haptic feedback depends on the gateway IP, and we still want it available
+         * when the operator chooses to run with unsynced IMUs. Previously this only ran
+         * on a successful sync, so a failed sync left haptics unavailable.
+         */
+        if(!imuManager.getGateWayIPFound()) {
+            Log.d("Aim2ThighExtensionStudyUI", "Sync complete (success=" + success + "), now finding gateway IP");
 
-                // Show loading window while finding gateway
-                loadingWindowUI.startLoadingPage("Finding Haptic Module Gateway IP...", new LoadingWindowUI.LoadingPageListener() {
-                    @Override
-                    public void onLoadingPageFinished() {
-                        // Gateway found, return to trial page
-                        Log.d("Aim2ThighExtensionStudyUI", "Gateway IP found, returning to trial page");
-                        showPage();
-                    }
+            // Show loading window while finding gateway
+            loadingWindowUI.startLoadingPage("Finding Haptic Module Gateway IP...", new LoadingWindowUI.LoadingPageListener() {
+                @Override
+                public void onLoadingPageFinished() {
+                    // Gateway found, return to trial page
+                    Log.d("Aim2ThighExtensionStudyUI", "Gateway IP found, returning to trial page");
+                    showPage();
+                }
 
-                    @Override
-                    public void onLoadingPageCancelled() {
-                        // User cancelled
-                        errorMessagePopUp("Gateway IP not found. Haptic feedback will not be available.");
-                        showPage();
-                    }
-                });
+                @Override
+                public void onLoadingPageCancelled() {
+                    // User cancelled
+                    errorMessagePopUp("Gateway IP not found. Haptic feedback will not be available.");
+                    showPage();
+                }
+            });
 
-                // Start the gateway discovery process
-                imuManager.findGateWayIP();
-            }
-        } else {
-            onIMUsFullySynced(false);
+            // Start the gateway discovery process
+            imuManager.findGateWayIP();
         }
     }
 
