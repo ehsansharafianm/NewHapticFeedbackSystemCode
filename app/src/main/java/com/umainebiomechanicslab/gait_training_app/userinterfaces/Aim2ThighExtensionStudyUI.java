@@ -1125,10 +1125,6 @@ public class Aim2ThighExtensionStudyUI extends UserInterfaceWithRecordingIMU {
          */
         updateButtonEnabledStatus(startInitializationButton, true);
         updateButtonEnabledStatus(startTrialButton, true);
-
-        if(!fullySynced){
-            fileManager.writeToLogFile("Sync unsuccessful - buttons enabled anyway (unsynced IMUs allowed)");
-        }
     }
 
     public void updateHapticCellIPAddress(String sideOfBody, int blockNumber, int IPBlock){
