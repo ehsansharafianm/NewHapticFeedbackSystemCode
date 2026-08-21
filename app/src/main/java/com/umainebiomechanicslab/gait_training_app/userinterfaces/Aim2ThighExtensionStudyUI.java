@@ -31,6 +31,7 @@ public class Aim2ThighExtensionStudyUI extends UserInterfaceWithRecordingIMU {
     private final TextView rightHapticCellIPAddressTextView;
 
     private boolean IMUsAngleOffsetInitialized;
+    private boolean IMUsSynced;
     private boolean startTrialButtonActivated;
     private boolean logPopUpWindowVisible;
     private boolean validLeftHapticCellIPAddress, validRightHapticCellIPAddress;
@@ -53,6 +54,9 @@ public class Aim2ThighExtensionStudyUI extends UserInterfaceWithRecordingIMU {
 
         //Initialize IMUsAngleOffsetInitialized
         IMUsAngleOffsetInitialized = false;
+
+        //Initialize IMUsSynced (tracks whether the last sync attempt succeeded)
+        IMUsSynced = false;
 
         //Initialize startTrialButtonActivated
         startTrialButtonActivated = false;
@@ -684,6 +688,12 @@ public class Aim2ThighExtensionStudyUI extends UserInterfaceWithRecordingIMU {
         //Set the behavior for the startInitializationButton
         startInitializationButton.setOnClickListener(view -> {
 
+            //Warn (but do not block) if the IMUs are not synced
+            if(!IMUsSynced){
+                errorMessagePopUp("WARNING: IMUs are not synced. Proceeding with initialization anyway.");
+                fileManager.writeToLogFile("WARNING: Initialization started with unsynced IMUs");
+            }
+
             //Update Initialization Button Characteristics
             updateButtonText(startInitializationButton, "Initializing...");
             updateButtonEnabledStatus(startInitializationButton, false);
@@ -726,6 +736,12 @@ public class Aim2ThighExtensionStudyUI extends UserInterfaceWithRecordingIMU {
 
                 //Only start a trial if all IMUs are initialized and there is a valid subject entered
                 if(IMUsAngleOffsetInitialized && validSubjectEntered){
+
+                    //Warn (but do not block) if the IMUs are not synced
+                    if(!IMUsSynced){
+                        errorMessagePopUp("WARNING: IMUs are not synced. Proceeding with trial anyway.");
+                        fileManager.writeToLogFile("WARNING: Trial started with unsynced IMUs");
+                    }
 
                     //Start the current trial
                     imuManager.startTrial(trialName);
@@ -1094,14 +1110,24 @@ public class Aim2ThighExtensionStudyUI extends UserInterfaceWithRecordingIMU {
     }
 
     private void onIMUsFullySynced(boolean fullySynced){
+
+        //Remember whether the IMUs actually synced so we can warn (but not block) later
+        IMUsSynced = fullySynced;
+
         updateButtonEnabledStatus(disconnectButton, true);
-        if(fullySynced){
-            updateButtonEnabledStatus(startInitializationButton, true);
-            updateButtonEnabledStatus(startTrialButton, true);
-        }
-        else{
-            updateButtonEnabledStatus(startInitializationButton, false);
-            updateButtonEnabledStatus(startTrialButton, false);
+
+        /*
+         * Google Pixel change: previously a failed sync left the Start Initialization and
+         * Start Trial buttons disabled, blocking the session. We now enable them regardless
+         * of sync success. If the sync failed, the user is still allowed to proceed, but a
+         * warning is shown when they press Start Initialization or Start Trial (see the
+         * startInitializationButton and startTrialButton click handlers).
+         */
+        updateButtonEnabledStatus(startInitializationButton, true);
+        updateButtonEnabledStatus(startTrialButton, true);
+
+        if(!fullySynced){
+            fileManager.writeToLogFile("Sync unsuccessful - buttons enabled anyway (unsynced IMUs allowed)");
         }
     }
 
