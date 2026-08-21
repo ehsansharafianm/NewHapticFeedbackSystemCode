@@ -571,6 +571,32 @@ public abstract class IMUManager implements DotScannerCallback, DotSyncCallback 
         else{
             fileManager.writeToLogFile("Sync Unsuccessful");
             userInterface.errorMessagePopUp("Sync Unsuccessful");
+
+            /*
+             * Google Pixel build: allow the session to proceed even when syncing fails.
+             *
+             * On a SUCCESSFUL sync, each IMU is driven through the chain
+             * onSyncingResult -> setMeasurementMode -> performHeadingReset ->
+             * onHeadingResetComplete -> onSyncComplete, which (a) puts every IMU into
+             * the correct measurement mode, (b) marks the streaming IMUs' heading as
+             * reset (required before startOffsetInitialization will run), and (c)
+             * finally tells the UI the sync flow is done.
+             *
+             * On a FAILED sync, setMeasurementMode() is only called for IMUs that
+             * happened to sync, so that chain never completes: previously onSyncComplete
+             * was never called, the Sync button stayed stuck on "Syncing...", and
+             * initialization would have been blocked by the heading-not-reset guard.
+             *
+             * To let the operator continue anyway, run the same setMeasurementMode()
+             * step here for every IMU. That sets each IMU's measurement mode and (for
+             * streaming IMUs) drives performHeadingReset -> onHeadingResetComplete ->
+             * onSyncComplete(false), which unsticks the button and enables the
+             * Initialization/Trial buttons on this build.
+             */
+            isSynced = false;
+            for(UniversalIMU IMU : IMUArrayList){
+                IMU.setMeasurementMode();
+            }
         }
 
     }
