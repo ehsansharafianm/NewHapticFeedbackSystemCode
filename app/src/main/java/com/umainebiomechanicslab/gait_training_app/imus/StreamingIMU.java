@@ -2,11 +2,9 @@ package com.umainebiomechanicslab.gait_training_app.imus;
 
 import android.bluetooth.BluetoothDevice;
 import android.content.Context;
-import android.os.SystemClock;
 import android.util.Log;
 
 import com.umainebiomechanicslab.gait_training_app.FileManager;
-import com.umainebiomechanicslab.gait_training_app.SyncDiagnosticsLogger;
 import com.umainebiomechanicslab.gait_training_app.studymanagers.IMUManager;
 import com.umainebiomechanicslab.gait_training_app.trials.Trial;
 import com.umainebiomechanicslab.gait_training_app.userinterfaces.UserInterfaceWithIMU;
@@ -37,16 +35,6 @@ public class StreamingIMU extends UniversalIMU implements DotMeasurementCallback
     protected int offsetInitializationDurationSec;
     protected double offsetEulerAngle;
     private final Object sampleCounterLock = new Object();
-
-    //Diagnostic-only logger for investigating cross-IMU timer desync on Samsung (logging only)
-    protected SyncDiagnosticsLogger syncDiagnosticsLogger;
-
-    //Diagnostic-only per-trial stats for the end-of-trial summary (Samsung desync investigation)
-    private boolean diagFirstPacketSeen;
-    private int diagFirstSensorPacketCounter, diagLastSensorPacketCounter;
-    private long diagFirstSensorTimeFineUs, diagLastSensorTimeFineUs;
-    private long diagFirstElapsedMs, diagLastElapsedMs;
-    private int diagReceivedCount;
 
     public StreamingIMU(String nameOfIMU, Context context, IMUManager imuManager, UserInterfaceWithIMU userInterface, FileManager fileManager, int measurementMode){
 
@@ -219,16 +207,6 @@ public class StreamingIMU extends UniversalIMU implements DotMeasurementCallback
         this.trialDurationMin = trialDurationMin;
         sampleCounter = 0;
 
-        //Reset diagnostic-only per-trial stats (Samsung desync investigation)
-        diagFirstPacketSeen = false;
-        diagFirstSensorPacketCounter = 0;
-        diagLastSensorPacketCounter = 0;
-        diagFirstSensorTimeFineUs = 0;
-        diagLastSensorTimeFineUs = 0;
-        diagFirstElapsedMs = 0;
-        diagLastElapsedMs = 0;
-        diagReceivedCount = 0;
-
         if(logData){
             //Stream and save results to logFile
             dotLogFile = createDataLog(trialName, timeStamp);
@@ -256,9 +234,6 @@ public class StreamingIMU extends UniversalIMU implements DotMeasurementCallback
 
     @Override
     public FileManager.DotLogFile stopTrial(boolean logData) {
-
-        //Diagnostic-only: write the end-of-trial packet-loss summary for this IMU
-        logSyncDiagnosticsSummary();
 
         if(movellaDotDevice != null){
             try{
@@ -325,119 +300,6 @@ public class StreamingIMU extends UniversalIMU implements DotMeasurementCallback
         }
     }
 
-    public void setSyncDiagnosticsLogger(SyncDiagnosticsLogger syncDiagnosticsLogger) {
-        this.syncDiagnosticsLogger = syncDiagnosticsLogger;
-    }
-
-    /*
-     * Diagnostic-only. Writes one row (roughly once per second) comparing three independent
-     * clocks for this IMU: real elapsed time, the app's received-packet counter, and the
-     * sensor's own packet counter/timestamp. Used to locate the origin of the cross-IMU timer
-     * desync observed on Samsung. Does NOT affect trial timing or signal processing.
-     */
-    protected void logSyncDiagnostics(DotData dotData) {
-
-        SyncDiagnosticsLogger logger = syncDiagnosticsLogger;
-        if (logger == null) {
-            return;
-        }
-
-        //Real wall-clock time since the single shared trial start
-        long elapsedMs = SystemClock.elapsedRealtime() - logger.getStartElapsedMs();
-
-        //Ground-truth values carried inside the sensor packet
-        int sensorPacketCounter = dotData.getPacketCounter();
-        long sensorTimeFineUs = dotData.getSampleTimeFine();
-
-        /*
-         * Per-packet stat tracking (runs for EVERY received packet) for the end-of-trial
-         * summary. diagReceivedCount counts packets the app actually received; the sensor's
-         * own packet counter range tells us how many the sensor produced, so the difference
-         * is the number of packets Bluetooth dropped for this sensor.
-         */
-        if (!diagFirstPacketSeen) {
-            diagFirstPacketSeen = true;
-            diagFirstSensorPacketCounter = sensorPacketCounter;
-            diagFirstSensorTimeFineUs = sensorTimeFineUs;
-            diagFirstElapsedMs = elapsedMs;
-        }
-        diagLastSensorPacketCounter = sensorPacketCounter;
-        diagLastSensorTimeFineUs = sensorTimeFineUs;
-        diagLastElapsedMs = elapsedMs;
-        diagReceivedCount++;
-
-        //Throttle the CSV row to roughly one per second per IMU
-        if ((sampleCounter % outputFrequency) != 0) {
-            return;
-        }
-
-        //Currently configured output rate for this sensor (Hz)
-        int outputRate = -1;
-        try {
-            if (movellaDotDevice != null) {
-                outputRate = movellaDotDevice.getCurrentOutputRate();
-            }
-        } catch (Exception e) {
-            //Leave outputRate as -1 if it cannot be read
-        }
-
-        logger.logRow(nameOfIMU, elapsedMs, sampleCounter, sensorPacketCounter, sensorTimeFineUs, outputRate);
-    }
-
-    /*
-     * Diagnostic-only. Writes a single summary line to the application log at the end of a
-     * trial for this streaming IMU. Compares packets the app received against packets the
-     * sensor actually produced (from the sensor's own packet counter) to quantify Bluetooth
-     * packet loss, and reports the app vs sensor packet rates against the phone wall clock.
-     * Reading these four summary lines (one per streaming IMU) shows directly which sensors
-     * fell behind and by how much. Does NOT affect trial timing or signal processing.
-     */
-    protected void logSyncDiagnosticsSummary() {
-
-        if (!diagFirstPacketSeen) {
-            return;
-        }
-
-        int received = diagReceivedCount;
-        int produced = diagLastSensorPacketCounter - diagFirstSensorPacketCounter + 1;
-        long spanMs = diagLastElapsedMs - diagFirstElapsedMs;
-        double spanSec = spanMs / 1000.0;
-
-        int outputRate = -1;
-        try {
-            if (movellaDotDevice != null) {
-                outputRate = movellaDotDevice.getCurrentOutputRate();
-            }
-        } catch (Exception e) {
-            //Leave outputRate as -1 if it cannot be read
-        }
-
-        //Guard against a sensor packet-counter wrap (produced would be non-positive)
-        if (produced <= 0) {
-            fileManager.writeToLogFile(String.format(Locale.US,
-                    "SYNC SUMMARY %s: received=%d, sensor packet counter wrapped/invalid " +
-                            "(first=%d, last=%d) - drops not computable; spanSec=%.1f, outputRate=%dHz",
-                    nameOfIMU, received, diagFirstSensorPacketCounter, diagLastSensorPacketCounter,
-                    spanSec, outputRate));
-            return;
-        }
-
-        int dropped = produced - received;
-        double dropPercent = 100.0 * dropped / produced;
-        double appRateHz = spanSec > 0 ? (received - 1) / spanSec : 0;
-        double sensorRateHz = spanSec > 0 ? (produced - 1) / spanSec : 0;
-
-        //Independent cross-check: span from the sensor's own hardware timestamp.
-        //Assumed to be microseconds; if this disagrees with spanSec the unit assumption is wrong.
-        double sensorTimeSpanSec = (diagLastSensorTimeFineUs - diagFirstSensorTimeFineUs) / 1_000_000.0;
-
-        fileManager.writeToLogFile(String.format(Locale.US,
-                "SYNC SUMMARY %s: received=%d, produced(sensor)=%d, dropped=%d (%.1f%%), " +
-                        "appRate=%.2fHz, sensorRate=%.2fHz, outputRate=%dHz, spanSec=%.1f, sensorTimeSpanSec=%.1f",
-                nameOfIMU, received, produced, dropped, dropPercent,
-                appRateHz, sensorRateHz, outputRate, spanSec, sensorTimeSpanSec));
-    }
-
     @Override
     public void onDotDataChanged(String address, DotData dotData) {
 
@@ -467,11 +329,6 @@ public class StreamingIMU extends UniversalIMU implements DotMeasurementCallback
         double eulerAngleX = dotData.getEuler()[0];
 
         synchronized(sampleCounterLock) {
-
-            //Diagnostic-only: capture the sensor's ground-truth clocks BEFORE the app
-            //overwrites the packet counter below (Samsung desync investigation)
-            logSyncDiagnostics(dotData);
-
             switch (trialName) {
                 case "HeadingReset":
                 case "HeadingRevert":

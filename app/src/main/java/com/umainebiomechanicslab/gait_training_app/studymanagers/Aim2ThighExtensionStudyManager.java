@@ -8,7 +8,6 @@ import android.util.Log;
 import com.umainebiomechanicslab.gait_training_app.FileManager;
 import com.umainebiomechanicslab.gait_training_app.HapticControlModule;
 import com.umainebiomechanicslab.gait_training_app.HttpRequestResponses;
-import com.umainebiomechanicslab.gait_training_app.SyncDiagnosticsLogger;
 import com.umainebiomechanicslab.gait_training_app.UDPListenerThread;
 import com.umainebiomechanicslab.gait_training_app.imus.RecordingIMU;
 import com.umainebiomechanicslab.gait_training_app.imus.StreamingIMU;
@@ -56,9 +55,6 @@ public class Aim2ThighExtensionStudyManager extends IMUManagerWithRecordingIMUs{
 
     //Create ArrayList to store Trial Objects
     private final ArrayList<Aim2ThighExtensionStudyTrial> trialArrayList = new ArrayList<>();
-
-    //Diagnostic-only logger for investigating cross-IMU timer desync on Samsung (logging only)
-    private SyncDiagnosticsLogger syncDiagnosticsLogger;
 
     // Map to store trial names and their durations
     private final Map<String, Integer> trialDurations;
@@ -190,18 +186,6 @@ public class Aim2ThighExtensionStudyManager extends IMUManagerWithRecordingIMUs{
         fileManager.writeToLogFile(String.format(Locale.US,"Right Foot Initialization Offset for %s mode: %.3f", trialName, rightFootIMU.getOffsetEulerAngle()));
 
         /*
-         * Diagnostic-only (Samsung timer-desync investigation): create one shared
-         * SyncDiagnosticsLogger for this trial and attach it to the four streaming IMUs.
-         * They all share the same trial-start reference, so their logged clocks can be
-         * compared on one time axis. This is logging only and does not change trial timing.
-         */
-        syncDiagnosticsLogger = new SyncDiagnosticsLogger(fileManager, trialName, currentTimeStamp);
-        leftThighIMU.setSyncDiagnosticsLogger(syncDiagnosticsLogger);
-        rightThighIMU.setSyncDiagnosticsLogger(syncDiagnosticsLogger);
-        leftFootIMU.setSyncDiagnosticsLogger(syncDiagnosticsLogger);
-        rightFootIMU.setSyncDiagnosticsLogger(syncDiagnosticsLogger);
-
-        /*
          * Not all trial modes (ie Testing, Familiarization) require data recording,
          * therefore the arms don't always need to be started and loggers for the
          * streaming IMUs don't always need to be created.
@@ -259,11 +243,6 @@ public class Aim2ThighExtensionStudyManager extends IMUManagerWithRecordingIMUs{
 
     @Override
     public void stopTrial(String trialName) {
-
-        //Diagnostic-only: close the sync-diagnostics logger for this trial (Samsung investigation)
-        if (syncDiagnosticsLogger != null) {
-            syncDiagnosticsLogger.close();
-        }
 
         switch(trialName) {
             case "Testing":
