@@ -781,9 +781,9 @@ public class Aim2ThighExtensionStudyUI extends UserInterfaceWithRecordingIMU {
         //Set the behavior for the exportRecordedIMUDataButton
         exportRecordedDataButton.setOnClickListener(view -> {
 
-            //Keep the screen on for the whole export (and the auto-upload that follows).
-            //Exporting can take longer than Samsung's max screen timeout (10 min); if the
-            //screen sleeps mid-export the app gets throttled and the export stalls.
+            //Keep the screen on during export. Exporting can take longer than Samsung's max
+            //screen timeout (10 min); if the screen sleeps mid-export the app is throttled and
+            //the export stalls. Released once export completes (see onRecordingExportComplete).
             keepScreenOn();
 
             //Start with export of the Left Arm Data
@@ -813,7 +813,8 @@ public class Aim2ThighExtensionStudyUI extends UserInterfaceWithRecordingIMU {
                 errorMessagePopUp("ERROR: IMUs are connected. Disconnect IMUs before going back.");
             }
             else{
-                //Leaving the page - allow the screen to time out normally again
+                //Safety fallback: clear keep-screen-on in case we leave the page mid-export
+                //(normally it is already cleared when export completes).
                 allowScreenToTurnOff();
                 userInterfaceForBackButton.showPage();
             }
@@ -1158,14 +1159,16 @@ public class Aim2ThighExtensionStudyUI extends UserInterfaceWithRecordingIMU {
     public void onRecordingExportComplete() {
 
         /*
-         * Export of all recorded data (both arms) has finished. Automatically start the
-         * cloud upload so the operator doesn't have to press Upload manually. The screen is
-         * already being kept on from the export, and stays on through the upload; it is
-         * released when the operator leaves the page (Go Back).
+         * Export of all recorded data (both arms) has finished and its loading page has
+         * closed. Exporting was the long, screen-timeout-sensitive step, so release the
+         * keep-screen-on flag now - the upload does not need the screen kept awake.
          *
-         * onRecordingExportComplete is called from a background (Movella callback) thread,
-         * so hop to the UI thread before touching the upload/loading UI.
+         * Then automatically start the cloud upload so the operator doesn't have to press
+         * Upload manually. onRecordingExportComplete is called from a background (Movella
+         * callback) thread, so hop to the UI thread before touching the upload/loading UI.
          */
+        allowScreenToTurnOff();
+
         activity.runOnUiThread(() -> {
             if (fileManager.isUserSignedIn()) {
                 textPopUp("Export complete. Uploading data to cloud...");
