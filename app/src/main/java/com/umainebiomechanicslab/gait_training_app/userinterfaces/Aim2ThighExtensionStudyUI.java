@@ -5,6 +5,7 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -44,12 +45,16 @@ public class Aim2ThighExtensionStudyUI extends UserInterfaceWithRecordingIMU {
 
     private String trialName;
     private final LoadingWindowUI loadingWindowUI;
+    private final FileManager fileManager;
 
     public Aim2ThighExtensionStudyUI(Activity activity, int pageID, LogPopupWindowUI logPopupWindowUI, FileManager fileManager, LoadingWindowUI loadingWindowUI) {
         
         super(activity, pageID);
 
         this.loadingWindowUI = loadingWindowUI;
+
+        //Store the FileManager so it can be used outside the constructor (e.g. auto-upload)
+        this.fileManager = fileManager;
 
         //Initialize IMUsAngleOffsetInitialized
         IMUsAngleOffsetInitialized = false;
@@ -776,6 +781,11 @@ public class Aim2ThighExtensionStudyUI extends UserInterfaceWithRecordingIMU {
         //Set the behavior for the exportRecordedIMUDataButton
         exportRecordedDataButton.setOnClickListener(view -> {
 
+            //Keep the screen on for the whole export (and the auto-upload that follows).
+            //Exporting can take longer than Samsung's max screen timeout (10 min); if the
+            //screen sleeps mid-export the app gets throttled and the export stalls.
+            keepScreenOn();
+
             //Start with export of the Left Arm Data
             imuManager.startRecordingExport("Left Arm IMU");
 
@@ -803,6 +813,8 @@ public class Aim2ThighExtensionStudyUI extends UserInterfaceWithRecordingIMU {
                 errorMessagePopUp("ERROR: IMUs are connected. Disconnect IMUs before going back.");
             }
             else{
+                //Leaving the page - allow the screen to time out normally again
+                allowScreenToTurnOff();
                 userInterfaceForBackButton.showPage();
             }
 
@@ -1145,5 +1157,40 @@ public class Aim2ThighExtensionStudyUI extends UserInterfaceWithRecordingIMU {
     @Override
     public void onRecordingExportComplete() {
 
+        /*
+         * Export of all recorded data (both arms) has finished. Automatically start the
+         * cloud upload so the operator doesn't have to press Upload manually. The screen is
+         * already being kept on from the export, and stays on through the upload; it is
+         * released when the operator leaves the page (Go Back).
+         *
+         * onRecordingExportComplete is called from a background (Movella callback) thread,
+         * so hop to the UI thread before touching the upload/loading UI.
+         */
+        activity.runOnUiThread(() -> {
+            if (fileManager.isUserSignedIn()) {
+                textPopUp("Export complete. Uploading data to cloud...");
+                fileManager.uploadFilesToFirebaseCloudStorage(this);
+            } else {
+                textPopUp("Export complete. Please sign in with Google, then press Upload.");
+                fileManager.signIn();
+            }
+        });
+
+    }
+
+    /*
+     * Keep the device screen on (and the app in the foreground) for long-running operations
+     * like exporting recorded data. Uses the window flag FLAG_KEEP_SCREEN_ON, which needs no
+     * permission and is automatically dropped when the app is backgrounded.
+     */
+    private void keepScreenOn() {
+        activity.runOnUiThread(() ->
+                activity.getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON));
+    }
+
+    //Allow the screen to time out normally again once the long operation is done / page left.
+    private void allowScreenToTurnOff() {
+        activity.runOnUiThread(() ->
+                activity.getWindow().clearFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON));
     }
 }
