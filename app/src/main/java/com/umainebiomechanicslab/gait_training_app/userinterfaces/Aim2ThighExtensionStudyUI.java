@@ -1,6 +1,11 @@
 package com.umainebiomechanicslab.gait_training_app.userinterfaces;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.Context;
+import android.os.VibrationEffect;
+import android.os.Vibrator;
+import android.os.VibratorManager;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
@@ -1205,6 +1210,33 @@ public class Aim2ThighExtensionStudyUI extends UserInterfaceWithRecordingIMU {
     private void allowScreenToTurnOff() {
         activity.runOnUiThread(() ->
                 activity.getWindow().clearFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON));
+    }
+
+    /*
+     * A stronger, more cautious warning than errorMessagePopUp: a longer, patterned vibration
+     * plus a dialog that stays on screen until the operator acknowledges it. Used for things the
+     * operator must not miss, like a baseline leg-asymmetry result.
+     */
+    public void strongWarningPopUp(String title, String message) {
+
+        //Longer, patterned vibration (buzz-pause-buzz-pause-buzz) so it can't be missed
+        try {
+            VibratorManager vibratorManager = (VibratorManager) activity.getSystemService(Context.VIBRATOR_MANAGER_SERVICE);
+            Vibrator vibrator = vibratorManager.getDefaultVibrator();
+            long[] pattern = {0, 600, 300, 600, 300, 600};
+            vibrator.cancel();
+            vibrator.vibrate(VibrationEffect.createWaveform(pattern, -1));
+        } catch (Exception e) {
+            //If vibration is unavailable, still show the dialog below
+        }
+
+        //Persistent dialog - stays on screen until the operator taps OK
+        activity.runOnUiThread(() -> new AlertDialog.Builder(activity)
+                .setTitle(title)
+                .setMessage(message)
+                .setCancelable(false)
+                .setPositiveButton("OK", null)
+                .show());
     }
 
     @Override

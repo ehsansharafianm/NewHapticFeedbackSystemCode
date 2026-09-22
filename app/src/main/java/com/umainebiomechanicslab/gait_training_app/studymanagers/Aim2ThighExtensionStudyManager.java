@@ -302,8 +302,8 @@ public class Aim2ThighExtensionStudyManager extends IMUManagerWithRecordingIMUs{
                     fileManager.writeToLogFile(String.format(Locale.US,
                             "WARNING: Leg asymmetry - baseline target difference %.1f degrees exceeds 5 degrees",
                             legDifference));
-                    thighExtensionStudyUI.errorMessagePopUp(String.format(Locale.US,
-                            "WARNING: Leg asymmetry detected.\nLeft avg: %.1f°, Right avg: %.1f° (difference %.1f° > 5°).\nConsider redoing the baseline.",
+                    thighExtensionStudyUI.strongWarningPopUp("Leg Asymmetry Warning", String.format(Locale.US,
+                            "Leg asymmetry detected.\n\nLeft avg: %.1f°\nRight avg: %.1f°\nDifference: %.1f° (exceeds 5°).\n\nConsider redoing the baseline.",
                             leftBaselineAverage, rightBaselineAverage, legDifference));
                 }
                 break;
