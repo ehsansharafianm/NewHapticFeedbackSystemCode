@@ -474,6 +474,8 @@ public class FileManager{
         // --- FIX 2: TRACK UPLOAD COMPLETION CORRECTLY ---
         // Use a counter to track how many uploads have finished (succeeded or failed)
         final int[] finishedUploadsCounter = {0};
+        // Track how many uploads actually succeeded, to report overall success to the UI
+        final int[] successfulUploadsCounter = {0};
         // --- END OF FIX 2 ---
 
         Log.d(TAG, "Total files to upload: " + totalFilesToUpload);
@@ -508,20 +510,23 @@ public class FileManager{
             uploadTask.addOnSuccessListener(taskSnapshot -> {
                 writeToLogFile("Successfully Uploaded: " + fileName);
 
+                //Count this as a successful upload
+                successfulUploadsCounter[0]++;
+
                 // Correctly handle completion
-                handleUploadFinished(finishedUploadsCounter, totalFilesToUpload, loadingWindowUI);
+                handleUploadFinished(finishedUploadsCounter, successfulUploadsCounter, totalFilesToUpload, loadingWindowUI, userInterfaceCalledFrom);
 
             }).addOnFailureListener(e -> {
                 writeToLogFile("Error Uploading File: " + fileName + " | Reason: " + e.getMessage());
 
                 // Still handle completion even on failure
-                handleUploadFinished(finishedUploadsCounter, totalFilesToUpload, loadingWindowUI);
+                handleUploadFinished(finishedUploadsCounter, successfulUploadsCounter, totalFilesToUpload, loadingWindowUI, userInterfaceCalledFrom);
             });
         }
     }
 
     // --- HELPER METHOD TO AVOID CODE DUPLICATION AND HANDLE COMPLETION ---
-    private void handleUploadFinished(int[] finishedUploadsCounter, int totalFilesToUpload, LoadingWindowUI loadingWindowUI) {
+    private void handleUploadFinished(int[] finishedUploadsCounter, int[] successfulUploadsCounter, int totalFilesToUpload, LoadingWindowUI loadingWindowUI, UserInterface userInterfaceCalledFrom) {
         // Increment the counter of finished uploads
         finishedUploadsCounter[0]++;
 
@@ -532,8 +537,14 @@ public class FileManager{
 
         // If all uploads are finished, close the loading window
         if (finishedUploadsCounter[0] >= totalFilesToUpload) {
-            writeToLogFile("All file uploads are complete.");
+            boolean allSucceeded = successfulUploadsCounter[0] >= totalFilesToUpload;
+            writeToLogFile("All file uploads are complete. Succeeded: " + successfulUploadsCounter[0] + "/" + totalFilesToUpload);
             loadingWindowUI.onLoadingComplete();
+
+            //Notify the calling UI so it can reflect the result (e.g. mark the button "Uploaded")
+            if (userInterfaceCalledFrom != null) {
+                userInterfaceCalledFrom.onUploadComplete(allSucceeded);
+            }
         }
     }
 

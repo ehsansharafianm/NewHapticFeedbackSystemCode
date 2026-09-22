@@ -43,6 +43,13 @@ public abstract class UserInterface {
         }
     }
 
+    /*
+     * Called when a cloud upload finishes. Default is a no-op; user interfaces that show an
+     * upload button can override this to reflect the result (e.g. mark the button "Uploaded").
+     */
+    public void onUploadComplete(boolean success){
+    }
+
     public void textPopUp(String messageContent){
         activity.runOnUiThread(() -> {
             final Toast toast = Toast.makeText(activity, messageContent, Toast.LENGTH_SHORT);

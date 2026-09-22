@@ -284,6 +284,28 @@ public class Aim2ThighExtensionStudyManager extends IMUManagerWithRecordingIMUs{
 
                 //Generate the peak thigh target
                 targetManager.generatePeakThighTarget(trialArrayList.get(trialArrayList.size() - 1));
+
+                //Check for left/right leg asymmetry. The baseline target is built from the
+                //average peak thigh extension of each leg; if the two leg averages differ by
+                //more than 5 degrees, warn the operator so they can decide whether to redo the
+                //baseline. This is only a notification - it does not block anything.
+                Aim2ThighExtensionStudyTrial baselineTrial = trialArrayList.get(trialArrayList.size() - 1);
+                double leftBaselineAverage = baselineTrial.getLeftPeakThighAngleAverage();
+                double rightBaselineAverage = baselineTrial.getRightPeakThighAngleAverage();
+                double legDifference = Math.abs(leftBaselineAverage - rightBaselineAverage);
+
+                fileManager.writeToLogFile(String.format(Locale.US,
+                        "Baseline leg averages - Left: %.1f, Right: %.1f, Difference: %.1f degrees",
+                        leftBaselineAverage, rightBaselineAverage, legDifference));
+
+                if (legDifference > 5.0) {
+                    fileManager.writeToLogFile(String.format(Locale.US,
+                            "WARNING: Leg asymmetry - baseline target difference %.1f degrees exceeds 5 degrees",
+                            legDifference));
+                    thighExtensionStudyUI.errorMessagePopUp(String.format(Locale.US,
+                            "WARNING: Leg asymmetry detected.\nLeft avg: %.1f°, Right avg: %.1f° (difference %.1f° > 5°).\nConsider redoing the baseline.",
+                            leftBaselineAverage, rightBaselineAverage, legDifference));
+                }
                 break;
 
         }

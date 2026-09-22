@@ -47,6 +47,9 @@ public class Aim2ThighExtensionStudyUI extends UserInterfaceWithRecordingIMU {
     private final LoadingWindowUI loadingWindowUI;
     private final FileManager fileManager;
 
+    //The upload button's original label, so it can be restored after showing "Uploaded"
+    private String originalUploadButtonText;
+
     public Aim2ThighExtensionStudyUI(Activity activity, int pageID, LogPopupWindowUI logPopupWindowUI, FileManager fileManager, LoadingWindowUI loadingWindowUI) {
         
         super(activity, pageID);
@@ -90,6 +93,9 @@ public class Aim2ThighExtensionStudyUI extends UserInterfaceWithRecordingIMU {
         showLogButton = activity.findViewById(R.id.aim2_thigh_extension_study_trial_page_ShowLogButton);
         uploadDataToCloudButton = activity.findViewById(R.id.aim2_thigh_extension_study_trial_page_UploadDataToCloudButton);
         exportRecordedDataButton = activity.findViewById(R.id.aim2_thigh_extension_study_trial_page_ExportRecordedDataButton);
+
+        //Remember the upload button's original label so it can be restored after a successful upload
+        originalUploadButtonText = uploadDataToCloudButton.getText().toString();
 
         //Set enabled status of buttons that shouldn't be enabled at the start of the app
         updateButtonEnabledStatus(startScanButton, false);
@@ -726,6 +732,10 @@ public class Aim2ThighExtensionStudyUI extends UserInterfaceWithRecordingIMU {
                 updateButtonEnabledStatus(exportRecordedDataButton, true);
                 updateButtonEnabledStatus(uploadDataToCloudButton, true);
 
+                //New data is now available to upload, so restore the upload button's original
+                //label (clears any previous "Uploaded" state from an earlier upload).
+                updateButtonText(uploadDataToCloudButton, originalUploadButtonText);
+
             }
             else{
 
@@ -1195,5 +1205,20 @@ public class Aim2ThighExtensionStudyUI extends UserInterfaceWithRecordingIMU {
     private void allowScreenToTurnOff() {
         activity.runOnUiThread(() ->
                 activity.getWindow().clearFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON));
+    }
+
+    @Override
+    public void onUploadComplete(boolean success) {
+
+        if (success) {
+            //Show that the data uploaded successfully and return the button to its initial
+            //(disabled/grey) look, so the operator can see at a glance the upload is done.
+            updateButtonText(uploadDataToCloudButton, "Uploaded");
+            updateButtonEnabledStatus(uploadDataToCloudButton, false);
+        } else {
+            //Upload had at least one failure - leave the button enabled (blue) so it can be retried.
+            updateButtonText(uploadDataToCloudButton, "Upload Failed - Retry");
+            updateButtonEnabledStatus(uploadDataToCloudButton, true);
+        }
     }
 }
