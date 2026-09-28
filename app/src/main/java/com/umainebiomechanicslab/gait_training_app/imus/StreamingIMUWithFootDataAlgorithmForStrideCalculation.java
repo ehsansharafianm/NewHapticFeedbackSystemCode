@@ -118,6 +118,24 @@ public class StreamingIMUWithFootDataAlgorithmForStrideCalculation extends Strea
         this.trial = trial;
 
         /*
+         * Reset per-trial state so each trial's outputs start fresh. Without this, values carry
+         * over from the previous trial. The important one is last2HeelStrikes: heel-strike
+         * detection is gated on sampleCounter >= last2HeelStrikes[0] + MIN_SAMPLES_BETWEEN_PEAKS,
+         * and sampleCounter restarts at 0 each trial, so a stale (large) last2HeelStrikes[0] from
+         * the previous trial blocks ALL detection until the new trial's sample count climbs back
+         * past it - which is why the foot rows (cadence, stride length, speed, heel-strike count)
+         * appeared frozen at the start of a new trial. Resetting the counters/accumulators also
+         * keeps the step count and averages correct per trial.
+         */
+        stepCounter = 0;
+        trialCadenceSum = 0;
+        trialStrideLengthSum = 0;
+        trialStrideSpeedSum = 0;
+        Arrays.fill(last2HeelStrikes, 0);
+        Arrays.fill(last5Angles, 0);
+        Arrays.fill(last3Samples, null);
+
+        /*
          * After running the startTrial lines of code unique to a Streaming IMU with a data algorithm, run the
          * startTrial lines of code that all Streaming IMUs used (this is inherited from the parent StreamingIMU class
          * */
