@@ -727,6 +727,9 @@ public class Aim2ThighExtensionStudyUI extends UserInterfaceWithRecordingIMU {
                 //Only start a trial if all IMUs are initialized and there is a valid subject entered
                 if(IMUsAngleOffsetInitialized && validSubjectEntered){
 
+                    //Clear the on-screen gait outputs so this trial starts fresh (Target Angle kept)
+                    resetTrialOutputs();
+
                     //Start the current trial
                     imuManager.startTrial(trialName);
 
@@ -1000,6 +1003,33 @@ public class Aim2ThighExtensionStudyUI extends UserInterfaceWithRecordingIMU {
                 break;
         }
 
+    }
+
+    /*
+     * Clear the per-trial gait output fields on screen so each trial starts fresh. Called at the
+     * start of every trial. Target Angle is intentionally NOT cleared - it is computed after the
+     * baseline and must stay fixed for the rest of the session.
+     */
+    public void resetTrialOutputs(){
+        //Last-stride PTE (thigh)
+        updateTextViewText(R.id.aim2_thigh_extension_study_trial_page_LeftThighLastPeak, "0");
+        updateTextViewText(R.id.aim2_thigh_extension_study_trial_page_RightThighLastPeak, "0");
+        //Stride length (foot)
+        updateTextViewText(R.id.aim2_thigh_extension_study_trial_page_LeftThighLastStrideLength, "0");
+        updateTextViewText(R.id.aim2_thigh_extension_study_trial_page_RightThighLastStrideLength, "0");
+        //Walking speed (foot)
+        updateTextViewText(R.id.aim2_thigh_extension_study_trial_page_LeftThighLastSpeed, "0");
+        updateTextViewText(R.id.aim2_thigh_extension_study_trial_page_RightThighLastSpeed, "0");
+        //Cadence (foot)
+        updateTextViewText(R.id.aim2_thigh_extension_study_trial_page_LeftThighLastCadence, "0");
+        updateTextViewText(R.id.aim2_thigh_extension_study_trial_page_RightThighLastCadence, "0");
+        //PTE cycle count (thigh)
+        updateTextViewText(R.id.aim2_thigh_extension_study_trial_page_LeftThighCycle, "0");
+        updateTextViewText(R.id.aim2_thigh_extension_study_trial_page_RightThighCycle, "0");
+        //Heel-strike cycle count (foot)
+        updateTextViewText(R.id.aim2_thigh_extension_study_trial_page_LeftFootCycle, "0");
+        updateTextViewText(R.id.aim2_thigh_extension_study_trial_page_RightFootCycle, "0");
+        //NOTE: Target Angle is intentionally left unchanged.
     }
 
     @Override
