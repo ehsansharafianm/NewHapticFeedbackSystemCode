@@ -270,6 +270,10 @@ public class Aim2ThighExtensionStudyManager extends IMUManagerWithRecordingIMUs{
                 rightFootIMU.stopTrial(false);
                 leftArmIMU.stopTrial(false);
                 rightArmIMU.stopTrial(false);
+
+                //Save this trial's per-stride gait parameters (PTE, stride length, speed, cadence)
+                //to a CSV and queue it for upload.
+                saveTrialGaitParametersCSV();
                 break;
 
             case "Baseline Normal":
@@ -284,9 +288,31 @@ public class Aim2ThighExtensionStudyManager extends IMUManagerWithRecordingIMUs{
 
                 //Generate the peak thigh target
                 targetManager.generatePeakThighTarget(trialArrayList.get(trialArrayList.size() - 1));
+
+                //Save this trial's per-stride gait parameters CSV and queue it for upload.
+                saveTrialGaitParametersCSV();
                 break;
 
         }
+    }
+
+    /*
+     * Write the most recent trial's per-stride gait parameters (PTE, target, stride length,
+     * speed, cadence) to a CSV in the session folder and add it to the cloud upload list.
+     */
+    private void saveTrialGaitParametersCSV(){
+
+        if(trialArrayList.isEmpty()){
+            return;
+        }
+
+        Aim2ThighExtensionStudyTrial trial = trialArrayList.get(trialArrayList.size() - 1);
+
+        //Use the session folder name as the subject/session title in the CSV file name
+        String subjectTitle = fileManager.getSessionFolderPath().getName();
+
+        java.io.File csvFile = trial.createTrialCSVFile(subjectTitle, context, fileManager, thighExtensionStudyUI);
+        fileManager.addFileToUploadList(csvFile);
     }
 
     public void sendHapticFeedback(String nameOfIMU, String vibrationType){

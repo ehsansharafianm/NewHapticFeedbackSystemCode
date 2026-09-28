@@ -132,6 +132,17 @@ public class FileManager{
         return sessionFolderPath;
     }
 
+    /*
+     * Add a file to the list that gets uploaded to the cloud. Used to include generated files
+     * (e.g. per-trial GaitParameters CSVs) in the upload alongside the app log and DOT logs.
+     */
+    public void addFileToUploadList(File file){
+        if(file != null && !fileArrayList.contains(file)){
+            fileArrayList.add(file);
+            writeToLogFile("Added file to upload list: " + file.getName());
+        }
+    }
+
 
     public boolean renameSessionFolder(String newFolderName) {
         if (newFolderName == null || newFolderName.isEmpty() || newFolderName.contains(File.separator)) {

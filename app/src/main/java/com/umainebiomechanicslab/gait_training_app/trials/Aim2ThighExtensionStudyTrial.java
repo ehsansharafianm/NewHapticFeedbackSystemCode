@@ -243,11 +243,19 @@ public class Aim2ThighExtensionStudyTrial extends Trial{
 
         try {
 
-            String logFileName = subjectTitle + " " + trialName + " " + trialTimeStamp + " GaitParameters.csv";
+            //Make the timestamp safe for a file name (drop ':' etc.)
+            String safeTimeStamp = trialTimeStamp.replaceAll("[^a-zA-Z0-9]", "_");
+            String logFileName = subjectTitle + " " + trialName + " " + safeTimeStamp + " GaitParameters.csv";
 
-            // Define the file name and path
-            //csvFile = new File(context.getApplicationContext().getExternalFilesDir("logs"), logFileName);
-            csvFile = new File(context.getApplicationContext().getExternalFilesDir("SubjectData/" + subjectTitle + "/GaitParameterCSVs"), logFileName);
+            //Save the gait-parameter CSV inside this session's folder, next to the app log and
+            //the Dot Log Files, so everything for a session is grouped together and uploaded together.
+            File gaitParameterFolder = new File(fileManager.getSessionFolderPath(), "GaitParameterCSVs");
+            if (!gaitParameterFolder.exists()) {
+                if (!gaitParameterFolder.mkdirs()) {
+                    Log.e(TAG, "createTrialCSVFile: Failed to create GaitParameterCSVs folder");
+                }
+            }
+            csvFile = new File(gaitParameterFolder, logFileName);
 
 
             // Create the file if it doesn't exist
