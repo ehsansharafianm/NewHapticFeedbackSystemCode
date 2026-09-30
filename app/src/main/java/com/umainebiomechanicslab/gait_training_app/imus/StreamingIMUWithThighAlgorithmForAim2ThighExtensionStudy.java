@@ -220,12 +220,13 @@ public class StreamingIMUWithThighAlgorithmForAim2ThighExtensionStudy extends St
                             //Update the packet counter to also show the number of steps taken
                             dotData.setPacketCounter((stepCounter * PACKET_COUNTER_STEP_OFFSET) + sampleCounter);
 
-                            //If we have exceeded the steady-state walking threshold, use that PTE for average PTE calculation
-                            if (stepCounter > NUMBER_OF_CYCLES_UNTIL_STEADY_STATE) {
+                            //Record every PTE for the per-stride CSV, from the first detected stride
+                            thighExtensionStudyTrial.appendToGaitParameterArrayList(nameOfIMU, "PTE", mostRecentPeakThighAngle);
 
-                                //Update the sum of all PTE Angles for use in the average angle calculation later
+                            //Only steady-state strides count toward the trial average (unchanged, so
+                            //the baseline-derived target is not affected)
+                            if (stepCounter > NUMBER_OF_CYCLES_UNTIL_STEADY_STATE) {
                                 trialAngleSumForAverage += mostRecentPeakThighAngle;
-                                thighExtensionStudyTrial.appendToGaitParameterArrayList(nameOfIMU, "PTE", mostRecentPeakThighAngle);
                             }
 
                             //Update the User Interface with the most recent PTE Angle
@@ -284,7 +285,7 @@ public class StreamingIMUWithThighAlgorithmForAim2ThighExtensionStudy extends St
                             stepCounter++;
 
                             //Send PTE to target manager to see if feedback should be given
-                            targetManager.onPTEAngleDetected(mostRecentPeakThighAngle, nameOfIMU, sampleCounter, trialName, thighExtensionStudyTrial);
+                            targetManager.onPTEAngleDetected(mostRecentPeakThighAngle, nameOfIMU, sampleCounter, trialName, thighExtensionStudyTrial, true);
 
                             //Update the User Interface with the most recent PTE Angle
                             thighExtensionStudyUI.updateGaitParameterOutput("PTE", nameOfIMU, String.format(Locale.US, "%.3f", mostRecentPeakThighAngle));
@@ -337,21 +338,25 @@ public class StreamingIMUWithThighAlgorithmForAim2ThighExtensionStudy extends St
                             //Update the packet counter to also show the number of steps taken
                             dotData.setPacketCounter((stepCounter * PACKET_COUNTER_STEP_OFFSET) + sampleCounter);
 
-                            //If we have exceeded the steady-state walking threshold, use that PTE for average PTE calculation
+                            //Record every PTE for the per-stride CSV, from the first detected stride
+                            thighExtensionStudyTrial.appendToGaitParameterArrayList(nameOfIMU, "PTE", mostRecentPeakThighAngle);
+
+                            //Only steady-state strides count toward the trial average (unchanged)
                             if (stepCounter > NUMBER_OF_CYCLES_UNTIL_STEADY_STATE) {
-
-                                //Update the sum of all PTE Angles for use in the average angle calculation later
                                 trialAngleSumForAverage += mostRecentPeakThighAngle;
-                                thighExtensionStudyTrial.appendToGaitParameterArrayList(nameOfIMU, "PTE", mostRecentPeakThighAngle);
+                            }
 
-                                //Send PTE to target manager to see if feedback should be given (and if target needs to be changed)
-                                boolean feedbackProvided = targetManager.onPTEAngleDetected(mostRecentPeakThighAngle, nameOfIMU,
-                                        sampleCounter, trialName, thighExtensionStudyTrial);
+                            //Send PTE to the target manager. The target value is recorded for every
+                            //stride (to keep the CSV target column aligned with PTE), but feedback and
+                            //target progression only happen after the steady-state warm-up - identical
+                            //to the previous behavior.
+                            boolean allowFeedback = (stepCounter > NUMBER_OF_CYCLES_UNTIL_STEADY_STATE);
+                            boolean feedbackProvided = targetManager.onPTEAngleDetected(mostRecentPeakThighAngle, nameOfIMU,
+                                    sampleCounter, trialName, thighExtensionStudyTrial, allowFeedback);
 
-                                //If feedback was given, update the packet counter to show that feedback was given
-                                if (feedbackProvided) {
-                                    dotData.setPacketCounter(FEEDBACK_GIVEN_OFFSET + (stepCounter * PACKET_COUNTER_STEP_OFFSET) + sampleCounter);
-                                }
+                            //If feedback was given, update the packet counter to show that feedback was given
+                            if (feedbackProvided) {
+                                dotData.setPacketCounter(FEEDBACK_GIVEN_OFFSET + (stepCounter * PACKET_COUNTER_STEP_OFFSET) + sampleCounter);
                             }
 
                             //Update the User Interface with the most recent PTE Angle

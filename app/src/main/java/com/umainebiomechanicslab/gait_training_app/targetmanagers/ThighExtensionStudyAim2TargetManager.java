@@ -41,14 +41,22 @@ public class ThighExtensionStudyAim2TargetManager {
 
     }
 
-    public boolean onPTEAngleDetected(double angle, String nameOfIMU, int sampleNumber, String feedbackType, Aim2ThighExtensionStudyTrial trial){
+    public boolean onPTEAngleDetected(double angle, String nameOfIMU, int sampleNumber, String feedbackType, Aim2ThighExtensionStudyTrial trial, boolean allowFeedback){
 
         boolean feedbackGiven = false;
         boolean targetMet = false;
 
-        //If trial is not null, Log the current target angle to the Thigh Extension Study Trial
+        //If trial is not null, Log the current target angle to the Thigh Extension Study Trial.
+        //This is recorded for EVERY detected stride (even during the steady-state warm-up before
+        //feedback begins) so the CSV target column stays aligned with the PTE column.
         if(trial != null){
             trial.appendToGaitParameterArrayList(nameOfIMU, "TargetAngle", peakThighAngleTarget);
+        }
+
+        //During the steady-state warm-up, do NOT give feedback or advance the target-progression
+        //window. This keeps feedback behavior identical to before (feedback only after warm-up).
+        if(!allowFeedback){
+            return false;
         }
 
         //Check to see if the angle doesn't meet the target angle (not negative enough)

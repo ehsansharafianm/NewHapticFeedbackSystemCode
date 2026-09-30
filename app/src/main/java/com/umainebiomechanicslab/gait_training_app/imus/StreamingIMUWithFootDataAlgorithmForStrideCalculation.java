@@ -239,12 +239,24 @@ public class StreamingIMUWithFootDataAlgorithmForStrideCalculation extends Strea
                         //Update the packet counter to also show the number of steps taken
                         last3Samples[2].setPacketCounter((stepCounter * PACKET_COUNTER_STEP_OFFSET) + sampleCounter - 2);
 
-                        //If we have exceeded the steady-state walking threshold, use that PTE for average PTE calculation
-                        if(stepCounter > NUMBER_OF_CYCLES_UNTIL_STEADY_STATE){
-
-                            //Update the sum of all cadences for use in the average cadence calculation later
-                            trialCadenceSum += mostRecentCadence;
+                        //Record cadence for the per-stride CSV from the 2nd heel strike onward (the
+                        //first stride has no previous heel strike to measure an interval against).
+                        if(stepCounter >= 2){
                             trial.appendToGaitParameterArrayList(nameOfIMU, "Cadence", mostRecentCadence);
+
+                            //Only steady-state strides count toward the trial average (unchanged)
+                            if(stepCounter > NUMBER_OF_CYCLES_UNTIL_STEADY_STATE){
+                                trialCadenceSum += mostRecentCadence;
+                            }
+                        }
+
+                        //Record stride length & speed once at least 3 strides exist (the calculation
+                        //needs 3 strides). This lets the CSV/display start near the beginning instead
+                        //of waiting for the steady-state threshold. Only steady-state strides are
+                        //added to the averages (unchanged).
+                        if(strides.size() >= 3){
+
+                            final boolean countTowardAverage = (stepCounter > NUMBER_OF_CYCLES_UNTIL_STEADY_STATE);
 
                             SpeedCalculationFromFootIMU.calculateSpeed(strides.get(strides.size() - 2), strides.get(strides.size() - 3), strides.get(strides.size() - 1), new SpeedCalculationFromFootIMU.SpeedReturn() {
                                 @Override
@@ -260,9 +272,11 @@ public class StreamingIMUWithFootDataAlgorithmForStrideCalculation extends Strea
                                     userInterface.updateGaitParameterOutput("StrideLength", nameOfIMU, String.format(Locale.US, "%.3f", strideLength));
                                     userInterface.updateGaitParameterOutput("WalkingSpeed", nameOfIMU, String.format(Locale.US, "%.3f", strideSpeed));
 
-                                    //Update the sum of all stride lengths and speeds for use in the average stride length and speed calculation later
-                                    trialStrideLengthSum += strideLength;
-                                    trialStrideSpeedSum += strideSpeed;
+                                    //Only steady-state strides are added to the average stride length and speed
+                                    if(countTowardAverage){
+                                        trialStrideLengthSum += strideLength;
+                                        trialStrideSpeedSum += strideSpeed;
+                                    }
 
                                 }
                             });
