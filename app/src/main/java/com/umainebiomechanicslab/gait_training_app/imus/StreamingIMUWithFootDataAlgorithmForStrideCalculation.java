@@ -242,7 +242,10 @@ public class StreamingIMUWithFootDataAlgorithmForStrideCalculation extends Strea
                         //Record cadence for the per-stride CSV from the 2nd heel strike onward (the
                         //first stride has no previous heel strike to measure an interval against).
                         if(stepCounter >= 2){
-                            trial.appendToGaitParameterArrayList(nameOfIMU, "Cadence", mostRecentCadence);
+                            //trial is null for non-recording modes (e.g. Familiarization); only record then.
+                            if(trial != null){
+                                trial.appendToGaitParameterArrayList(nameOfIMU, "Cadence", mostRecentCadence);
+                            }
 
                             //Only steady-state strides count toward the trial average (unchanged)
                             if(stepCounter > NUMBER_OF_CYCLES_UNTIL_STEADY_STATE){
@@ -250,11 +253,12 @@ public class StreamingIMUWithFootDataAlgorithmForStrideCalculation extends Strea
                             }
                         }
 
-                        //Record stride length & speed once at least 3 strides exist (the calculation
-                        //needs 3 strides). This lets the CSV/display start near the beginning instead
-                        //of waiting for the steady-state threshold. Only steady-state strides are
-                        //added to the averages (unchanged).
-                        if(strides.size() >= 3){
+                        //Record stride length & speed once at least 4 strides exist. The calculation
+                        //uses three strides (previous/current/next) and must NOT use the very first
+                        //list entry, which is the partial segment recorded before the first heel strike
+                        //(feeding it to the speed calc crashes). Requiring >= 4 means the oldest stride
+                        //used is a real stride. Only steady-state strides are added to the averages.
+                        if(strides.size() >= 4){
 
                             final boolean countTowardAverage = (stepCounter > NUMBER_OF_CYCLES_UNTIL_STEADY_STATE);
 
@@ -265,8 +269,11 @@ public class StreamingIMUWithFootDataAlgorithmForStrideCalculation extends Strea
                                     double strideLength = strideLengthAndSpeed[0];
                                     double strideSpeed = strideLengthAndSpeed[1];
 
-                                    trial.appendToGaitParameterArrayList(nameOfIMU, "StrideLength", strideLength);
-                                    trial.appendToGaitParameterArrayList(nameOfIMU, "WalkingSpeed", strideSpeed);
+                                    //trial is null for non-recording modes (e.g. Familiarization)
+                                    if(trial != null){
+                                        trial.appendToGaitParameterArrayList(nameOfIMU, "StrideLength", strideLength);
+                                        trial.appendToGaitParameterArrayList(nameOfIMU, "WalkingSpeed", strideSpeed);
+                                    }
 
                                     //Update the User Interface with the most recent stride length and speed
                                     userInterface.updateGaitParameterOutput("StrideLength", nameOfIMU, String.format(Locale.US, "%.3f", strideLength));
@@ -361,13 +368,19 @@ public class StreamingIMUWithFootDataAlgorithmForStrideCalculation extends Strea
         @Override
         public void run(){
 
-            previousStride.extractDesiredSampleData();
-            strideToBeProcessed.extractDesiredSampleData();
-            nextStride.extractDesiredSampleData();
+            //This runs on a background thread, so any uncaught exception here would crash the whole
+            //app. Guard the calculation so a degenerate/early stride can never take the app down.
+            try {
+                previousStride.extractDesiredSampleData();
+                strideToBeProcessed.extractDesiredSampleData();
+                nextStride.extractDesiredSampleData();
 
-            double[] strideLengthAndSpeed = strideToBeProcessed.getStrideSpeed(previousStride, nextStride);
+                double[] strideLengthAndSpeed = strideToBeProcessed.getStrideSpeed(previousStride, nextStride);
 
-            speedReturn.onSpeedCalculated(strideLengthAndSpeed);
+                speedReturn.onSpeedCalculated(strideLengthAndSpeed);
+            } catch (Exception e) {
+                android.util.Log.e("SpeedCalculationFromFootIMU", "Skipping stride - speed calculation failed", e);
+            }
 
         }
 
