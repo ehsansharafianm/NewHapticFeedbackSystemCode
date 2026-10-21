@@ -7,6 +7,46 @@ dated entry each time we chase down a real issue, so future-us knows the cause.
 
 ---
 
+## Aim2 — IMU timer drift returned on Samsung; fixed by hotspot security mode (WPA2-only → WPA2/WPA3)
+
+**Date resolved:** 2026-10-21
+**Device:** Samsung Galaxy S26
+**Study:** Aim2 Thigh Extension
+
+### Symptom
+The same streaming-IMU timer drift from the entry below came back on the S26 **even
+with the hotspot already set to single-band 2.4 GHz.** On the table with the sensors
+stationary the timers stayed locked and no packets dropped; the drift only appeared
+once the sensors (still in their carrying case) were picked up / moved. Temporary
+diagnostic logging confirmed it was again Bluetooth packet loss in transit (5–25%
+dropped, uneven across sensors), not a sensor rate problem — every sensor produced a
+clean ~60 Hz but the app received less.
+
+### Root cause
+The phone's **WiFi hotspot security was set to "WPA2-Personal" only.** On the S26,
+WPA2-only degraded the 2.4 GHz link enough that the Bluetooth IMU connections lost
+packets once the radio environment changed (sensors moved). This is a *different*
+knob from the hotspot **band** (the fix in the entry below) — the band was already
+correct this time; the **security mode** was the remaining problem.
+
+### The fix
+Set the hotspot **security to "WPA2/WPA3-Personal"** (the transitional mode), not
+"WPA2-Personal" only.
+
+- Samsung: Hotspot settings → **Security → WPA2/WPA3-Personal**.
+- Keep the band on **2.4 GHz** (still required — see the entry below).
+- The ESP-based haptic cells still connect fine in WPA2/WPA3 transitional mode on
+  the S26. (This supersedes the older "use WPA2-only" note below for this phone — if
+  the cells ever fail to join under transitional mode on a different phone, fall back
+  to WPA2-Personal and re-test.)
+
+### Quick checklist when the timers drift on Samsung
+1. Hotspot **Band = 2.4 GHz** (not auto/dual).
+2. Hotspot **Security = WPA2/WPA3-Personal** (not WPA2-only).
+3. Keep phone and sensors close; avoid other 2.4 GHz congestion.
+
+---
+
 ## Aim2 — Streaming IMU timers drift apart on Samsung (WiFi/Bluetooth interference)
 
 **Date resolved:** 2026-08-25
@@ -58,8 +98,10 @@ Set the **phone's WiFi hotspot to a single 2.4 GHz band** (not auto / dual /
 2.4+5 GHz), matching how the Pixel was configured.
 
 - Samsung: Hotspot settings → **Band → 2.4 GHz** (do **not** use auto/dual-band).
-- Security: **WPA2-Personal** (best compatibility with the ESP-based haptic cells;
-  WPA3 or mixed mode can stop the cells from connecting).
+- Security: **WPA2/WPA3-Personal** (transitional mode). Note: this note originally
+  recommended WPA2-only, but on the Samsung S26 WPA2-only degraded the Bluetooth link
+  — see the 2026-10-21 entry above. The ESP-based haptic cells still connect under
+  WPA2/WPA3 transitional mode; only fall back to WPA2-only if the cells can't join.
 
 ### If it comes back / other things to try
 - Re-check the hotspot band first — a phone update or reset can flip it back to

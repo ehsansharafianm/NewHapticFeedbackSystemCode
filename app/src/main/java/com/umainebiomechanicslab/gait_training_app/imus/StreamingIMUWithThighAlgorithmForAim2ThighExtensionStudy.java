@@ -139,10 +139,6 @@ public class StreamingIMUWithThighAlgorithmForAim2ThighExtensionStudy extends St
 
         synchronized(sampleCounterLock) {
 
-            //Diagnostic-only: capture the sensor's ground-truth clocks BEFORE the app
-            //overwrites the packet counter below (Samsung desync investigation)
-            logSyncDiagnostics(dotData);
-
             switch (trialName) {
                 case "HeadingReset":
                 case "HeadingRevert":
